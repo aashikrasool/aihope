@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AIHope — Custom Web & Mobile Solutions</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #080c10;
+    --bg2: #0d1117;
+    --bg3: #111820;
+    --border: rgba(255,255,255,0.07);
+    --accent: #00e5ff;
+    --accent2: #7b61ff;
+    --text: #e8edf2;
+    --muted: #6b7a8d;
+    --card: rgba(255,255,255,0.03);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── Noise overlay ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  /* ── Nav ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(8,12,16,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: #000 !important;
+    padding: 0.5rem 1.2rem;
+    border-radius: 4px;
+    font-weight: 500 !important;
+    transition: opacity 0.2s !important;
+  }
+  .nav-cta:hover { opacity: 0.85; color: #000 !important; }
+
+  /* ── Hero ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: -200px; left: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(0,229,255,0.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero-glow2 {
+    position: absolute;
+    bottom: -200px; right: -100px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(123,97,255,0.07) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero-inner { max-width: 900px; position: relative; z-index: 1; }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 0.35rem 1rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    background: rgba(255,255,255,0.02);
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-badge .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    animation: fadeUp 0.8s 0.1s ease both;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 560px;
+    animation: fadeUp 0.8s 0.2s ease both;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-tags {
+    display: flex; flex-wrap: wrap; gap: 0.6rem;
+    animation: fadeUp 0.8s 0.3s ease both;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-tag {
+    background: rgba(0,229,255,0.06);
+    border: 1px solid rgba(0,229,255,0.15);
+    color: var(--accent);
+    font-size: 0.78rem;
+    padding: 0.3rem 0.85rem;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+    font-weight: 400;
+  }
+
+  .hero-actions {
+    display: flex; gap: 1rem; align-items: center;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+    padding: 0.85rem 2rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.92rem;
+    transition: opacity 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  .btn-ghost {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.92rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--text); border-color: var(--muted); }
+
+  /* ── Sections ── */
+  section { padding: 7rem 4rem; position: relative; z-index: 1; }
+
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-desc {
+    color: var(--muted);
+    max-width: 540px;
+    font-size: 1rem;
+    margin-bottom: 4rem;
+  }
+
+  /* ── Stats row ── */
+  .stats-row {
+    display: flex; gap: 3rem; flex-wrap: wrap;
+    border-top: 1px solid var(--border);
+    padding-top: 3rem;
+    margin-top: 3rem;
+  }
+
+  .stat { display: flex; flex-direction: column; gap: 0.3rem; }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.04em;
+  }
+  .stat-num span { color: var(--accent); }
+  .stat-label { font-size: 0.82rem; color: var(--muted); }
+
+  /* ── Services ── */
+  #services { background: var(--bg2); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .service-card {
+    background: var(--bg2);
+    padding: 2.5rem;
+    transition: background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-card:hover { background: var(--bg3); }
+
+  .service-icon {
+    font-size: 2rem;
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+
+  .service-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+  }
+
+  .service-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+
+  .service-list {
+    margin-top: 1.2rem;
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+  }
+
+  .service-tag {
+    font-size: 0.72rem;
+    padding: 0.2rem 0.6rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--muted);
+  }
+
+  /* ── Process ── */
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    counter-reset: step;
+  }
+
+  .process-step { position: relative; }
+
+  .step-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: rgba(0,229,255,0.1);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .step-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .step-desc { color: var(--muted); font-size: 0.88rem; }
+
+  /* ── Why us ── */
+  #why { background: var(--bg2); }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .why-features { display: flex; flex-direction: column; gap: 2rem; }
+
+  .why-feature {
+    display: flex; gap: 1.5rem; align-items: flex-start;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .why-feature:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .why-icon {
+    width: 44px; height: 44px;
+    border-radius: 8px;
+    background: rgba(0,229,255,0.07);
+    border: 1px solid rgba(0,229,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .why-feature-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .why-feature-desc { color: var(--muted); font-size: 0.88rem; line-height: 1.6; }
+
+  .why-visual {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 3rem;
+    background: var(--bg3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .why-visual::after {
+    content: '';
+    position: absolute; bottom: -80px; right: -80px;
+    width: 250px; height: 250px;
+    background: radial-gradient(circle, rgba(123,97,255,0.15) 0%, transparent 70%);
+  }
+
+  .visual-items { display: flex; flex-direction: column; gap: 1rem; }
+
+  .visual-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 1.2rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.88rem;
+  }
+
+  .visual-item-label { color: var(--muted); }
+  .visual-item-value { color: var(--accent); font-weight: 500; }
+
+  .visual-bar-wrap { margin-top: 0.5rem; background: rgba(255,255,255,0.05); border-radius: 2px; height: 4px; }
+  .visual-bar { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+
+  /* ── Contact ── */
+  #contact { border-top: 1px solid var(--border); }
+
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .contact-links { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 2rem; }
+
+  .contact-link {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text);
+    background: var(--card);
+    transition: border-color 0.25s, background 0.25s;
+    font-size: 0.92rem;
+  }
+  .contact-link:hover {
+    border-color: rgba(0,229,255,0.3);
+    background: rgba(0,229,255,0.04);
+  }
+
+  .contact-link-icon { font-size: 1.3rem; }
+  .contact-link-label { color: var(--muted); font-size: 0.78rem; }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center;
+    padding: 2rem 4rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.82rem;
+    position: relative; z-index: 1;
+  }
+
+  footer span { color: var(--accent); }
+
+  /* ── Animations ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── Mobile ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    #hero, section { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .why-grid, .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .stats-row { gap: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Nav ── -->
+<nav>
+  <a href="#" class="nav-logo">AI<span>Hope</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ── Hero ── -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      Available for new projects
+    </div>
+    <h1 class="hero-title">
+      We build digital<br/>products that <em>matter</em>
+    </h1>
+    <p class="hero-sub">
+      AIHope crafts custom websites and mobile applications that help businesses grow, scale, and stand out in a competitive world.
+    </p>
+    <div class="hero-tags">
+      <span class="hero-tag">Web Development</span>
+      <span class="hero-tag">Mobile Apps</span>
+      <span class="hero-tag">UI / UX Design</span>
+      <span class="hero-tag">React &amp; Next.js</span>
+      <span class="hero-tag">iOS &amp; Android</span>
+      <span class="hero-tag">E-Commerce</span>
+    </div>
+    <div class="hero-actions">
+      <a href="https://wa.me/821094859943" class="btn-primary" target="_blank">Start a Project →</a>
+      <a href="#services" class="btn-ghost">Explore services</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── About ── -->
+<section id="about">
+  <div class="section-label">About AIHope</div>
+  <h2 class="section-title reveal">Who we are</h2>
+  <p class="section-desc reveal">
+    AIHope is a full-service digital agency specialising in custom web and mobile development. We partner with businesses — from startups to enterprises — to design and build software that solves real problems and drives measurable results.
+  </p>
+  <div class="stats-row reveal">
+    <div class="stat">
+      <span class="stat-num">50<span>+</span></span>
+      <span class="stat-label">Projects Delivered</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">30<span>+</span></span>
+      <span class="stat-label">Happy Clients</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">4<span>+</span></span>
+      <span class="stat-label">Years Experience</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">100<span>%</span></span>
+      <span class="stat-label">Custom Built</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── Services ── -->
+<section id="services">
+  <div class="section-label">What We Do</div>
+  <h2 class="section-title reveal">Our services</h2>
+  <p class="section-desc reveal">Everything your business needs to build, launch, and grow a world-class digital product.</p>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <span class="service-icon">🌐</span>
+      <div class="service-name">Custom Web Development</div>
+      <p class="service-desc">Tailor-made websites and web apps built for performance, SEO, and user experience. From landing pages to complex platforms.</p>
+      <div class="service-list">
+        <span class="service-tag">React</span>
+        <span class="service-tag">Next.js</span>
+        <span class="service-tag">Node.js</span>
+        <span class="service-tag">PostgreSQL</span>
+        <span class="service-tag">REST APIs</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">📱</span>
+      <div class="service-name">Mobile App Development</div>
+      <p class="service-desc">Native and cross-platform mobile applications for iOS and Android that deliver smooth, intuitive experiences.</p>
+      <div class="service-list">
+        <span class="service-tag">React Native</span>
+        <span class="service-tag">Flutter</span>
+        <span class="service-tag">Swift</span>
+        <span class="service-tag">Kotlin</span>
+        <span class="service-tag">Firebase</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🛒</span>
+      <div class="service-name">E-Commerce Solutions</div>
+      <p class="service-desc">End-to-end online store development with payment gateways, inventory management, and conversion-optimised design.</p>
+      <div class="service-list">
+        <span class="service-tag">Shopify</span>
+        <span class="service-tag">WooCommerce</span>
+        <span class="service-tag">Stripe</span>
+        <span class="service-tag">Custom Cart</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🎨</span>
+      <div class="service-name">UI / UX Design</div>
+      <p class="service-desc">User-centred design that balances aesthetics with function — wireframes, prototypes, and polished design systems.</p>
+      <div class="service-list">
+        <span class="service-tag">Figma</span>
+        <span class="service-tag">Design System</span>
+        <span class="service-tag">Prototyping</span>
+        <span class="service-tag">User Research</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">☁️</span>
+      <div class="service-name">Backend & Cloud</div>
+      <p class="service-desc">Scalable backend systems, APIs, and cloud infrastructure that grow with your business without breaking.</p>
+      <div class="service-list">
+        <span class="service-tag">AWS</span>
+        <span class="service-tag">GCP</span>
+        <span class="service-tag">Docker</span>
+        <span class="service-tag">CI/CD</span>
+        <span class="service-tag">Microservices</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🔧</span>
+      <div class="service-name">Maintenance & Support</div>
+      <p class="service-desc">Ongoing support, performance monitoring, and iterative improvements to keep your product running at its best.</p>
+      <div class="service-list">
+        <span class="service-tag">24/7 Support</span>
+        <span class="service-tag">Updates</span>
+        <span class="service-tag">Security</span>
+        <span class="service-tag">Analytics</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Process ── -->
+<section id="process">
+  <div class="section-label">How We Work</div>
+  <h2 class="section-title reveal">Our process</h2>
+  <p class="section-desc reveal">A clear, collaborative approach from the first message to final launch — and beyond.</p>
+  <div class="process-steps reveal">
+    <div class="process-step">
+      <div class="step-num">01</div>
+      <div class="step-title">Discovery</div>
+      <p class="step-desc">We learn your business goals, audience, and requirements through a focused consultation session.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">02</div>
+      <div class="step-title">Design</div>
+      <p class="step-desc">Our designers create wireframes and visual mockups for your approval before a single line of code is written.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">03</div>
+      <div class="step-title">Development</div>
+      <p class="step-desc">We build your product with clean, maintainable code using modern frameworks and agile sprints.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">04</div>
+      <div class="step-title">Testing</div>
+      <p class="step-desc">Rigorous QA across devices and browsers ensures a bug-free, polished experience at launch.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">05</div>
+      <div class="step-title">Launch</div>
+      <p class="step-desc">We handle deployment, DNS, and go-live support so your launch day is smooth and stress-free.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">06</div>
+      <div class="step-title">Growth</div>
+      <p class="step-desc">Post-launch support, analytics, and iterative improvements keep your product ahead of the curve.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Why Us ── -->
+<section id="why">
+  <div class="section-label">Why AIHope</div>
+  <div class="why-grid">
+    <div>
+      <h2 class="section-title reveal">Built differently,<br/>delivered right</h2>
+      <div class="why-features reveal">
+        <div class="why-feature">
+          <div class="why-icon">⚡</div>
+          <div>
+            <div class="why-feature-title">Fast Turnaround</div>
+            <p class="why-feature-desc">We move quickly without cutting corners. Most projects are delivered on or ahead of schedule.</p>
+          </div>
+        </div>
+        <div class="why-feature">
+          <div class="why-icon">🎯</div>
+          <div>
+            <div class="why-feature-title">100% Custom</div>
+            <p class="why-feature-desc">No templates. No cookie-cutter solutions. Every product is built from scratch for your specific needs.</p>
+          </div>
+        </div>
+        <div class="why-feature">
+          <div class="why-icon">💬</div>
+          <div>
+            <div class="why-feature-title">Direct Communication</div>
+            <p class="why-feature-desc">You work directly with our developers via WhatsApp — no account managers, no delays.</p>
+          </div>
+        </div>
+        <div class="why-feature">
+          <div class="why-icon">🔒</div>
+          <div>
+            <div class="why-feature-title">Transparent Pricing</div>
+            <p class="why-feature-desc">Clear quotes upfront. No hidden fees. No surprises at the end of the project.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="why-visual reveal">
+      <div class="section-label" style="margin-bottom:1.5rem">Project at a glance</div>
+      <div class="visual-items">
+        <div class="visual-item">
+          <span class="visual-item-label">Web App</span>
+          <span class="visual-item-value">2–4 weeks</span>
+        </div>
+        <div style="padding: 0 0 1rem;">
+          <div class="visual-bar-wrap"><div class="visual-bar" style="width:75%"></div></div>
+        </div>
+        <div class="visual-item">
+          <span class="visual-item-label">Mobile App</span>
+          <span class="visual-item-value">4–8 weeks</span>
+        </div>
+        <div style="padding: 0 0 1rem;">
+          <div class="visual-bar-wrap"><div class="visual-bar" style="width:60%"></div></div>
+        </div>
+        <div class="visual-item">
+          <span class="visual-item-label">E-Commerce</span>
+          <span class="visual-item-value">1–3 weeks</span>
+        </div>
+        <div style="padding: 0 0 1rem;">
+          <div class="visual-bar-wrap"><div class="visual-bar" style="width:90%"></div></div>
+        </div>
+        <div class="visual-item">
+          <span class="visual-item-label">Client Satisfaction</span>
+          <span class="visual-item-value">100%</span>
+        </div>
+        <div style="padding: 0 0 0;">
+          <div class="visual-bar-wrap"><div class="visual-bar" style="width:100%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Contact ── -->
+<section id="contact">
+  <div class="contact-inner">
+    <div>
+      <div class="section-label">Get In Touch</div>
+      <h2 class="section-title reveal">Let's build something<br/>together</h2>
+      <p class="section-desc reveal" style="margin-bottom:0">
+        Have a project in mind? Reach out on WhatsApp for a free consultation. We typically respond within a few hours.
+      </p>
+    </div>
+    <div class="reveal">
+      <div class="contact-links">
+        <a href="https://wa.me/821094859943" class="contact-link" target="_blank">
+          <span class="contact-link-icon">💬</span>
+          <div>
+            <div>WhatsApp</div>
+            <div class="contact-link-label">+82 10-9485-9943 · Fastest response</div>
+          </div>
+        </a>
+      </div>
+      <div style="margin-top:2rem; padding:1.5rem; border:1px solid var(--border); border-radius:8px; background:var(--card);">
+        <div style="font-size:0.78rem; color:var(--muted); margin-bottom:0.75rem; text-transform:uppercase; letter-spacing:0.1em;">Response time</div>
+        <div style="font-family:'Syne',sans-serif; font-size:1.8rem; font-weight:800; letter-spacing:-0.03em;">Within 24hrs</div>
+        <div style="color:var(--muted); font-size:0.85rem; margin-top:0.3rem;">Usually much sooner</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  © 2025 <span>AIHope</span> · Custom Web &amp; Mobile Solutions · Built with precision
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        e.target.style.transitionDelay = (i * 0.05) + 's';
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => io.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,1819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Founder — AIHope</title>
+  <meta name="description" content="Meet the founder of AIHope and learn about the vision, expertise and leadership behind the company.">
+
+  <link rel="icon" type="image/png" sizes="512x512" href="favicon.png">
+  <link rel="shortcut icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+  <style>
+
+    :root{
+      --ink:#07111f;
+      --paper:#f7f9fc;
+      --paper-2:#eaf0f8;
+      --olive:#0c2748;
+      --rust:#2f6bff;
+      --mustard:#79e0ff;
+      --white:#ffffff;
+      --line:#0d1b2d;
+      --violet:#7a5cff;
+      --cyan:#42d5ff;
+      --soft-blue:#dfeaff;
+      --serif:"DM Serif Display", Georgia, serif;
+      --sans:"DM Sans", Arial, sans-serif;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      background:var(--paper);
+      color:var(--ink);
+      font-family:var(--sans);
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    button{font:inherit}
+
+    .container{
+      width:min(1440px, calc(100% - 48px));
+      margin:auto;
+    }
+
+    /* ---------- HEADER ---------- */
+    .site-header{
+      position:sticky;
+      top:0;
+      z-index:100;
+      background:rgba(246,248,252,.96);
+      backdrop-filter:blur(12px);
+      border-bottom:2px solid var(--line);
+    }
+
+    .nav{
+      height:84px;
+      display:grid;
+      grid-template-columns:1fr auto 1fr;
+      align-items:center;
+      gap:24px;
+    }
+
+    .brand{
+      display:inline-flex;
+      align-items:center;
+      gap:12px;
+      font-weight:700;
+      letter-spacing:-.03em;
+      justify-self:start;
+    }
+    .brand img{
+      width:44px;
+      height:44px;
+      object-fit:contain;
+      border-radius:50%;
+      border:1.5px solid var(--ink);
+      background:var(--white);
+    }
+    .brand span{
+      font-family:var(--serif);
+      font-size:1.7rem;
+      line-height:1;
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:30px;
+      font-size:.82rem;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:.11em;
+    }
+    .nav-links a{
+      position:relative;
+    }
+    .nav-links a:after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:100%;
+      bottom:-5px;
+      height:2px;
+      background:var(--ink);
+      transition:.25s;
+    }
+    .nav-links a:hover:after{right:0}
+
+    .nav-cta{
+      justify-self:end;
+      border:2px solid var(--ink);
+      padding:12px 18px;
+      font-size:.78rem;
+      text-transform:uppercase;
+      font-weight:700;
+      letter-spacing:.08em;
+      transition:.2s;
+    }
+    .nav-cta:hover{
+      background:var(--ink);
+      color:var(--paper);
+    }
+
+    .menu-btn{
+      display:none;
+      border:2px solid var(--ink);
+      background:transparent;
+      width:46px;
+      height:46px;
+      cursor:pointer;
+      font-size:1.35rem;
+    }
+
+    /* ---------- HERO ---------- */
+    .hero{
+      border-bottom:2px solid var(--line);
+    }
+
+    .hero-grid{
+      min-height:690px;
+      display:grid;
+      grid-template-columns:1.18fr .82fr;
+    }
+
+    .hero-copy{
+      padding:92px 64px 74px 0;
+      border-right:2px solid var(--line);
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:48px;
+    }
+
+    .eyebrow{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      text-transform:uppercase;
+      letter-spacing:.13em;
+      font-size:.78rem;
+      font-weight:700;
+    }
+    .eyebrow:before{
+      content:"";
+      width:44px;
+      height:2px;
+      background:var(--ink);
+    }
+
+    .hero h1{
+      font-family:var(--serif);
+      font-size:clamp(4.5rem,9vw,9.8rem);
+      line-height:.84;
+      letter-spacing:-.055em;
+      font-weight:400;
+      margin-top:28px;
+    }
+    .hero h1 em{
+      color:var(--rust);
+      font-weight:400;
+    }
+
+    .hero-bottom{
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:44px;
+      align-items:end;
+    }
+
+    .hero-lead{
+      font-size:1.15rem;
+      line-height:1.65;
+      max-width:620px;
+    }
+
+    .hero-actions{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .btn{
+      display:inline-flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:18px;
+      min-height:56px;
+      padding:14px 18px;
+      border:2px solid var(--ink);
+      text-transform:uppercase;
+      font-size:.78rem;
+      font-weight:700;
+      letter-spacing:.09em;
+      transition:.2s;
+    }
+    .btn:after{content:"↗";font-size:1.2rem}
+    .btn-dark{
+      background:var(--ink);
+      color:var(--paper);
+    }
+    .btn:hover{
+      background:var(--rust);
+      color:var(--white);
+      border-color:var(--rust);
+    }
+
+    .hero-panel{
+      background:var(--olive);
+      color:var(--white);
+      padding:58px 44px 34px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero-panel:before{
+      content:"AI";
+      position:absolute;
+      right:-32px;
+      top:70px;
+      font-family:var(--serif);
+      font-size:18rem;
+      line-height:.7;
+      color:rgba(255,255,255,.07);
+      transform:rotate(-7deg);
+      pointer-events:none;
+    }
+
+    .panel-badge{
+      width:88px;
+      height:88px;
+      border-radius:50%;
+      border:2px solid currentColor;
+      display:grid;
+      place-items:center;
+      font-size:.72rem;
+      font-weight:700;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+      text-align:center;
+      transform:rotate(-8deg);
+    }
+
+    .panel-copy{
+      position:relative;
+      z-index:1;
+    }
+    .panel-copy small{
+      display:block;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      font-size:.72rem;
+      margin-bottom:18px;
+      opacity:.85;
+    }
+    .panel-copy h2{
+      font-family:var(--serif);
+      font-size:clamp(2.8rem,5vw,5.3rem);
+      font-weight:400;
+      line-height:.94;
+      letter-spacing:-.04em;
+    }
+    .panel-copy p{
+      margin-top:24px;
+      max-width:420px;
+      line-height:1.65;
+      font-size:.98rem;
+      opacity:.9;
+    }
+
+    /* ---------- MARQUEE ---------- */
+    .marquee{
+      overflow:hidden;
+      border-bottom:2px solid var(--line);
+      background:var(--mustard);
+    }
+    .marquee-track{
+      display:flex;
+      width:max-content;
+      animation:marquee 28s linear infinite;
+    }
+    .marquee-track span{
+      display:block;
+      padding:19px 26px;
+      font-family:var(--serif);
+      font-size:1.6rem;
+      white-space:nowrap;
+    }
+    .marquee-track span:after{
+      content:" ✦";
+      margin-left:24px;
+    }
+    @keyframes marquee{
+      from{transform:translateX(0)}
+      to{transform:translateX(-50%)}
+    }
+
+    /* ---------- COMMON ---------- */
+    .section{
+      padding:100px 0;
+      border-bottom:2px solid var(--line);
+    }
+
+    .section-head{
+      display:grid;
+      grid-template-columns:.8fr 2.2fr;
+      gap:52px;
+      align-items:start;
+      margin-bottom:64px;
+    }
+
+    .section-kicker{
+      font-size:.78rem;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:.13em;
+      padding-top:12px;
+    }
+
+    .section-title{
+      font-family:var(--serif);
+      font-size:clamp(3.1rem,6.2vw,6.8rem);
+      line-height:.9;
+      letter-spacing:-.045em;
+      font-weight:400;
+    }
+
+    /* ---------- ABOUT ---------- */
+    .about-grid{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      border:2px solid var(--line);
+    }
+
+    .about-story{
+      padding:54px;
+      border-right:2px solid var(--line);
+      background:var(--white);
+    }
+    .about-story p{
+      font-family:var(--serif);
+      font-size:clamp(1.8rem,3vw,3.2rem);
+      line-height:1.17;
+      letter-spacing:-.02em;
+    }
+
+    .about-stack{
+      display:grid;
+      grid-template-rows:repeat(3,1fr);
+    }
+    .about-item{
+      padding:32px 34px;
+      border-bottom:2px solid var(--line);
+      display:grid;
+      grid-template-columns:70px 1fr;
+      gap:20px;
+      align-items:start;
+    }
+    .about-item:last-child{border-bottom:0}
+    .about-num{
+      font-family:var(--serif);
+      font-size:2.2rem;
+      color:var(--rust);
+    }
+    .about-item h3{
+      font-size:1rem;
+      margin-bottom:9px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+    .about-item p{
+      color:#465168;
+      line-height:1.55;
+    }
+
+    /* ---------- SERVICES ---------- */
+    .services{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      border-top:2px solid var(--line);
+      border-left:2px solid var(--line);
+    }
+    .service{
+      min-height:330px;
+      padding:34px;
+      border-right:2px solid var(--line);
+      border-bottom:2px solid var(--line);
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      transition:.25s;
+    }
+    .service:hover{
+      background:var(--ink);
+      color:var(--paper);
+    }
+    .service .index{
+      font-size:.75rem;
+      font-weight:700;
+      letter-spacing:.12em;
+    }
+    .service h3{
+      font-family:var(--serif);
+      font-size:2.25rem;
+      line-height:1;
+      font-weight:400;
+      max-width:260px;
+    }
+    .service p{
+      line-height:1.55;
+      font-size:.92rem;
+      opacity:.85;
+      max-width:300px;
+    }
+
+    /* ---------- PROCESS ---------- */
+    .process-list{
+      border-top:2px solid var(--line);
+    }
+    .process-row{
+      display:grid;
+      grid-template-columns:80px 1fr 1fr;
+      gap:28px;
+      align-items:center;
+      padding:30px 0;
+      border-bottom:2px solid var(--line);
+    }
+    .process-no{
+      font-family:var(--serif);
+      font-size:2.1rem;
+      color:var(--rust);
+    }
+    .process-row h3{
+      font-family:var(--serif);
+      font-size:2.5rem;
+      font-weight:400;
+    }
+    .process-row p{
+      line-height:1.6;
+      color:#465168;
+      max-width:650px;
+    }
+
+    /* ---------- WHY ---------- */
+    .why-wrap{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:0;
+      border:2px solid var(--line);
+    }
+    .why-card{
+      min-height:250px;
+      padding:38px;
+      border-bottom:2px solid var(--line);
+      border-right:2px solid var(--line);
+    }
+    .why-card:nth-child(even){border-right:0}
+    .why-card:nth-last-child(-n+2){border-bottom:0}
+    .why-card h3{
+      font-family:var(--serif);
+      font-size:2.4rem;
+      font-weight:400;
+      margin-bottom:20px;
+    }
+    .why-card p{
+      line-height:1.6;
+      max-width:500px;
+    }
+
+    /* ---------- CONTACT ---------- */
+    .contact{
+      background:var(--rust);
+      color:var(--white);
+      padding:96px 0 82px;
+      border-bottom:2px solid var(--line);
+    }
+    .contact-grid{
+      display:grid;
+      grid-template-columns:1.4fr .6fr;
+      gap:60px;
+      align-items:end;
+    }
+    .contact h2{
+      font-family:var(--serif);
+      font-size:clamp(4rem,8vw,9rem);
+      line-height:.86;
+      letter-spacing:-.055em;
+      font-weight:400;
+    }
+    .contact-side p{
+      line-height:1.6;
+      margin-bottom:24px;
+    }
+    .contact .btn{
+      border-color:var(--white);
+      color:var(--white);
+    }
+    .contact .btn:hover{
+      background:var(--white);
+      color:var(--rust);
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer{
+      background:var(--ink);
+      color:var(--paper);
+      padding:30px 0;
+    }
+    .footer-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+      font-size:.8rem;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media(max-width:1050px){
+      .nav{
+        grid-template-columns:1fr auto;
+      }
+      .nav-links,.nav-cta{display:none}
+      .menu-btn{display:block;justify-self:end}
+
+      .mobile-menu{
+        display:none;
+        border-top:2px solid var(--line);
+        padding:18px 24px 24px;
+        background:var(--paper);
+      }
+      .mobile-menu.open{display:grid;gap:18px}
+      .mobile-menu a{
+        font-family:var(--serif);
+        font-size:2rem;
+      }
+
+      .hero-grid{grid-template-columns:1fr}
+      .hero-copy{
+        border-right:0;
+        border-bottom:2px solid var(--line);
+        padding-right:0;
+      }
+      .hero-panel{min-height:520px}
+
+      .section-head{grid-template-columns:1fr}
+      .about-grid{grid-template-columns:1fr}
+      .about-story{border-right:0;border-bottom:2px solid var(--line)}
+      .services{grid-template-columns:repeat(2,1fr)}
+      .process-row{grid-template-columns:70px 1fr}
+      .process-row p{grid-column:2}
+      .contact-grid{grid-template-columns:1fr}
+    }
+
+    @media(max-width:700px){
+      .container{
+        width:min(100% - 28px, 1440px);
+      }
+      .nav{height:72px}
+      .brand span{font-size:1.45rem}
+      .brand img{width:38px;height:38px}
+
+      .hero-copy{padding:58px 0 48px}
+      .hero h1{font-size:clamp(4rem,22vw,7rem)}
+      .hero-bottom{grid-template-columns:1fr}
+      .hero-panel{padding:42px 26px 30px;min-height:470px}
+      .hero-panel:before{font-size:12rem}
+      .panel-badge{width:76px;height:76px}
+
+      .section{padding:72px 0}
+      .section-head{margin-bottom:44px}
+      .about-story{padding:30px}
+      .about-item{grid-template-columns:50px 1fr;padding:26px 22px}
+
+      .services{grid-template-columns:1fr}
+      .service{min-height:280px}
+
+      .process-row{
+        grid-template-columns:50px 1fr;
+        gap:18px;
+        padding:24px 0;
+      }
+      .process-row h3{font-size:2rem}
+
+      .why-wrap{grid-template-columns:1fr}
+      .why-card,
+      .why-card:nth-child(even){
+        border-right:0;
+        border-bottom:2px solid var(--line);
+      }
+      .why-card:last-child{border-bottom:0}
+
+      .contact{padding:72px 0}
+      .footer-row{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+    }
+  
+    /* ===========================
+       PREMIUM STYLE ENHANCEMENTS
+    =========================== */
+
+    body{
+      background:
+        radial-gradient(circle at 10% 5%, rgba(66,213,255,.12), transparent 28%),
+        radial-gradient(circle at 90% 12%, rgba(122,92,255,.10), transparent 26%),
+        var(--paper);
+    }
+
+    .site-header{
+      background:rgba(247,249,252,.80);
+      backdrop-filter:blur(18px) saturate(1.3);
+      -webkit-backdrop-filter:blur(18px) saturate(1.3);
+      border-bottom:1px solid rgba(13,27,45,.16);
+      box-shadow:0 10px 40px rgba(11,22,39,.05);
+    }
+
+    .nav{
+      height:92px;
+    }
+
+    .brand img{
+      width:48px;
+      height:48px;
+      border:0;
+      background:linear-gradient(145deg,#fff,#edf4ff);
+      box-shadow:0 10px 30px rgba(47,107,255,.14);
+    }
+
+    .brand span{
+      font-size:1.9rem;
+      letter-spacing:-.045em;
+    }
+
+    .nav-cta{
+      border:0;
+      border-radius:999px;
+      padding:14px 22px;
+      color:#fff;
+      background:linear-gradient(135deg,var(--rust),var(--violet));
+      box-shadow:0 10px 26px rgba(47,107,255,.28);
+    }
+
+    .nav-cta:hover{
+      transform:translateY(-2px);
+      background:linear-gradient(135deg,var(--violet),var(--rust));
+      color:#fff;
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(13,27,45,.16);
+    }
+
+    .hero:before{
+      content:"";
+      position:absolute;
+      width:420px;
+      height:420px;
+      border-radius:50%;
+      left:-180px;
+      top:80px;
+      background:radial-gradient(circle,rgba(66,213,255,.2),transparent 68%);
+      filter:blur(10px);
+      pointer-events:none;
+    }
+
+    .hero-grid{
+      min-height:760px;
+    }
+
+    .hero-copy{
+      padding:110px 74px 88px 0;
+      border-right:1px solid rgba(13,27,45,.14);
+    }
+
+    .eyebrow{
+      color:#31506f;
+      letter-spacing:.18em;
+    }
+
+    .eyebrow:before{
+      background:linear-gradient(90deg,var(--rust),var(--cyan));
+    }
+
+    .hero h1{
+      font-size:clamp(5rem,9.4vw,10.6rem);
+      line-height:.82;
+      letter-spacing:-.065em;
+      text-wrap:balance;
+    }
+
+    .hero h1 em{
+      background:linear-gradient(120deg,var(--rust),var(--violet),var(--cyan));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+      position:relative;
+    }
+
+    .hero h1 em:after{
+      content:"";
+      position:absolute;
+      left:2%;
+      right:2%;
+      bottom:.03em;
+      height:.08em;
+      border-radius:999px;
+      background:linear-gradient(90deg,var(--rust),var(--violet),var(--cyan));
+      opacity:.65;
+      transform:rotate(-1.5deg);
+    }
+
+    .hero-lead{
+      font-size:1.19rem;
+      color:#32465d;
+      max-width:640px;
+    }
+
+    .btn{
+      border-radius:999px;
+      border:1px solid rgba(13,27,45,.28);
+      transition:.25s ease;
+      box-shadow:0 8px 26px rgba(11,22,39,.04);
+    }
+
+    .btn-dark{
+      border:0;
+      background:linear-gradient(135deg,var(--ink),#1d3554);
+      color:#fff;
+      box-shadow:0 14px 30px rgba(7,17,31,.18);
+    }
+
+    .btn:hover{
+      transform:translateY(-3px);
+      box-shadow:0 16px 32px rgba(47,107,255,.15);
+      background:linear-gradient(135deg,var(--rust),var(--violet));
+      color:#fff;
+      border-color:transparent;
+    }
+
+    .hero-panel{
+      background:
+        radial-gradient(circle at 85% 12%, rgba(66,213,255,.22), transparent 28%),
+        radial-gradient(circle at 15% 80%, rgba(122,92,255,.20), transparent 34%),
+        linear-gradient(145deg,#0b1a2c,#112f57 50%,#10274a);
+      border-left:0;
+      position:relative;
+    }
+
+    .hero-panel:after{
+      content:"";
+      position:absolute;
+      width:260px;
+      height:260px;
+      right:-80px;
+      bottom:-70px;
+      border:1px solid rgba(255,255,255,.16);
+      border-radius:50%;
+      box-shadow:
+        0 0 0 38px rgba(255,255,255,.03),
+        0 0 0 78px rgba(255,255,255,.02);
+    }
+
+    .panel-badge{
+      width:96px;
+      height:96px;
+      border-color:rgba(255,255,255,.55);
+      box-shadow:inset 0 0 0 8px rgba(255,255,255,.03);
+    }
+
+    .panel-copy h2{
+      font-size:clamp(3rem,5.2vw,5.8rem);
+      letter-spacing:-.05em;
+    }
+
+    .marquee{
+      background:
+        linear-gradient(90deg,var(--cyan),#a9ebff 35%,#c5d9ff 70%,#cfc4ff);
+      border-bottom:1px solid rgba(13,27,45,.16);
+    }
+
+    .marquee-track span{
+      font-size:1.7rem;
+      color:#102037;
+    }
+
+    .section{
+      border-bottom:1px solid rgba(13,27,45,.14);
+    }
+
+    .section-title{
+      background:linear-gradient(135deg,#0b1625 20%,#193d67 70%,#2f6bff);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    .about-grid{
+      border:1px solid rgba(13,27,45,.18);
+      border-radius:28px;
+      overflow:hidden;
+      box-shadow:0 28px 70px rgba(25,55,95,.08);
+    }
+
+    .about-story{
+      background:
+        linear-gradient(145deg,#ffffff,#f5f9ff);
+      border-right:1px solid rgba(13,27,45,.14);
+    }
+
+    .about-item{
+      border-bottom:1px solid rgba(13,27,45,.12);
+      transition:.25s ease;
+      background:rgba(255,255,255,.64);
+    }
+
+    .about-item:hover{
+      background:linear-gradient(90deg,rgba(47,107,255,.07),rgba(66,213,255,.04));
+      transform:translateX(5px);
+    }
+
+    .about-num{
+      color:var(--rust);
+    }
+
+    .services{
+      border:0;
+      gap:18px;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+    }
+
+    .service{
+      min-height:340px;
+      border:1px solid rgba(13,27,45,.14);
+      border-radius:24px;
+      background:rgba(255,255,255,.72);
+      backdrop-filter:blur(12px);
+      box-shadow:0 18px 50px rgba(17,45,85,.06);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .service:before{
+      content:"";
+      position:absolute;
+      width:120px;
+      height:120px;
+      border-radius:50%;
+      right:-30px;
+      top:-30px;
+      background:radial-gradient(circle,rgba(66,213,255,.18),transparent 70%);
+      transition:.3s ease;
+    }
+
+    .service:hover{
+      background:
+        radial-gradient(circle at 90% 10%,rgba(66,213,255,.22),transparent 26%),
+        linear-gradient(145deg,#0c1830,#153d68);
+      color:#fff;
+      transform:translateY(-8px);
+      box-shadow:0 28px 70px rgba(47,107,255,.18);
+      border-color:transparent;
+    }
+
+    .service:hover:before{
+      transform:scale(1.4);
+    }
+
+    .service h3{
+      font-size:2.5rem;
+      letter-spacing:-.03em;
+    }
+
+    .process-list{
+      border-top:1px solid rgba(13,27,45,.14);
+    }
+
+    .process-row{
+      border-bottom:1px solid rgba(13,27,45,.14);
+      transition:.25s ease;
+      padding:34px 18px;
+      border-radius:18px;
+    }
+
+    .process-row:hover{
+      background:linear-gradient(90deg,rgba(47,107,255,.06),rgba(66,213,255,.04));
+      transform:translateX(6px);
+    }
+
+    .process-no{
+      color:var(--violet);
+    }
+
+    .why-wrap{
+      border:0;
+      gap:18px;
+    }
+
+    .why-card,
+    .why-card:nth-child(even),
+    .why-card:nth-last-child(-n+2){
+      border:1px solid rgba(13,27,45,.14);
+      border-radius:24px;
+      background:rgba(255,255,255,.74);
+      box-shadow:0 16px 50px rgba(17,45,85,.05);
+      transition:.25s ease;
+    }
+
+    .why-card:hover{
+      transform:translateY(-7px);
+      box-shadow:0 26px 70px rgba(47,107,255,.14);
+      background:
+        linear-gradient(145deg,#ffffff,#eef5ff);
+    }
+
+    .contact{
+      background:
+        radial-gradient(circle at 12% 15%,rgba(66,213,255,.18),transparent 26%),
+        radial-gradient(circle at 90% 80%,rgba(122,92,255,.22),transparent 28%),
+        linear-gradient(135deg,#0a1424,#17375f 55%,#204f84);
+      border-bottom:0;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .contact:before{
+      content:"";
+      position:absolute;
+      inset:0;
+      opacity:.08;
+      background-image:
+        linear-gradient(rgba(255,255,255,.18) 1px, transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.18) 1px, transparent 1px);
+      background-size:42px 42px;
+    }
+
+    .contact-grid{
+      position:relative;
+      z-index:1;
+    }
+
+    .contact h2{
+      background:linear-gradient(120deg,#fff,#bdeeff,#cfc8ff);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    footer{
+      background:#07111f;
+      color:#dce6f5;
+    }
+
+    @media(max-width:1050px){
+      .hero-copy{
+        border-right:0;
+        border-bottom:1px solid rgba(13,27,45,.14);
+      }
+      .services{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+
+    @media(max-width:700px){
+      .nav{height:76px}
+      .hero-grid{min-height:auto}
+      .hero-copy{padding:64px 0 50px}
+      .hero h1{font-size:clamp(4.2rem,22vw,7.2rem)}
+      .services{grid-template-columns:1fr}
+      .service{min-height:300px}
+      .about-grid{border-radius:22px}
+      .why-wrap{gap:14px}
+    }
+
+
+    /* ===== HEADER / MOBILE MENU FIX ===== */
+    .mobile-menu{
+      display:none;
+    }
+
+    @media (min-width:1051px){
+      .mobile-menu,
+      .mobile-menu.open{
+        display:none !important;
+      }
+    }
+
+    @media (max-width:1050px){
+      .site-header{
+        overflow:visible;
+      }
+
+      .nav{
+        height:78px;
+        grid-template-columns:1fr auto;
+        gap:14px;
+      }
+
+      .brand{
+        min-width:0;
+      }
+
+      .brand img{
+        width:40px;
+        height:40px;
+        flex:0 0 40px;
+      }
+
+      .brand span{
+        font-size:1.55rem;
+        white-space:nowrap;
+      }
+
+      .nav-links,
+      .nav-cta{
+        display:none !important;
+      }
+
+      .menu-btn{
+        display:grid !important;
+        place-items:center;
+        justify-self:end;
+        width:44px;
+        height:44px;
+        border-radius:12px;
+        border:1px solid rgba(13,27,45,.18);
+        background:#fff;
+        color:var(--ink);
+        box-shadow:0 8px 24px rgba(7,17,31,.08);
+      }
+
+      .mobile-menu{
+        display:none;
+        position:absolute;
+        top:100%;
+        left:14px;
+        right:14px;
+        padding:14px;
+        border:1px solid rgba(13,27,45,.12);
+        border-radius:18px;
+        background:rgba(255,255,255,.98);
+        box-shadow:0 22px 60px rgba(7,17,31,.16);
+        z-index:999;
+      }
+
+      .mobile-menu.open{
+        display:grid !important;
+        gap:4px;
+      }
+
+      .mobile-menu a{
+        display:flex;
+        align-items:center;
+        min-height:48px;
+        padding:10px 14px;
+        border-radius:12px;
+        font-family:var(--sans);
+        font-size:1rem;
+        font-weight:700;
+        letter-spacing:-.01em;
+      }
+
+      .mobile-menu a:hover{
+        background:var(--soft-blue);
+        color:var(--rust);
+      }
+    }
+
+    @media (max-width:700px){
+      .container{
+        width:min(100% - 28px, 1440px);
+      }
+
+      .nav{
+        height:72px;
+      }
+
+      .brand img{
+        width:36px;
+        height:36px;
+        flex-basis:36px;
+      }
+
+      .brand span{
+        font-size:1.4rem;
+      }
+
+      .menu-btn{
+        width:40px;
+        height:40px;
+      }
+
+      .hero{
+        padding-top:0;
+      }
+
+      .hero-copy{
+        padding-top:54px;
+      }
+
+      .section:first-of-type{
+        scroll-margin-top:84px;
+      }
+    }
+
+
+
+    /* ===== FOUNDER PAGE ===== */
+    .founder-hero{
+      padding:88px 0 72px;
+      border-bottom:1px solid rgba(13,27,45,.14);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .founder-hero:before{
+      content:"";
+      position:absolute;
+      width:420px;
+      height:420px;
+      border-radius:50%;
+      right:-120px;
+      top:-100px;
+      background:radial-gradient(circle,rgba(66,213,255,.18),transparent 70%);
+      pointer-events:none;
+    }
+
+    .founder-grid{
+      display:grid;
+      grid-template-columns:.78fr 1.22fr;
+      gap:72px;
+      align-items:center;
+    }
+
+    .founder-card{
+      min-height:560px;
+      border-radius:32px;
+      padding:34px;
+      color:#fff;
+      background:
+        radial-gradient(circle at 18% 10%,rgba(66,213,255,.22),transparent 28%),
+        radial-gradient(circle at 84% 85%,rgba(122,92,255,.28),transparent 35%),
+        linear-gradient(145deg,#081729,#123a67);
+      box-shadow:0 30px 90px rgba(26,72,126,.18);
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .founder-card:after{
+      content:"AR";
+      position:absolute;
+      right:-20px;
+      bottom:-38px;
+      font-family:var(--serif);
+      font-size:13rem;
+      line-height:1;
+      color:rgba(255,255,255,.055);
+      letter-spacing:-.08em;
+    }
+
+    .portrait-wrap{
+      width:180px;
+      height:180px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,#fff,#dbe9ff);
+      color:var(--ink);
+      font-family:var(--serif);
+      font-size:4.8rem;
+      border:8px solid rgba(255,255,255,.12);
+      box-shadow:0 18px 50px rgba(0,0,0,.18);
+      position:relative;
+      z-index:1;
+    }
+
+    .founder-photo-real{
+      overflow:hidden;
+      padding:0;
+      background:#fff;
+    }
+    .founder-photo-real img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center top;
+    }
+
+    .founder-card-meta{
+      position:relative;
+      z-index:1;
+    }
+
+    .founder-card-meta small{
+      text-transform:uppercase;
+      letter-spacing:.16em;
+      opacity:.75;
+      font-size:.72rem;
+    }
+
+    .founder-card-meta h2{
+      margin-top:10px;
+      font-family:var(--serif);
+      font-size:3.3rem;
+      line-height:.95;
+      font-weight:400;
+    }
+
+    .founder-card-meta p{
+      margin-top:14px;
+      max-width:350px;
+      line-height:1.6;
+      opacity:.86;
+    }
+
+    .founder-copy .eyebrow{
+      margin-bottom:28px;
+    }
+
+    .founder-copy h1{
+      font-family:var(--serif);
+      font-size:clamp(4.2rem,8vw,8.5rem);
+      line-height:.84;
+      letter-spacing:-.055em;
+      font-weight:400;
+      margin-bottom:28px;
+    }
+
+    .founder-copy h1 span{
+      background:linear-gradient(120deg,var(--rust),var(--violet),var(--cyan));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    .founder-lead{
+      font-size:1.18rem;
+      line-height:1.75;
+      color:#344a62;
+      max-width:720px;
+    }
+
+    .founder-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:32px;
+    }
+
+    .profile-section{
+      padding:94px 0;
+      border-bottom:1px solid rgba(13,27,45,.14);
+    }
+
+    .profile-grid{
+      display:grid;
+      grid-template-columns:.8fr 1.2fr;
+      gap:64px;
+    }
+
+    .profile-label{
+      font-size:.78rem;
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:#4d6075;
+    }
+
+    .profile-text{
+      font-family:var(--serif);
+      font-size:clamp(1.8rem,3vw,3.1rem);
+      line-height:1.2;
+      letter-spacing:-.02em;
+    }
+
+    .expertise-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+      margin-top:54px;
+    }
+
+    .expertise-card{
+      border:1px solid rgba(13,27,45,.14);
+      border-radius:24px;
+      padding:30px;
+      background:rgba(255,255,255,.72);
+      box-shadow:0 18px 50px rgba(17,45,85,.05);
+      transition:.25s ease;
+    }
+
+    .expertise-card:hover{
+      transform:translateY(-6px);
+      box-shadow:0 26px 65px rgba(47,107,255,.12);
+    }
+
+    .expertise-card .num{
+      font-family:var(--serif);
+      font-size:1.7rem;
+      color:var(--rust);
+      margin-bottom:32px;
+    }
+
+    .expertise-card h3{
+      font-family:var(--serif);
+      font-size:2rem;
+      font-weight:400;
+      margin-bottom:12px;
+    }
+
+    .expertise-card p{
+      color:#465168;
+      line-height:1.6;
+    }
+
+    .timeline-founder{
+      margin-top:52px;
+      border-top:1px solid rgba(13,27,45,.14);
+    }
+
+    .timeline-founder-row{
+      display:grid;
+      grid-template-columns:150px 1fr;
+      gap:30px;
+      padding:28px 0;
+      border-bottom:1px solid rgba(13,27,45,.14);
+    }
+
+    .timeline-founder-row .year{
+      font-family:var(--serif);
+      font-size:1.7rem;
+      color:var(--violet);
+    }
+
+    .timeline-founder-row h3{
+      font-family:var(--serif);
+      font-size:2rem;
+      font-weight:400;
+      margin-bottom:8px;
+    }
+
+    .timeline-founder-row p{
+      color:#465168;
+      line-height:1.6;
+    }
+
+    .founder-quote{
+      margin-top:54px;
+      border-radius:30px;
+      padding:48px;
+      color:#fff;
+      background:
+        radial-gradient(circle at 90% 15%,rgba(66,213,255,.18),transparent 30%),
+        linear-gradient(135deg,#08172a,#163d68);
+      box-shadow:0 30px 80px rgba(20,54,100,.16);
+    }
+
+    .founder-quote blockquote{
+      font-family:var(--serif);
+      font-size:clamp(2rem,4vw,4.2rem);
+      line-height:1.08;
+      letter-spacing:-.03em;
+      max-width:1000px;
+    }
+
+    .founder-quote cite{
+      display:block;
+      margin-top:24px;
+      font-style:normal;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      font-size:.74rem;
+      opacity:.72;
+    }
+
+    @media(max-width:980px){
+      .founder-grid,
+      .profile-grid{
+        grid-template-columns:1fr;
+      }
+      .founder-card{
+        min-height:500px;
+      }
+      .expertise-grid{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media(max-width:700px){
+      .founder-hero{
+        padding:56px 0 48px;
+      }
+      .founder-card{
+        min-height:440px;
+        padding:26px;
+      }
+      .portrait-wrap{
+        width:140px;
+        height:140px;
+        font-size:3.8rem;
+      }
+      .founder-card-meta h2{
+        font-size:2.6rem;
+      }
+      .founder-copy h1{
+        font-size:clamp(4rem,20vw,6.4rem);
+      }
+      .profile-section{
+        padding:68px 0;
+      }
+      .expertise-grid{
+        grid-template-columns:1fr;
+      }
+      .timeline-founder-row{
+        grid-template-columns:1fr;
+        gap:8px;
+      }
+      .founder-quote{
+        padding:32px 24px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" href="index.html">
+      <img src="logo.png" alt="AIHope logo">
+      <span>AIHope</span>
+    </a>
+
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="index.html#about">About</a>
+      <a href="founder.html">Founder</a>
+      <a href="index.html#services">Services</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+
+    <a class="nav-cta" href="https://wa.me/821094859943" target="_blank" rel="noopener noreferrer">
+      Start a project
+    </a>
+
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+  </div>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="index.html#about">About</a>
+    <a href="founder.html">Founder</a>
+    <a href="index.html#services">Services</a>
+    <a href="index.html#contact">Contact</a>
+    <a href="https://wa.me/821094859943" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a>
+  </div>
+</header>
+
+<main>
+
+  <section class="founder-hero">
+    <div class="container founder-grid">
+
+      <div class="founder-card">
+        <div class="portrait-wrap founder-photo-real">
+          <img src="https://aashikrasool.github.io/IMG9.JPG" alt="M.J. Aashik Rasool">
+        </div>
+
+        <div class="founder-card-meta">
+          <small>Founder / AI Research Engineer</small>
+          <h2>M.J. Aashik Rasool</h2>
+          <p>
+            AI Research Engineer and PhD researcher in Computer Engineering at
+            Gachon University, South Korea, working across computer vision,
+            image enhancement, medical imaging and efficient edge AI.
+          </p>
+        </div>
+      </div>
+
+      <div class="founder-copy">
+        <div class="eyebrow">Meet the founder</div>
+
+        <h1>
+          Technology with<br>
+          <span>purpose.</span>
+        </h1>
+
+        <p class="founder-lead">
+          M.J. Aashik Rasool is an AI Research Engineer and PhD researcher at
+          Gachon University, South Korea. His work focuses on lightweight and
+          efficient deep learning for computer vision, image super-resolution,
+          medical imaging and resource-constrained deployment. His research has
+          appeared in venues including Knowledge-Based Systems, IEEE Access,
+          TMLR, Sensors, CVPR workshops and MICCAI-related events.
+        </p>
+
+        <div class="founder-actions">
+          <a class="btn btn-dark" href="index.html#contact">Work with AIHope</a>
+          <a class="btn" href="https://wa.me/821094859943" target="_blank" rel="noopener noreferrer">
+            Connect on WhatsApp
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="profile-section">
+    <div class="container">
+
+      <div class="profile-grid">
+        <div class="profile-label">01 / Background</div>
+
+        <div class="profile-text">
+          Researching efficient computer vision systems that connect
+          high-quality visual intelligence with practical deployment on
+          healthcare, IoT and edge platforms.
+        </div>
+      </div>
+
+      <div class="expertise-grid">
+
+        <article class="expertise-card">
+          <div class="num">01</div>
+          <h3>Computer Vision & Image Enhancement</h3>
+          <p>
+            Image super-resolution, denoising, low-light enhancement, dehazing,
+            GANs, artifact removal and knowledge distillation.
+          </p>
+        </article>
+
+        <article class="expertise-card">
+          <div class="num">02</div>
+          <h3>Medical Imaging & AI</h3>
+          <p>
+            Endoscopic imaging, disease classification, semantic segmentation,
+            ensemble learning and efficient medical-image enhancement.
+          </p>
+        </article>
+
+        <article class="expertise-card">
+          <div class="num">03</div>
+          <h3>Edge AI & Efficient Models</h3>
+          <p>
+            Lightweight neural networks, neural architecture search, ONNX,
+            resource-aware inference and deployment for IoT and edge devices.
+          </p>
+        </article>
+
+        <article class="expertise-card">
+          <div class="num">04</div>
+          <h3>Reinforcement Learning</h3>
+          <p>
+            Deep and multi-agent reinforcement learning for efficient
+            super-resolution and adaptive visual processing.
+          </p>
+        </article>
+
+        <article class="expertise-card">
+          <div class="num">05</div>
+          <h3>LLMs & Multimodal AI</h3>
+          <p>
+            Large-language-model fine-tuning, vision-language systems,
+            prompt engineering and domain adaptation.
+          </p>
+        </article>
+
+        <article class="expertise-card">
+          <div class="num">06</div>
+          <h3>Core Tools</h3>
+          <p>
+            Python, C/C++, PyTorch, TensorFlow, Keras, OpenCV,
+            scikit-learn and NumPy.
+          </p>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+  <section class="profile-section">
+    <div class="container">
+
+      <div class="profile-grid">
+        <div class="profile-label">02 / Career Highlights</div>
+
+        <div>
+          <div class="timeline-founder">
+
+            <div class="timeline-founder-row">
+              <div class="year">2021–Now</div>
+              <div>
+                <h3>Graduate Research Assistant — CT Lab, Gachon University</h3>
+                <p>
+                  Research in medical image classification, efficient
+                  super-resolution for IoT and edge devices, GAN-based medical
+                  imaging and deep reinforcement learning for super-resolution.
+                </p>
+              </div>
+            </div>
+
+            <div class="timeline-founder-row">
+              <div class="year">2024–2025</div>
+              <div>
+                <h3>AI Research Engineer — Opt-AI.Inc</h3>
+                <p>
+                  Developed generalized image-enhancement models, applied
+                  knowledge distillation, fine-tuned LLMs, and worked on object
+                  detection, classification, reinforcement learning and neural
+                  architecture search.
+                </p>
+              </div>
+            </div>
+
+            <div class="timeline-founder-row">
+              <div class="year">2024</div>
+              <div>
+                <h3>Department Assistant — Gachon University</h3>
+                <p>
+                  Supported the Computer Engineering department with student
+                  records and academic administration from February to August 2024.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:72px">
+        <div class="profile-grid">
+          <div class="profile-label">03 / Education</div>
+          <div>
+            <div class="timeline-founder">
+              <div class="timeline-founder-row">
+                <div class="year">PhD</div>
+                <div>
+                  <h3>Computer Engineering — Gachon University</h3>
+                  <p>
+                    2024–Present · GPA 4.38/4.5. Research focus includes
+                    single-viewpoint 3D reconstruction, computer vision,
+                    image super-resolution, medical imaging and Edge AI.
+                  </p>
+                </div>
+              </div>
+              <div class="timeline-founder-row">
+                <div class="year">M.S.</div>
+                <div>
+                  <h3>Computer Engineering — Gachon University</h3>
+                  <p>
+                    Aug 2022–Aug 2024 · GPA 4.20/4.5. GRRC Scholarship and
+                    Brain Korea 21 (BK21) Scholarship recipient.
+                  </p>
+                </div>
+              </div>
+              <div class="timeline-founder-row">
+                <div class="year">B.S.</div>
+                <div>
+                  <h3>Computer Engineering — Gachon University</h3>
+                  <p>
+                    2018–2022 · GPA 3.95/4.5 · Machine Learning.
+                    Gachon University Presidential Scholarship recipient.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:72px">
+        <div class="profile-grid">
+          <div class="profile-label">04 / Selected Research</div>
+          <div>
+            <div class="timeline-founder">
+              <div class="timeline-founder-row">
+                <div class="year">2026</div>
+                <div>
+                  <h3>Gaming and Cooperation in Federated Learning</h3>
+                  <p>Transactions on Machine Learning Research (TMLR).</p>
+                </div>
+              </div>
+              <div class="timeline-founder-row">
+                <div class="year">2025</div>
+                <div>
+                  <h3>PixelCraftSR</h3>
+                  <p>
+                    Efficient super-resolution with multi-agent reinforcement
+                    for edge devices · Sensors.
+                  </p>
+                </div>
+              </div>
+              <div class="timeline-founder-row">
+                <div class="year">2024</div>
+                <div>
+                  <h3>Lightweight Image Super-Resolution for IoT Devices</h3>
+                  <p>
+                    Deep Residual Feature Distillation Network ·
+                    Knowledge-Based Systems.
+                  </p>
+                </div>
+              </div>
+              <div class="timeline-founder-row">
+                <div class="year">2024</div>
+                <div>
+                  <h3>KONet</h3>
+                  <p>
+                    Weighted ensemble learning for knee osteoporosis
+                    classification · IEEE Access.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="founder-quote">
+        <blockquote>
+          Research should not stop at accuracy — it should become efficient,
+          deployable technology that works in the real world.
+        </blockquote>
+        <cite>AIHope founder research direction</cite>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="container contact-grid">
+      <h2>Build something<br>meaningful.</h2>
+
+      <div class="contact-side">
+        <p>
+          Have an idea for a website, mobile application or intelligent digital
+          product? Start a conversation with AIHope.
+        </p>
+
+        <a class="btn" href="https://wa.me/821094859943" target="_blank" rel="noopener noreferrer">
+          Contact AIHope
+        </a>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:18px;font-size:.82rem">
+          <a href="https://github.com/aashikrasool" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+          <a href="https://linkedin.com/in/aashik-rasool-504466204" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+          <a href="https://scholar.google.com/citations?user=XI9KvGwAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Google Scholar ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container footer-row">
+    <span>© 2026 AIHope — Founder Profile</span>
+    <span>AI / Web / Mobile / Cloud</span>
+  </div>
+</footer>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+    menuBtn.textContent = mobileMenu.classList.contains('open') ? '✕' : '☰';
+  });
+
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      menuBtn.textContent = '☰';
+    });
+  });
+</script>
+
+</body>
+</html>

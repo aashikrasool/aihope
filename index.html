@@ -1,512 +1,2830 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>AIHope — Custom Web & Mobile Solutions</title>
-  <!-- FAVICON -->
+
+<!-- =======================================================
+     FAVICON / GOOGLE SEARCH ICON
+     Put favicon.png in the same folder as index.html
+======================================================= -->
 <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
-<link rel="shortcut icon" href="/favicon.png">
-<link rel="apple-touch-icon" href="/favicon.png">
+<link rel="shortcut icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon.png">
 
+<!-- Optional SEO -->
+<meta name="description" content="AIHope builds custom websites, web applications, mobile apps, e-commerce platforms, and digital solutions for businesses.">
+
+<meta name="robots" content="index, follow">
+
+<!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+<link
+  href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Fira+Code:wght@400;500&display=swap"
+  rel="stylesheet"
+>
+
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --bg:#07080f;
-  --bg2:#0c0e18;
-  --text:#eef0f6;
-  --text2:#8b8fa8;
-  --accent:#7eb8ff;
-  --accent2:#a78bfa;
-  --accent3:#f0abfc;
-  --glass:rgba(255,255,255,.04);
-  --glass2:rgba(255,255,255,.07);
-  --glass-border:rgba(255,255,255,.08);
-  --glass-border2:rgba(255,255,255,.12);
-  --glow1:rgba(126,184,255,.15);
-  --glow2:rgba(167,139,250,.15);
-  --glow3:rgba(240,171,252,.1);
-  --display:'Playfair Display',Georgia,serif;
-  --body:'Sora',system-ui,sans-serif;
-  --mono:'Fira Code',monospace;
-  --radius:20px;
+
+/* =======================================================
+   GLOBAL
+======================================================= */
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-html{scroll-behavior:smooth;font-size:16px}
-body{background:var(--bg);color:var(--text);font-family:var(--body);line-height:1.6;overflow-x:hidden}
-a{color:inherit;text-decoration:none}
-::selection{background:var(--accent);color:var(--bg)}
 
-/* MESH GRADIENT BACKGROUND */
-.mesh-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:hidden}
-.mesh-bg .orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.35;animation:orbFloat 20s ease-in-out infinite}
-.mesh-bg .orb1{width:600px;height:600px;background:radial-gradient(circle,rgba(126,184,255,.4),transparent 70%);top:-10%;left:-10%;animation-delay:0s}
-.mesh-bg .orb2{width:500px;height:500px;background:radial-gradient(circle,rgba(167,139,250,.35),transparent 70%);top:30%;right:-15%;animation-delay:-7s}
-.mesh-bg .orb3{width:450px;height:450px;background:radial-gradient(circle,rgba(240,171,252,.3),transparent 70%);bottom:-5%;left:20%;animation-delay:-14s}
-.mesh-bg .orb4{width:350px;height:350px;background:radial-gradient(circle,rgba(126,184,255,.25),transparent 70%);top:60%;left:50%;animation-delay:-10s}
-@keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(60px,-40px) scale(1.1)}50%{transform:translate(-30px,50px) scale(.95)}75%{transform:translate(40px,20px) scale(1.05)}}
+:root {
+    --bg: #07080f;
+    --bg2: #0c0e18;
 
-/* GLASS UTILITY */
-.glass{background:var(--glass);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--glass-border);border-radius:var(--radius)}
+    --text: #eef0f6;
+    --text2: #8b8fa8;
 
-/* NAV */
-nav{position:fixed;top:1rem;left:50%;transform:translateX(-50%);z-index:100;padding:.6rem 1.8rem;display:flex;align-items:center;gap:2rem;background:rgba(255,255,255,.03);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,.06);border-radius:100px;transition:all .3s}
-nav .logo{font-family:var(--display);font-size:1.1rem;color:var(--accent);font-weight:700;white-space:nowrap}
-nav .links{display:flex;gap:1.5rem;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;color:var(--text2);font-weight:500}
-nav .links a{transition:color .2s}
-nav .links a:hover{color:var(--accent)}
-.menu-toggle{display:none;background:none;border:none;color:var(--text);font-size:1.3rem;cursor:pointer}
+    --accent: #7eb8ff;
+    --accent2: #a78bfa;
+    --accent3: #f0abfc;
 
-/* HERO */
-.hero{min-height:100vh;display:flex;align-items:center;padding:8rem 6vw 4rem;position:relative;z-index:1}
-.hero-content{max-width:700px;position:relative;z-index:1}
-.hero-label{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent2);margin-bottom:1.5rem;display:flex;align-items:center;gap:.8rem}
-.hero-label::before{content:'';width:2.5rem;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px}
-.hero h1{font-family:var(--display);font-size:clamp(3rem,6.5vw,5rem);line-height:1.05;font-weight:400;margin-bottom:1.5rem}
-.hero h1 em{font-style:italic;background:linear-gradient(135deg,var(--accent),var(--accent2),var(--accent3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero p{font-size:1rem;color:var(--text2);max-width:540px;margin-bottom:2.5rem;line-height:1.8;font-weight:300}
-.hero-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2.5rem}
-.tag{font-size:.68rem;padding:.4rem .9rem;border:1px solid var(--glass-border2);border-radius:100px;color:var(--text2);letter-spacing:.02em;transition:all .3s;background:var(--glass);backdrop-filter:blur(10px);font-weight:400}
-.tag:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 0 20px var(--glow1)}
-.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
-.btn{padding:.75rem 1.8rem;border-radius:100px;font-size:.82rem;font-weight:500;transition:all .3s;cursor:pointer;border:none;font-family:var(--body);letter-spacing:.02em;display:inline-block}
-.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--bg);box-shadow:0 4px 30px var(--glow1)}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 40px var(--glow1)}
-.btn-outline{background:var(--glass);border:1px solid var(--glass-border2);color:var(--text);backdrop-filter:blur(10px)}
-.btn-outline:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 0 20px var(--glow1)}
+    --glass: rgba(255,255,255,.04);
+    --glass2: rgba(255,255,255,.07);
 
-/* HERO VISUAL CARD */
-.hero-visual{position:absolute;right:6vw;top:50%;transform:translateY(-50%);width:270px;height:330px;border-radius:24px;overflow:hidden;border:2px solid var(--glass-border2);box-shadow:0 20px 60px rgba(0,0,0,.4),0 0 80px var(--glow2);z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;background:rgba(255,255,255,.03);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
-.hero-visual::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(7,8,15,.5));pointer-events:none}
-.hero-visual-logo{font-family:var(--display);font-size:2.8rem;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2),var(--accent3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;position:relative;z-index:1}
-.hero-visual-tagline{font-family:var(--mono);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text2);position:relative;z-index:1;text-align:center;line-height:2}
-.hero-visual-dots{display:flex;gap:.6rem;position:relative;z-index:1}
-.hero-visual-dots span{width:9px;height:9px;border-radius:50%;animation:dotPulse 2.4s ease-in-out infinite}
-.hero-visual-dots span:nth-child(1){background:var(--accent);animation-delay:0s}
-.hero-visual-dots span:nth-child(2){background:var(--accent2);animation-delay:.5s}
-.hero-visual-dots span:nth-child(3){background:var(--accent3);animation-delay:1s}
-@keyframes dotPulse{0%,100%{opacity:.25;transform:scale(.75)}50%{opacity:1;transform:scale(1.2)}}
+    --glass-border: rgba(255,255,255,.08);
+    --glass-border2: rgba(255,255,255,.12);
 
-/* STATS */
-.stats-wrap{position:relative;z-index:1;padding:0 6vw}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--glass-border);margin-top:-2rem}
-.stat{background:var(--glass);backdrop-filter:blur(20px);padding:2.5rem 2rem;text-align:center;transition:background .3s}
-.stat:hover{background:var(--glass2)}
-.stat-val{font-family:var(--display);font-size:2.4rem;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.3rem}
-.stat-label{font-size:.7rem;color:var(--text2);text-transform:uppercase;letter-spacing:.1em;font-weight:500}
+    --glow1: rgba(126,184,255,.15);
+    --glow2: rgba(167,139,250,.15);
+    --glow3: rgba(240,171,252,.1);
 
-/* SECTIONS */
-section{padding:6rem 6vw;position:relative;z-index:1}
-.section-label{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent2);margin-bottom:.8rem;display:flex;align-items:center;gap:.8rem;font-weight:500}
-.section-label::before{content:'';width:1.5rem;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px}
-.section-title{font-family:var(--display);font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:400;margin-bottom:3rem}
+    --display: 'Playfair Display', Georgia, serif;
+    --body: 'Sora', system-ui, sans-serif;
+    --mono: 'Fira Code', monospace;
 
-/* ABOUT */
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
-.about-text{font-size:.92rem;color:var(--text2);line-height:1.9;font-weight:300}
-.about-text p+p{margin-top:1rem}
-.about-text strong{color:var(--text);font-weight:500}
-.about-cards{display:grid;gap:.8rem}
-.about-card{padding:1.2rem 1.5rem;transition:all .3s}
-.about-card:hover{border-color:var(--accent);box-shadow:0 0 30px var(--glow1)}
-.about-card-title{font-size:.65rem;text-transform:uppercase;letter-spacing:.12em;color:var(--accent2);margin-bottom:.4rem;font-weight:500}
-.about-card-val{font-size:.9rem;font-weight:500}
-.about-card-sub{font-size:.75rem;color:var(--text2);margin-top:.15rem;font-weight:300}
-
-/* SERVICES */
-.services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.2rem}
-.service-card{padding:1.8rem;transition:all .3s;position:relative;overflow:hidden}
-.service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3));opacity:0;transition:opacity .3s}
-.service-card:hover{border-color:var(--glass-border2);box-shadow:0 8px 40px rgba(0,0,0,.3)}
-.service-card:hover::before{opacity:1}
-.service-card-icon{font-size:1.5rem;margin-bottom:1rem;display:inline-block;padding:.6rem;background:var(--glass);border-radius:12px;border:1px solid var(--glass-border)}
-.service-card h3{font-size:.95rem;margin-bottom:.6rem;font-weight:500}
-.service-card p{font-size:.8rem;color:var(--text2);line-height:1.7;margin-bottom:1rem;font-weight:300}
-.service-tags{display:flex;flex-wrap:wrap;gap:.4rem}
-.service-tags .tag{font-size:.64rem;padding:.25rem .6rem}
-
-/* PROCESS TIMELINE */
-.timeline{position:relative;padding-left:2rem;border-left:2px solid var(--glass-border2)}
-.timeline-item{position:relative;margin-bottom:3rem;padding-left:1.8rem}
-.timeline-item:last-child{margin-bottom:0}
-.timeline-item::before{content:'';position:absolute;left:-2.45rem;top:.4rem;width:12px;height:12px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 0 20px var(--glow1);border:2px solid var(--bg)}
-.timeline-item h3{font-size:1.05rem;font-weight:600;margin-bottom:.15rem}
-.timeline-item .role{font-size:.85rem;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:500;margin-bottom:.3rem}
-.timeline-item .meta{font-size:.72rem;color:var(--text2);margin-bottom:.8rem;display:flex;gap:1rem;font-weight:400}
-.timeline-item p{font-size:.82rem;color:var(--text2);line-height:1.7;font-weight:300}
-
-/* WHY US */
-.why-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.2rem}
-.why-card{padding:1.8rem;transition:all .3s;position:relative;overflow:hidden}
-.why-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3));opacity:0;transition:opacity .3s}
-.why-card:hover{border-color:var(--glass-border2);box-shadow:0 8px 40px rgba(0,0,0,.3)}
-.why-card:hover::before{opacity:1}
-.why-icon{font-size:1.5rem;margin-bottom:1rem;display:inline-block;padding:.6rem;background:var(--glass);border-radius:12px;border:1px solid var(--glass-border)}
-.why-card h3{font-size:.95rem;margin-bottom:.5rem;font-weight:500}
-.why-card p{font-size:.82rem;color:var(--text2);line-height:1.7;font-weight:300}
-
-/* CONTACT */
-.contact-inner{max-width:600px}
-.contact-inner>p{color:var(--text2);margin-bottom:2rem;font-size:.92rem;font-weight:300;line-height:1.8}
-.contact-links{display:flex;flex-wrap:wrap;gap:.8rem}
-.contact-link{display:flex;align-items:center;gap:.5rem;padding:.65rem 1.3rem;font-size:.8rem;color:var(--text2);transition:all .3s;font-weight:400}
-.contact-link:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 0 25px var(--glow1);transform:translateY(-2px)}
-
-footer{padding:2.5rem 6vw;text-align:center;font-size:.7rem;color:var(--text2);border-top:1px solid var(--glass-border);position:relative;z-index:1;font-weight:300}
-
-/* ANIMATIONS */
-@keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
-.hero-content{animation:fadeUp .9s ease-out}
-.hero-visual{animation:fadeUp 1.1s ease-out .15s both}
-
-/* SCROLL REVEAL */
-.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease-out,transform .7s ease-out}
-.reveal.visible{opacity:1;transform:translateY(0)}
-
-/* RESPONSIVE */
-@media(max-width:1100px){
-  .hero{padding:8rem 5vw 4rem}
-  .hero-visual{width:230px;height:290px;right:4vw}
-  .hero-visual-logo{font-size:2.2rem}
+    --radius: 20px;
 }
-@media(max-width:900px){
-  nav{top:.6rem;padding:.5rem 1.2rem;gap:1rem}
-  .hero{flex-direction:column;text-align:center;padding:7rem 5vw 3rem;min-height:auto}
-  .hero-content{max-width:100%}
-  .hero-label{justify-content:center}
-  .hero p{margin-left:auto;margin-right:auto}
-  .hero-tags{justify-content:center}
-  .hero-btns{justify-content:center}
-  .hero-visual{position:relative;right:auto;top:auto;transform:none;margin:2.5rem auto 0;width:180px;height:180px;border-radius:50%}
-  .hero-visual-logo{font-size:1.8rem}
-  .hero-visual-tagline{display:none}
-  .about-grid{grid-template-columns:1fr}
-  .stats{grid-template-columns:repeat(2,1fr)}
-  .stats-wrap{padding:0 5vw}
-  section{padding:4rem 5vw}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
 }
-@media(max-width:600px){
-  nav{padding:.5rem 1rem;gap:.6rem}
-  nav .links{display:none;position:fixed;top:0;left:0;right:0;bottom:0;flex-direction:column;background:rgba(7,8,15,.97);backdrop-filter:blur(30px);padding:5rem 2rem 2rem;gap:1.5rem;z-index:99;align-items:center;justify-content:center}
-  nav .links.open{display:flex}
-  nav .links a{font-size:1.1rem}
-  .menu-toggle{display:block;z-index:200;position:relative}
-  .hero{padding:5.5rem 5vw 2.5rem}
-  .hero h1{font-size:2.4rem}
-  .hero p{font-size:.88rem}
-  .hero-visual{width:130px;height:130px}
-  .hero-visual-logo{font-size:1.3rem}
-  section{padding:3rem 4.5vw}
-  .section-title{font-size:1.6rem;margin-bottom:2rem}
-  .stats{grid-template-columns:repeat(2,1fr)}
-  .stats-wrap{padding:0 4.5vw}
-  .stat{padding:1.5rem 1rem}
-  .stat-val{font-size:1.6rem}
-  .stat-label{font-size:.62rem}
-  .services-grid,.why-grid{grid-template-columns:1fr}
-  .service-card,.why-card{padding:1.3rem}
-  .timeline{padding-left:1.2rem}
-  .timeline-item{padding-left:1rem}
-  .contact-links{flex-direction:column}
-  .contact-link{justify-content:center}
-  footer{padding:1.5rem 4vw}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    line-height: 1.6;
+    overflow-x: hidden;
 }
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+::selection {
+    background: var(--accent);
+    color: var(--bg);
+}
+
+
+/* =======================================================
+   BACKGROUND
+======================================================= */
+
+.mesh-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.mesh-bg .orb {
+    position: absolute;
+
+    border-radius: 50%;
+
+    filter: blur(120px);
+
+    opacity: .35;
+
+    animation: orbFloat 20s ease-in-out infinite;
+}
+
+.mesh-bg .orb1 {
+    width: 600px;
+    height: 600px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(126,184,255,.4),
+            transparent 70%
+        );
+
+    top: -10%;
+    left: -10%;
+}
+
+.mesh-bg .orb2 {
+    width: 500px;
+    height: 500px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(167,139,250,.35),
+            transparent 70%
+        );
+
+    top: 30%;
+    right: -15%;
+
+    animation-delay: -7s;
+}
+
+.mesh-bg .orb3 {
+    width: 450px;
+    height: 450px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(240,171,252,.3),
+            transparent 70%
+        );
+
+    bottom: -5%;
+    left: 20%;
+
+    animation-delay: -14s;
+}
+
+.mesh-bg .orb4 {
+    width: 350px;
+    height: 350px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(126,184,255,.25),
+            transparent 70%
+        );
+
+    top: 60%;
+    left: 50%;
+
+    animation-delay: -10s;
+}
+
+@keyframes orbFloat {
+
+    0%, 100% {
+        transform: translate(0,0) scale(1);
+    }
+
+    25% {
+        transform: translate(60px,-40px) scale(1.1);
+    }
+
+    50% {
+        transform: translate(-30px,50px) scale(.95);
+    }
+
+    75% {
+        transform: translate(40px,20px) scale(1.05);
+    }
+}
+
+
+/* =======================================================
+   GLASS
+======================================================= */
+
+.glass {
+    background: var(--glass);
+
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+
+    border: 1px solid var(--glass-border);
+
+    border-radius: var(--radius);
+}
+
+
+/* =======================================================
+   NAVIGATION
+======================================================= */
+
+nav {
+    position: fixed;
+
+    top: 1rem;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    z-index: 100;
+
+    padding: .6rem 1.8rem;
+
+    display: flex;
+    align-items: center;
+
+    gap: 2rem;
+
+    background: rgba(255,255,255,.03);
+
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+
+    border: 1px solid rgba(255,255,255,.06);
+
+    border-radius: 100px;
+
+    transition: all .3s;
+}
+
+nav .logo {
+    display: flex;
+    align-items: center;
+}
+
+nav .logo img {
+    height: 32px;
+    width: auto;
+
+    object-fit: contain;
+
+    border-radius: 6px;
+}
+
+nav .links {
+    display: flex;
+
+    gap: 1.5rem;
+
+    font-size: .75rem;
+
+    letter-spacing: .05em;
+
+    text-transform: uppercase;
+
+    color: var(--text2);
+
+    font-weight: 500;
+}
+
+nav .links a {
+    transition: color .2s;
+}
+
+nav .links a:hover {
+    color: var(--accent);
+}
+
+.menu-toggle {
+    display: none;
+
+    background: none;
+    border: none;
+
+    color: var(--text);
+
+    font-size: 1.3rem;
+
+    cursor: pointer;
+}
+
+
+/* =======================================================
+   HERO
+======================================================= */
+
+.hero {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+
+    padding: 8rem 6vw 4rem;
+
+    position: relative;
+
+    z-index: 1;
+}
+
+.hero-content {
+    max-width: 700px;
+
+    position: relative;
+
+    z-index: 1;
+
+    animation: fadeUp .9s ease-out;
+}
+
+.hero-label {
+    font-family: var(--mono);
+
+    font-size: .7rem;
+
+    letter-spacing: .2em;
+
+    text-transform: uppercase;
+
+    color: var(--accent2);
+
+    margin-bottom: 1.5rem;
+
+    display: flex;
+    align-items: center;
+
+    gap: .8rem;
+}
+
+.hero-label::before {
+    content: '';
+
+    width: 2.5rem;
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--accent),
+            var(--accent2)
+        );
+
+    border-radius: 2px;
+}
+
+.hero h1 {
+    font-family: var(--display);
+
+    font-size: clamp(3rem,6.5vw,5rem);
+
+    line-height: 1.05;
+
+    font-weight: 400;
+
+    margin-bottom: 1.5rem;
+}
+
+.hero h1 em {
+    font-style: italic;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--accent),
+            var(--accent2),
+            var(--accent3)
+        );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    background-clip: text;
+}
+
+.hero p {
+    font-size: 1rem;
+
+    color: var(--text2);
+
+    max-width: 540px;
+
+    margin-bottom: 2.5rem;
+
+    line-height: 1.8;
+
+    font-weight: 300;
+}
+
+.hero-tags {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: .5rem;
+
+    margin-bottom: 2.5rem;
+}
+
+.tag {
+    font-size: .68rem;
+
+    padding: .4rem .9rem;
+
+    border: 1px solid var(--glass-border2);
+
+    border-radius: 100px;
+
+    color: var(--text2);
+
+    letter-spacing: .02em;
+
+    transition: all .3s;
+
+    background: var(--glass);
+
+    backdrop-filter: blur(10px);
+
+    font-weight: 400;
+}
+
+.tag:hover {
+    border-color: var(--accent);
+
+    color: var(--accent);
+
+    box-shadow: 0 0 20px var(--glow1);
+}
+
+.hero-btns {
+    display: flex;
+
+    gap: 1rem;
+
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: .75rem 1.8rem;
+
+    border-radius: 100px;
+
+    font-size: .82rem;
+
+    font-weight: 500;
+
+    transition: all .3s;
+
+    cursor: pointer;
+
+    border: none;
+
+    font-family: var(--body);
+
+    letter-spacing: .02em;
+
+    display: inline-block;
+}
+
+.btn-primary {
+    background:
+        linear-gradient(
+            135deg,
+            var(--accent),
+            var(--accent2)
+        );
+
+    color: var(--bg);
+
+    box-shadow:
+        0 4px 30px var(--glow1);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 40px var(--glow1);
+}
+
+.btn-outline {
+    background: var(--glass);
+
+    border: 1px solid var(--glass-border2);
+
+    color: var(--text);
+
+    backdrop-filter: blur(10px);
+}
+
+.btn-outline:hover {
+    border-color: var(--accent);
+
+    color: var(--accent);
+
+    box-shadow:
+        0 0 20px var(--glow1);
+}
+
+
+/* =======================================================
+   HERO VISUAL
+======================================================= */
+
+.hero-visual {
+    position: absolute;
+
+    right: 6vw;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 270px;
+    height: 330px;
+
+    border-radius: 24px;
+
+    overflow: hidden;
+
+    border: 2px solid var(--glass-border2);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.4),
+        0 0 80px var(--glow2);
+
+    z-index: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 1.5rem;
+
+    background: rgba(255,255,255,.03);
+
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+
+    animation:
+        fadeUp 1.1s ease-out .15s both;
+}
+
+.hero-visual::after {
+    content: '';
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            transparent 50%,
+            rgba(7,8,15,.5)
+        );
+
+    pointer-events: none;
+}
+
+.hero-visual-logo {
+    font-family: var(--display);
+
+    font-size: 2.8rem;
+
+    font-weight: 700;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--accent),
+            var(--accent2),
+            var(--accent3)
+        );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    background-clip: text;
+
+    position: relative;
+
+    z-index: 1;
+}
+
+.hero-visual-tagline {
+    font-family: var(--mono);
+
+    font-size: .58rem;
+
+    letter-spacing: .18em;
+
+    text-transform: uppercase;
+
+    color: var(--text2);
+
+    position: relative;
+
+    z-index: 1;
+
+    text-align: center;
+
+    line-height: 2;
+}
+
+.hero-visual-dots {
+    display: flex;
+
+    gap: .6rem;
+
+    position: relative;
+
+    z-index: 1;
+}
+
+.hero-visual-dots span {
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+
+    animation:
+        dotPulse 2.4s ease-in-out infinite;
+}
+
+.hero-visual-dots span:nth-child(1) {
+    background: var(--accent);
+}
+
+.hero-visual-dots span:nth-child(2) {
+    background: var(--accent2);
+
+    animation-delay: .5s;
+}
+
+.hero-visual-dots span:nth-child(3) {
+    background: var(--accent3);
+
+    animation-delay: 1s;
+}
+
+@keyframes dotPulse {
+
+    0%,100% {
+        opacity: .25;
+
+        transform: scale(.75);
+    }
+
+    50% {
+        opacity: 1;
+
+        transform: scale(1.2);
+    }
+}
+
+
+/* =======================================================
+   STATS
+======================================================= */
+
+.stats-wrap {
+    position: relative;
+
+    z-index: 1;
+
+    padding: 0 6vw;
+}
+
+.stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap: 1px;
+
+    border-radius: var(--radius);
+
+    overflow: hidden;
+
+    border:
+        1px solid var(--glass-border);
+
+    margin-top: -2rem;
+}
+
+.stat {
+    background: var(--glass);
+
+    backdrop-filter: blur(20px);
+
+    padding: 2.5rem 2rem;
+
+    text-align: center;
+
+    transition: background .3s;
+}
+
+.stat:hover {
+    background: var(--glass2);
+}
+
+.stat-val {
+    font-family: var(--display);
+
+    font-size: 2.4rem;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--accent),
+            var(--accent2)
+        );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    background-clip: text;
+
+    margin-bottom: .3rem;
+}
+
+.stat-label {
+    font-size: .7rem;
+
+    color: var(--text2);
+
+    text-transform: uppercase;
+
+    letter-spacing: .1em;
+
+    font-weight: 500;
+}
+
+
+/* =======================================================
+   SECTIONS
+======================================================= */
+
+section {
+    padding: 6rem 6vw;
+
+    position: relative;
+
+    z-index: 1;
+}
+
+.section-label {
+    font-family: var(--mono);
+
+    font-size: .68rem;
+
+    letter-spacing: .2em;
+
+    text-transform: uppercase;
+
+    color: var(--accent2);
+
+    margin-bottom: .8rem;
+
+    display: flex;
+    align-items: center;
+
+    gap: .8rem;
+
+    font-weight: 500;
+}
+
+.section-label::before {
+    content: '';
+
+    width: 1.5rem;
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--accent),
+            var(--accent2)
+        );
+
+    border-radius: 2px;
+}
+
+.section-title {
+    font-family: var(--display);
+
+    font-size:
+        clamp(1.8rem,3.5vw,2.8rem);
+
+    font-weight: 400;
+
+    margin-bottom: 3rem;
+}
+
+
+/* =======================================================
+   ABOUT
+======================================================= */
+
+.about-grid {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 3rem;
+}
+
+.about-text {
+    font-size: .92rem;
+
+    color: var(--text2);
+
+    line-height: 1.9;
+
+    font-weight: 300;
+}
+
+.about-text p + p {
+    margin-top: 1rem;
+}
+
+.about-text strong {
+    color: var(--text);
+
+    font-weight: 500;
+}
+
+.about-cards {
+    display: grid;
+
+    gap: .8rem;
+}
+
+.about-card {
+    padding: 1.2rem 1.5rem;
+
+    transition: all .3s;
+}
+
+.about-card:hover {
+    border-color: var(--accent);
+
+    box-shadow:
+        0 0 30px var(--glow1);
+}
+
+.about-card-title {
+    font-size: .65rem;
+
+    text-transform: uppercase;
+
+    letter-spacing: .12em;
+
+    color: var(--accent2);
+
+    margin-bottom: .4rem;
+
+    font-weight: 500;
+}
+
+.about-card-val {
+    font-size: .9rem;
+
+    font-weight: 500;
+}
+
+.about-card-sub {
+    font-size: .75rem;
+
+    color: var(--text2);
+
+    margin-top: .15rem;
+
+    font-weight: 300;
+}
+
+
+/* =======================================================
+   SERVICES
+======================================================= */
+
+.services-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill,minmax(320px,1fr));
+
+    gap: 1.2rem;
+}
+
+.service-card {
+    padding: 1.8rem;
+
+    transition: all .3s;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.service-card::before {
+    content: '';
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--accent),
+            var(--accent2),
+            var(--accent3)
+        );
+
+    opacity: 0;
+
+    transition: opacity .3s;
+}
+
+.service-card:hover {
+    border-color:
+        var(--glass-border2);
+
+    box-shadow:
+        0 8px 40px rgba(0,0,0,.3);
+}
+
+.service-card:hover::before {
+    opacity: 1;
+}
+
+.service-card-icon {
+    font-size: 1.5rem;
+
+    margin-bottom: 1rem;
+
+    display: inline-block;
+
+    padding: .6rem;
+
+    background: var(--glass);
+
+    border-radius: 12px;
+
+    border:
+        1px solid var(--glass-border);
+}
+
+.service-card h3 {
+    font-size: .95rem;
+
+    margin-bottom: .6rem;
+
+    font-weight: 500;
+}
+
+.service-card p {
+    font-size: .8rem;
+
+    color: var(--text2);
+
+    line-height: 1.7;
+
+    margin-bottom: 1rem;
+
+    font-weight: 300;
+}
+
+.service-tags {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: .4rem;
+}
+
+.service-tags .tag {
+    font-size: .64rem;
+
+    padding: .25rem .6rem;
+}
+
+
+/* =======================================================
+   TIMELINE
+======================================================= */
+
+.timeline {
+    position: relative;
+
+    padding-left: 2rem;
+
+    border-left:
+        2px solid var(--glass-border2);
+}
+
+.timeline-item {
+    position: relative;
+
+    margin-bottom: 3rem;
+
+    padding-left: 1.8rem;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-item::before {
+    content: '';
+
+    position: absolute;
+
+    left: -2.45rem;
+    top: .4rem;
+
+    width: 12px;
+    height: 12px;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--accent),
+            var(--accent2)
+        );
+
+    box-shadow:
+        0 0 20px var(--glow1);
+
+    border:
+        2px solid var(--bg);
+}
+
+.timeline-item h3 {
+    font-size: 1.05rem;
+
+    font-weight: 600;
+
+    margin-bottom: .15rem;
+}
+
+.timeline-item .role {
+    font-size: .85rem;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--accent),
+            var(--accent2)
+        );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    background-clip: text;
+
+    font-weight: 500;
+
+    margin-bottom: .3rem;
+}
+
+.timeline-item .meta {
+    font-size: .72rem;
+
+    color: var(--text2);
+
+    margin-bottom: .8rem;
+
+    display: flex;
+
+    gap: 1rem;
+
+    font-weight: 400;
+}
+
+.timeline-item p {
+    font-size: .82rem;
+
+    color: var(--text2);
+
+    line-height: 1.7;
+
+    font-weight: 300;
+}
+
+
+/* =======================================================
+   WHY US
+======================================================= */
+
+.why-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill,minmax(300px,1fr));
+
+    gap: 1.2rem;
+}
+
+.why-card {
+    padding: 1.8rem;
+
+    transition: all .3s;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.why-card::before {
+    content: '';
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 2px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--accent),
+            var(--accent2),
+            var(--accent3)
+        );
+
+    opacity: 0;
+
+    transition: opacity .3s;
+}
+
+.why-card:hover {
+    border-color:
+        var(--glass-border2);
+
+    box-shadow:
+        0 8px 40px rgba(0,0,0,.3);
+}
+
+.why-card:hover::before {
+    opacity: 1;
+}
+
+.why-icon {
+    font-size: 1.5rem;
+
+    margin-bottom: 1rem;
+
+    display: inline-block;
+
+    padding: .6rem;
+
+    background: var(--glass);
+
+    border-radius: 12px;
+
+    border:
+        1px solid var(--glass-border);
+}
+
+.why-card h3 {
+    font-size: .95rem;
+
+    margin-bottom: .5rem;
+
+    font-weight: 500;
+}
+
+.why-card p {
+    font-size: .82rem;
+
+    color: var(--text2);
+
+    line-height: 1.7;
+
+    font-weight: 300;
+}
+
+
+/* =======================================================
+   CONTACT
+======================================================= */
+
+.contact-inner {
+    max-width: 600px;
+}
+
+.contact-inner > p {
+    color: var(--text2);
+
+    margin-bottom: 2rem;
+
+    font-size: .92rem;
+
+    font-weight: 300;
+
+    line-height: 1.8;
+}
+
+.contact-links {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: .8rem;
+}
+
+.contact-link {
+    display: flex;
+
+    align-items: center;
+
+    gap: .5rem;
+
+    padding: .65rem 1.3rem;
+
+    font-size: .8rem;
+
+    color: var(--text2);
+
+    transition: all .3s;
+
+    font-weight: 400;
+}
+
+.contact-link:hover {
+    border-color: var(--accent);
+
+    color: var(--accent);
+
+    box-shadow:
+        0 0 25px var(--glow1);
+
+    transform: translateY(-2px);
+}
+
+
+/* =======================================================
+   FOOTER
+======================================================= */
+
+footer {
+    padding: 2.5rem 6vw;
+
+    text-align: center;
+
+    font-size: .7rem;
+
+    color: var(--text2);
+
+    border-top:
+        1px solid var(--glass-border);
+
+    position: relative;
+
+    z-index: 1;
+
+    font-weight: 300;
+}
+
+
+/* =======================================================
+   ANIMATION
+======================================================= */
+
+@keyframes fadeUp {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+.reveal {
+    opacity: 0;
+
+    transform:
+        translateY(30px);
+
+    transition:
+        opacity .7s ease-out,
+        transform .7s ease-out;
+}
+
+.reveal.visible {
+    opacity: 1;
+
+    transform:
+        translateY(0);
+}
+
+
+/* =======================================================
+   RESPONSIVE
+======================================================= */
+
+@media (max-width:1100px) {
+
+    .hero {
+        padding:
+            8rem 5vw 4rem;
+    }
+
+    .hero-visual {
+        width: 230px;
+
+        height: 290px;
+
+        right: 4vw;
+    }
+
+    .hero-visual-logo {
+        font-size: 2.2rem;
+    }
+}
+
+
+@media (max-width:900px) {
+
+    nav {
+        top: .6rem;
+
+        padding:
+            .5rem 1.2rem;
+
+        gap: 1rem;
+    }
+
+    .hero {
+        flex-direction: column;
+
+        text-align: center;
+
+        padding:
+            7rem 5vw 3rem;
+
+        min-height: auto;
+    }
+
+    .hero-content {
+        max-width: 100%;
+    }
+
+    .hero-label {
+        justify-content: center;
+    }
+
+    .hero p {
+        margin-left: auto;
+
+        margin-right: auto;
+    }
+
+    .hero-tags {
+        justify-content: center;
+    }
+
+    .hero-btns {
+        justify-content: center;
+    }
+
+    .hero-visual {
+        position: relative;
+
+        right: auto;
+
+        top: auto;
+
+        transform: none;
+
+        margin:
+            2.5rem auto 0;
+
+        width: 180px;
+
+        height: 180px;
+
+        border-radius: 50%;
+    }
+
+    .hero-visual-logo {
+        font-size: 1.8rem;
+    }
+
+    .hero-visual-tagline {
+        display: none;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .stats-wrap {
+        padding:
+            0 5vw;
+    }
+
+    section {
+        padding:
+            4rem 5vw;
+    }
+}
+
+
+@media (max-width:600px) {
+
+    nav {
+        padding:
+            .5rem 1rem;
+
+        gap: .6rem;
+    }
+
+    nav .links {
+        display: none;
+
+        position: fixed;
+
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        flex-direction: column;
+
+        background:
+            rgba(7,8,15,.97);
+
+        backdrop-filter:
+            blur(30px);
+
+        padding:
+            5rem 2rem 2rem;
+
+        gap: 1.5rem;
+
+        z-index: 99;
+
+        align-items: center;
+
+        justify-content: center;
+    }
+
+    nav .links.open {
+        display: flex;
+    }
+
+    nav .links a {
+        font-size: 1.1rem;
+    }
+
+    .menu-toggle {
+        display: block;
+
+        z-index: 200;
+
+        position: relative;
+    }
+
+    .hero {
+        padding:
+            5.5rem 5vw 2.5rem;
+    }
+
+    .hero h1 {
+        font-size: 2.4rem;
+    }
+
+    .hero p {
+        font-size: .88rem;
+    }
+
+    .hero-visual {
+        width: 130px;
+
+        height: 130px;
+    }
+
+    .hero-visual-logo {
+        font-size: 1.3rem;
+    }
+
+    section {
+        padding:
+            3rem 4.5vw;
+    }
+
+    .section-title {
+        font-size: 1.6rem;
+
+        margin-bottom: 2rem;
+    }
+
+    .stats {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .stats-wrap {
+        padding:
+            0 4.5vw;
+    }
+
+    .stat {
+        padding:
+            1.5rem 1rem;
+    }
+
+    .stat-val {
+        font-size: 1.6rem;
+    }
+
+    .stat-label {
+        font-size: .62rem;
+    }
+
+    .services-grid,
+    .why-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .service-card,
+    .why-card {
+        padding: 1.3rem;
+    }
+
+    .timeline {
+        padding-left: 1.2rem;
+    }
+
+    .timeline-item {
+        padding-left: 1rem;
+    }
+
+    .contact-links {
+        flex-direction: column;
+    }
+
+    .contact-link {
+        justify-content: center;
+    }
+
+    footer {
+        padding:
+            1.5rem 4vw;
+    }
+}
+
 </style>
 </head>
+
+
 <body>
 
-<!-- MESH GRADIENT BG -->
+
+<!-- =======================================================
+     BACKGROUND
+======================================================= -->
+
 <div class="mesh-bg">
-  <div class="orb orb1"></div>
-  <div class="orb orb2"></div>
-  <div class="orb orb3"></div>
-  <div class="orb orb4"></div>
+
+    <div class="orb orb1"></div>
+
+    <div class="orb orb2"></div>
+
+    <div class="orb orb3"></div>
+
+    <div class="orb orb4"></div>
+
 </div>
+
+
+<!-- =======================================================
+     NAVIGATION
+======================================================= -->
 
 <nav>
-  <a href="#" class="logo"><img src="logo.png" alt="AIHope" style="height:32px;width:auto;vertical-align:middle;border-radius:6px;"></a>
-  <button class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle menu" id="menuBtn">&#9776;</button>
-  <div class="links" id="navLinks">
-    <a href="#about" onclick="closeMenu()">About</a>
-    <a href="#services" onclick="closeMenu()">Services</a>
-    <a href="#process" onclick="closeMenu()">Process</a>
-    <a href="#why" onclick="closeMenu()">Why Us</a>
-    <a href="#contact" onclick="closeMenu()">Contact</a>
-  </div>
+
+    <a href="/" class="logo">
+
+        <img
+            src="logo.png"
+            alt="AIHope logo"
+        >
+
+    </a>
+
+
+    <button
+        class="menu-toggle"
+        onclick="toggleMenu()"
+        aria-label="Toggle menu"
+        id="menuBtn"
+    >
+        &#9776;
+    </button>
+
+
+    <div
+        class="links"
+        id="navLinks"
+    >
+
+        <a
+            href="#about"
+            onclick="closeMenu()"
+        >
+            About
+        </a>
+
+        <a
+            href="#services"
+            onclick="closeMenu()"
+        >
+            Services
+        </a>
+
+        <a
+            href="#process"
+            onclick="closeMenu()"
+        >
+            Process
+        </a>
+
+        <a
+            href="#why"
+            onclick="closeMenu()"
+        >
+            Why Us
+        </a>
+
+        <a
+            href="#contact"
+            onclick="closeMenu()"
+        >
+            Contact
+        </a>
+
+    </div>
+
 </nav>
 
-<!-- HERO -->
+
+<!-- =======================================================
+     HERO
+======================================================= -->
+
 <section class="hero">
-  <div class="hero-content">
-    <div class="hero-label">Custom Web &amp; Mobile Development Agency</div>
-    <h1>We build digital<br/>products that <em>matter</em></h1>
-    <p>AIHope crafts tailor-made websites and mobile applications that help businesses grow, scale, and stand out. Every project built from scratch — no templates, no shortcuts.</p>
-    <div class="hero-tags">
-      <span class="tag">Web Development</span>
-      <span class="tag">Mobile Apps</span>
-      <span class="tag">UI / UX Design</span>
-      <span class="tag">React &amp; Next.js</span>
-      <span class="tag">iOS &amp; Android</span>
-      <span class="tag">E-Commerce</span>
-      <span class="tag">Cloud &amp; Backend</span>
+
+    <div class="hero-content">
+
+        <div class="hero-label">
+            Custom Web &amp; Mobile Development Agency
+        </div>
+
+
+        <h1>
+            We build digital<br>
+            products that
+            <em>matter</em>
+        </h1>
+
+
+        <p>
+
+            AIHope crafts tailor-made websites and mobile
+            applications that help businesses grow, scale,
+            and stand out.
+
+            Every project is built from scratch —
+            no templates, no shortcuts.
+
+        </p>
+
+
+        <div class="hero-tags">
+
+            <span class="tag">
+                Web Development
+            </span>
+
+            <span class="tag">
+                Mobile Apps
+            </span>
+
+            <span class="tag">
+                UI / UX Design
+            </span>
+
+            <span class="tag">
+                React &amp; Next.js
+            </span>
+
+            <span class="tag">
+                iOS &amp; Android
+            </span>
+
+            <span class="tag">
+                E-Commerce
+            </span>
+
+            <span class="tag">
+                Cloud &amp; Backend
+            </span>
+
+        </div>
+
+
+        <div class="hero-btns">
+
+            <a
+                href="#services"
+                class="btn btn-primary"
+            >
+                Explore Services
+            </a>
+
+
+            <a
+                href="https://wa.me/821094859943"
+                class="btn btn-outline"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                WhatsApp Us
+            </a>
+
+        </div>
+
     </div>
-    <div class="hero-btns">
-      <a href="#services" class="btn btn-primary">Explore Services</a>
-      <a href="https://wa.me/821094859943" class="btn btn-outline" target="_blank">WhatsApp Us</a>
+
+
+    <div class="hero-visual">
+
+        <div class="hero-visual-logo">
+            AIHope
+        </div>
+
+
+        <div class="hero-visual-tagline">
+
+            Web &middot;
+            Mobile &middot;
+            Design
+
+            <br>
+
+            Built for Business
+
+        </div>
+
+
+        <div class="hero-visual-dots">
+
+            <span></span>
+
+            <span></span>
+
+            <span></span>
+
+        </div>
+
     </div>
-  </div>
-  <div class="hero-visual">
-    <div class="hero-visual-logo">AIHope</div>
-    <div class="hero-visual-tagline">Web &middot; Mobile &middot; Design<br/>Built for Business</div>
-    <div class="hero-visual-dots">
-      <span></span><span></span><span></span>
-    </div>
-  </div>
+
 </section>
 
-<!-- STATS -->
+
+<!-- =======================================================
+     STATS
+======================================================= -->
+
 <div class="stats-wrap">
-  <div class="stats">
-    <div class="stat"><div class="stat-val">50+</div><div class="stat-label">Projects Delivered</div></div>
-    <div class="stat"><div class="stat-val">30+</div><div class="stat-label">Happy Clients</div></div>
-    <div class="stat"><div class="stat-val">4+</div><div class="stat-label">Years Experience</div></div>
-    <div class="stat"><div class="stat-val">100%</div><div class="stat-label">Custom Built</div></div>
-  </div>
+
+    <div class="stats">
+
+        <div class="stat">
+
+            <div class="stat-val">
+                50+
+            </div>
+
+            <div class="stat-label">
+                Projects Delivered
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-val">
+                30+
+            </div>
+
+            <div class="stat-label">
+                Happy Clients
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-val">
+                4+
+            </div>
+
+            <div class="stat-label">
+                Years Experience
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-val">
+                100%
+            </div>
+
+            <div class="stat-label">
+                Custom Built
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 
-<!-- ABOUT -->
-<section id="about" class="reveal">
-  <div class="section-label">About</div>
-  <h2 class="section-title">Who we are</h2>
-  <div class="about-grid">
-    <div class="about-text">
-      <p>We are <strong>AIHope</strong>, a full-service digital agency specialising in custom web and mobile development. We partner with businesses — from solo founders to established enterprises — to design and build software that solves real problems and drives measurable results.</p>
-      <p>Our team brings together expertise in <strong>modern web frameworks, cross-platform mobile development, and user-centred design</strong> to deliver products that don't just look great but genuinely work for your business goals.</p>
-      <p>Every project we take on is built entirely from scratch. We believe that <strong>custom solutions consistently outperform off-the-shelf products</strong> — and our track record proves it.</p>
+
+<!-- =======================================================
+     ABOUT
+======================================================= -->
+
+<section
+    id="about"
+    class="reveal"
+>
+
+    <div class="section-label">
+        About
     </div>
-    <div class="about-cards">
-      <div class="about-card glass">
-        <div class="about-card-title">What We Build</div>
-        <div class="about-card-val">Websites &amp; Web Applications</div>
-        <div class="about-card-sub">From landing pages to full SaaS platforms</div>
-      </div>
-      <div class="about-card glass">
-        <div class="about-card-title">Mobile Development</div>
-        <div class="about-card-val">iOS &amp; Android Apps</div>
-        <div class="about-card-sub">Native and cross-platform solutions</div>
-      </div>
-      <div class="about-card glass">
-        <div class="about-card-title">Our Approach</div>
-        <div class="about-card-val">Custom &middot; Agile &middot; Transparent</div>
-        <div class="about-card-sub">No templates. Clear pricing. Direct communication.</div>
-      </div>
-      <div class="about-card glass">
-        <div class="about-card-title">Contact Us</div>
-        <div class="about-card-val">WhatsApp +82 10-9485-9943</div>
-        <div class="about-card-sub">We respond within a few hours</div>
-      </div>
+
+
+    <h2 class="section-title">
+        Who we are
+    </h2>
+
+
+    <div class="about-grid">
+
+
+        <div class="about-text">
+
+            <p>
+
+                We are <strong>AIHope</strong>,
+                a full-service digital agency specialising
+                in custom web and mobile development.
+
+                We partner with businesses — from solo
+                founders to established enterprises —
+                to design and build software that solves
+                real problems and drives measurable results.
+
+            </p>
+
+
+            <p>
+
+                Our team brings together expertise in
+                <strong>
+                    modern web frameworks,
+                    cross-platform mobile development,
+                    and user-centred design
+                </strong>
+
+                to deliver products that don't just
+                look great but genuinely work for
+                your business goals.
+
+            </p>
+
+
+            <p>
+
+                Every project we take on is built
+                entirely from scratch.
+
+                We believe that
+                <strong>
+                    custom solutions consistently
+                    outperform off-the-shelf products
+                </strong>
+
+                — and our track record proves it.
+
+            </p>
+
+        </div>
+
+
+        <div class="about-cards">
+
+
+            <div class="about-card glass">
+
+                <div class="about-card-title">
+                    What We Build
+                </div>
+
+                <div class="about-card-val">
+                    Websites &amp; Web Applications
+                </div>
+
+                <div class="about-card-sub">
+                    From landing pages to full SaaS platforms
+                </div>
+
+            </div>
+
+
+            <div class="about-card glass">
+
+                <div class="about-card-title">
+                    Mobile Development
+                </div>
+
+                <div class="about-card-val">
+                    iOS &amp; Android Apps
+                </div>
+
+                <div class="about-card-sub">
+                    Native and cross-platform solutions
+                </div>
+
+            </div>
+
+
+            <div class="about-card glass">
+
+                <div class="about-card-title">
+                    Our Approach
+                </div>
+
+                <div class="about-card-val">
+                    Custom · Agile · Transparent
+                </div>
+
+                <div class="about-card-sub">
+                    No templates. Clear pricing. Direct communication.
+                </div>
+
+            </div>
+
+
+            <div class="about-card glass">
+
+                <div class="about-card-title">
+                    Contact Us
+                </div>
+
+                <div class="about-card-val">
+                    WhatsApp +82 10-9485-9943
+                </div>
+
+                <div class="about-card-sub">
+                    We respond within a few hours
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
-  </div>
+
 </section>
 
-<!-- SERVICES -->
-<section id="services" class="reveal">
-  <div class="section-label">What We Do</div>
-  <h2 class="section-title">Our services</h2>
-  <div class="services-grid">
-    <div class="service-card glass">
-      <div class="service-card-icon">&#127760;</div>
-      <h3>Custom Web Development</h3>
-      <p>Tailor-made websites and web apps built for performance, SEO, and user experience. From landing pages to complex platforms.</p>
-      <div class="service-tags">
-        <span class="tag">React</span>
-        <span class="tag">Next.js</span>
-        <span class="tag">Node.js</span>
-        <span class="tag">PostgreSQL</span>
-        <span class="tag">REST APIs</span>
-      </div>
+
+<!-- =======================================================
+     SERVICES
+======================================================= -->
+
+<section
+    id="services"
+    class="reveal"
+>
+
+    <div class="section-label">
+        What We Do
     </div>
-    <div class="service-card glass">
-      <div class="service-card-icon">&#128241;</div>
-      <h3>Mobile App Development</h3>
-      <p>Native and cross-platform mobile applications for iOS and Android that deliver smooth, intuitive experiences users love.</p>
-      <div class="service-tags">
-        <span class="tag">React Native</span>
-        <span class="tag">Flutter</span>
-        <span class="tag">Swift</span>
-        <span class="tag">Kotlin</span>
-        <span class="tag">Firebase</span>
-      </div>
+
+
+    <h2 class="section-title">
+        Our services
+    </h2>
+
+
+    <div class="services-grid">
+
+
+        <div class="service-card glass">
+
+            <div class="service-card-icon">
+                🌐
+            </div>
+
+            <h3>
+                Custom Web Development
+            </h3>
+
+            <p>
+
+                Tailor-made websites and web apps
+                built for performance, SEO,
+                and user experience.
+
+                From landing pages to complex platforms.
+
+            </p>
+
+            <div class="service-tags">
+
+                <span class="tag">React</span>
+                <span class="tag">Next.js</span>
+                <span class="tag">Node.js</span>
+                <span class="tag">PostgreSQL</span>
+                <span class="tag">REST APIs</span>
+
+            </div>
+
+        </div>
+
+
+        <div class="service-card glass">
+
+            <div class="service-card-icon">
+                📱
+            </div>
+
+            <h3>
+                Mobile App Development
+            </h3>
+
+            <p>
+
+                Native and cross-platform mobile
+                applications for iOS and Android
+                that deliver smooth, intuitive
+                experiences users love.
+
+            </p>
+
+            <div class="service-tags">
+
+                <span class="tag">
+                    React Native
+                </span>
+
+                <span class="tag">
+                    Flutter
+                </span>
+
+                <span class="tag">
+                    Swift
+                </span>
+
+                <span class="tag">
+                    Kotlin
+                </span>
+
+                <span class="tag">
+                    Firebase
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="service-card glass">
+
+            <div class="service-card-icon">
+                🛒
+            </div>
+
+            <h3>
+                E-Commerce Solutions
+            </h3>
+
+            <p>
+
+                End-to-end online store development
+                with payment gateways,
+                inventory management,
+                and conversion-optimised design.
+
+            </p>
+
+            <div class="service-tags">
+
+                <span class="tag">
+                    Shopify
+                </span>
+
+                <span class="tag">
+                    WooCommerce
+                </span>
+
+                <span class="tag">
+                    Stripe
+                </span>
+
+                <span class="tag">
+                    Custom Cart
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="service-card glass">
+
+            <div class="service-card-icon">
+                🎨
+            </div>
+
+            <h3>
+                UI / UX Design
+            </h3>
+
+            <p>
+
+                User-centred design that balances
+                aesthetics with function —
+                wireframes, prototypes,
+                and polished design systems.
+
+            </p>
+
+            <div class="service-tags">
+
+                <span class="tag">Figma</span>
+                <span class="tag">Design System</span>
+                <span class="tag">Prototyping</span>
+                <span class="tag">User Research</span>
+
+            </div>
+
+        </div>
+
+
+        <div class="service-card glass">
+
+            <div class="service-card-icon">
+                ☁️
+            </div>
+
+            <h3>
+                Backend &amp; Cloud
+            </h3>
+
+            <p>
+
+                Scalable backend systems,
+                APIs, and cloud infrastructure
+                engineered to grow with your
+                business without breaking.
+
+            </p>
+
+            <div class="service-tags">
+
+                <span class="tag">AWS</span>
+                <span class="tag">GCP</span>
+                <span class="tag">Docker</span>
+                <span class="tag">CI/CD</span>
+                <span class="tag">Microservices</span>
+
+            </div>
+
+        </div>
+
+
+        <div class="service-card glass">
+
+            <div class="service-card-icon">
+                🔧
+            </div>
+
+            <h3>
+                Maintenance &amp; Support
+            </h3>
+
+            <p>
+
+                Ongoing support,
+                performance monitoring,
+                and iterative improvements
+                to keep your product
+                running at its best.
+
+            </p>
+
+            <div class="service-tags">
+
+                <span class="tag">
+                    24/7 Support
+                </span>
+
+                <span class="tag">
+                    Updates
+                </span>
+
+                <span class="tag">
+                    Security
+                </span>
+
+                <span class="tag">
+                    Analytics
+                </span>
+
+            </div>
+
+        </div>
+
     </div>
-    <div class="service-card glass">
-      <div class="service-card-icon">&#128722;</div>
-      <h3>E-Commerce Solutions</h3>
-      <p>End-to-end online store development with payment gateways, inventory management, and conversion-optimised design.</p>
-      <div class="service-tags">
-        <span class="tag">Shopify</span>
-        <span class="tag">WooCommerce</span>
-        <span class="tag">Stripe</span>
-        <span class="tag">Custom Cart</span>
-      </div>
-    </div>
-    <div class="service-card glass">
-      <div class="service-card-icon">&#127912;</div>
-      <h3>UI / UX Design</h3>
-      <p>User-centred design that balances aesthetics with function — wireframes, prototypes, and polished design systems.</p>
-      <div class="service-tags">
-        <span class="tag">Figma</span>
-        <span class="tag">Design System</span>
-        <span class="tag">Prototyping</span>
-        <span class="tag">User Research</span>
-      </div>
-    </div>
-    <div class="service-card glass">
-      <div class="service-card-icon">&#9729;&#65039;</div>
-      <h3>Backend &amp; Cloud</h3>
-      <p>Scalable backend systems, APIs, and cloud infrastructure engineered to grow with your business without breaking.</p>
-      <div class="service-tags">
-        <span class="tag">AWS</span>
-        <span class="tag">GCP</span>
-        <span class="tag">Docker</span>
-        <span class="tag">CI/CD</span>
-        <span class="tag">Microservices</span>
-      </div>
-    </div>
-    <div class="service-card glass">
-      <div class="service-card-icon">&#128295;</div>
-      <h3>Maintenance &amp; Support</h3>
-      <p>Ongoing support, performance monitoring, and iterative improvements to keep your product running at its best.</p>
-      <div class="service-tags">
-        <span class="tag">24/7 Support</span>
-        <span class="tag">Updates</span>
-        <span class="tag">Security</span>
-        <span class="tag">Analytics</span>
-      </div>
-    </div>
-  </div>
+
 </section>
 
-<!-- PROCESS -->
-<section id="process" class="reveal">
-  <div class="section-label">How We Work</div>
-  <h2 class="section-title">Our process</h2>
-  <div class="timeline">
-    <div class="timeline-item">
-      <h3>Discovery</h3>
-      <div class="role">Step 01 — Free Consultation</div>
-      <div class="meta"><span>Day 1</span></div>
-      <p>We learn your business goals, audience, and technical requirements through a focused consultation. No jargon — just clear conversation about what you need and what success looks like.</p>
+
+<!-- =======================================================
+     PROCESS
+======================================================= -->
+
+<section
+    id="process"
+    class="reveal"
+>
+
+    <div class="section-label">
+        How We Work
     </div>
-    <div class="timeline-item">
-      <h3>Design</h3>
-      <div class="role">Step 02 — Wireframes &amp; Prototypes</div>
-      <div class="meta"><span>Week 1</span></div>
-      <p>Our designers create wireframes and visual mockups for your approval before a single line of code is written. You see exactly what you're getting before we build it.</p>
+
+    <h2 class="section-title">
+        Our process
+    </h2>
+
+
+    <div class="timeline">
+
+
+        <div class="timeline-item">
+
+            <h3>
+                Discovery
+            </h3>
+
+            <div class="role">
+                Step 01 — Free Consultation
+            </div>
+
+            <div class="meta">
+                <span>Day 1</span>
+            </div>
+
+            <p>
+
+                We learn your business goals,
+                audience, and technical requirements
+                through a focused consultation.
+
+                No jargon — just clear conversation
+                about what you need and what success looks like.
+
+            </p>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <h3>
+                Design
+            </h3>
+
+            <div class="role">
+                Step 02 — Wireframes &amp; Prototypes
+            </div>
+
+            <div class="meta">
+                <span>Week 1</span>
+            </div>
+
+            <p>
+
+                Our designers create wireframes
+                and visual mockups for your approval
+                before a single line of code is written.
+
+                You see exactly what you're getting
+                before we build it.
+
+            </p>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <h3>
+                Development
+            </h3>
+
+            <div class="role">
+                Step 03 — Agile Build
+            </div>
+
+            <div class="meta">
+                <span>
+                    Weeks 2–4
+                </span>
+            </div>
+
+            <p>
+
+                We build your product
+                with clean, maintainable code
+                using modern frameworks.
+
+                You receive regular progress updates
+                and can provide feedback
+                at every stage of the build.
+
+            </p>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <h3>
+                Testing
+            </h3>
+
+            <div class="role">
+                Step 04 — QA &amp; Refinement
+            </div>
+
+            <div class="meta">
+                <span>
+                    Final Week
+                </span>
+            </div>
+
+            <p>
+
+                Rigorous quality assurance
+                across devices and browsers
+                ensures a polished,
+                bug-free experience.
+
+                We don't ship until everything
+                works exactly as it should.
+
+            </p>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <h3>
+                Launch
+            </h3>
+
+            <div class="role">
+                Step 05 — Go Live
+            </div>
+
+            <div class="meta">
+                <span>
+                    Launch Day
+                </span>
+            </div>
+
+            <p>
+
+                We handle deployment,
+                DNS configuration,
+                and go-live support
+                so your launch day is smooth
+                and stress-free.
+
+            </p>
+
+        </div>
+
+
+        <div class="timeline-item">
+
+            <h3>
+                Growth
+            </h3>
+
+            <div class="role">
+                Step 06 — Post-launch Support
+            </div>
+
+            <div class="meta">
+                <span>
+                    Ongoing
+                </span>
+            </div>
+
+            <p>
+
+                Ongoing support,
+                analytics tracking,
+                and iterative improvements
+                keep your product
+                running at peak performance.
+
+            </p>
+
+        </div>
+
     </div>
-    <div class="timeline-item">
-      <h3>Development</h3>
-      <div class="role">Step 03 — Agile Build</div>
-      <div class="meta"><span>Weeks 2–4</span></div>
-      <p>We build your product with clean, maintainable code using modern frameworks. You receive regular progress updates and can provide feedback at every stage of the build.</p>
-    </div>
-    <div class="timeline-item">
-      <h3>Testing</h3>
-      <div class="role">Step 04 — QA &amp; Refinement</div>
-      <div class="meta"><span>Final Week</span></div>
-      <p>Rigorous quality assurance across devices and browsers ensures a polished, bug-free experience. We don't ship until everything works exactly as it should.</p>
-    </div>
-    <div class="timeline-item">
-      <h3>Launch</h3>
-      <div class="role">Step 05 — Go Live</div>
-      <div class="meta"><span>Launch Day</span></div>
-      <p>We handle deployment, DNS configuration, and go-live support so your launch day is smooth and completely stress-free. You just share the link.</p>
-    </div>
-    <div class="timeline-item">
-      <h3>Growth</h3>
-      <div class="role">Step 06 — Post-launch Support</div>
-      <div class="meta"><span>Ongoing</span></div>
-      <p>Ongoing support, analytics tracking, and iterative improvements keep your product running at peak performance and ahead of the competition.</p>
-    </div>
-  </div>
+
 </section>
 
-<!-- WHY US -->
-<section id="why" class="reveal">
-  <div class="section-label">Why AIHope</div>
-  <h2 class="section-title">Built differently, delivered right</h2>
-  <div class="why-grid">
-    <div class="why-card glass">
-      <div class="why-icon">&#9889;</div>
-      <h3>Fast Turnaround</h3>
-      <p>We move quickly without cutting corners. Most web projects are delivered in 2–4 weeks. Mobile apps in 4–8 weeks. Always on or ahead of schedule.</p>
+
+<!-- =======================================================
+     WHY AIHOPE
+======================================================= -->
+
+<section
+    id="why"
+    class="reveal"
+>
+
+    <div class="section-label">
+        Why AIHope
     </div>
-    <div class="why-card glass">
-      <div class="why-icon">&#127919;</div>
-      <h3>100% Custom</h3>
-      <p>No templates. No cookie-cutter solutions. Every product is designed and built entirely from scratch for your specific business needs and goals.</p>
+
+
+    <h2 class="section-title">
+        Built differently, delivered right
+    </h2>
+
+
+    <div class="why-grid">
+
+
+        <div class="why-card glass">
+
+            <div class="why-icon">
+                ⚡
+            </div>
+
+            <h3>
+                Fast Turnaround
+            </h3>
+
+            <p>
+
+                We move quickly without cutting corners.
+
+                Most web projects are delivered
+                in 2–4 weeks.
+
+                Mobile apps in 4–8 weeks.
+
+            </p>
+
+        </div>
+
+
+        <div class="why-card glass">
+
+            <div class="why-icon">
+                🎯
+            </div>
+
+            <h3>
+                100% Custom
+            </h3>
+
+            <p>
+
+                No templates.
+                No cookie-cutter solutions.
+
+                Every product is designed
+                and built specifically
+                for your business.
+
+            </p>
+
+        </div>
+
+
+        <div class="why-card glass">
+
+            <div class="why-icon">
+                💬
+            </div>
+
+            <h3>
+                Direct Communication
+            </h3>
+
+            <p>
+
+                You work directly with our developers
+                via WhatsApp.
+
+                No unnecessary middlemen
+                and no communication delays.
+
+            </p>
+
+        </div>
+
+
+        <div class="why-card glass">
+
+            <div class="why-icon">
+                🔒
+            </div>
+
+            <h3>
+                Transparent Pricing
+            </h3>
+
+            <p>
+
+                Clear, itemised quotes upfront.
+
+                No hidden fees
+                and no surprise invoices.
+
+            </p>
+
+        </div>
+
+
+        <div class="why-card glass">
+
+            <div class="why-icon">
+                📈
+            </div>
+
+            <h3>
+                Results Focused
+            </h3>
+
+            <p>
+
+                We care about outcomes,
+                not just deliverables.
+
+                Our solutions are designed
+                to generate real business value.
+
+            </p>
+
+        </div>
+
+
+        <div class="why-card glass">
+
+            <div class="why-icon">
+                🌟
+            </div>
+
+            <h3>
+                Quality Guaranteed
+            </h3>
+
+            <p>
+
+                Every project comes
+                with our quality commitment.
+
+                If something isn't right after launch,
+                we fix it.
+
+            </p>
+
+        </div>
+
     </div>
-    <div class="why-card glass">
-      <div class="why-icon">&#128172;</div>
-      <h3>Direct Communication</h3>
-      <p>You work directly with our developers via WhatsApp — no account managers, no middlemen, no delays. Fast answers from real people who know your project.</p>
-    </div>
-    <div class="why-card glass">
-      <div class="why-icon">&#128274;</div>
-      <h3>Transparent Pricing</h3>
-      <p>Clear, itemised quotes upfront. No hidden fees. No surprise invoices at the end. What we quote is exactly what you pay — nothing more.</p>
-    </div>
-    <div class="why-card glass">
-      <div class="why-icon">&#128200;</div>
-      <h3>Results Focused</h3>
-      <p>We care about outcomes, not just deliverables. Our work is designed to drive real business results — more leads, more sales, and sustainable growth.</p>
-    </div>
-    <div class="why-card glass">
-      <div class="why-icon">&#127775;</div>
-      <h3>Quality Guaranteed</h3>
-      <p>Every project comes with a quality guarantee. If something isn't right after launch, we fix it — no questions asked, no extra charges.</p>
-    </div>
-  </div>
+
 </section>
 
-<!-- CONTACT -->
-<section id="contact" class="reveal">
-  <div class="section-label">Contact</div>
-  <h2 class="section-title">Let's build something together</h2>
-  <div class="contact-inner">
-    <p>Have a project in mind? Reach out on WhatsApp for a free consultation. We're open to businesses of all sizes — from solo founders to established companies. We typically respond within a few hours.</p>
-    <div class="contact-links">
-      <a href="https://wa.me/821094859943" class="contact-link glass" target="_blank">&#128172; WhatsApp +82 10-9485-9943</a>
-      <a href="https://wa.me/821094859943" class="contact-link glass" target="_blank">&#128640; Start a Free Consultation</a>
+
+<!-- =======================================================
+     CONTACT
+======================================================= -->
+
+<section
+    id="contact"
+    class="reveal"
+>
+
+    <div class="section-label">
+        Contact
     </div>
-  </div>
+
+    <h2 class="section-title">
+        Let's build something together
+    </h2>
+
+
+    <div class="contact-inner">
+
+
+        <p>
+
+            Have a project in mind?
+
+            Reach out on WhatsApp
+            for a free consultation.
+
+            We're open to businesses of all sizes —
+            from solo founders
+            to established companies.
+
+        </p>
+
+
+        <div class="contact-links">
+
+
+            <a
+                href="https://wa.me/821094859943"
+                class="contact-link glass"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+
+                💬 WhatsApp +82 10-9485-9943
+
+            </a>
+
+
+            <a
+                href="https://wa.me/821094859943"
+                class="contact-link glass"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+
+                🚀 Start a Free Consultation
+
+            </a>
+
+
+        </div>
+
+    </div>
+
 </section>
 
-<footer>&copy; 2025 AIHope &middot; Custom Web &amp; Mobile Solutions &middot; Built with passion</footer>
+
+<!-- =======================================================
+     FOOTER
+======================================================= -->
+
+<footer>
+
+    &copy; 2026 AIHope
+    &middot;
+    Custom Web &amp; Mobile Solutions
+    &middot;
+    Built with passion
+
+</footer>
+
+
+<!-- =======================================================
+     JAVASCRIPT
+======================================================= -->
 
 <script>
-function toggleMenu(){
-  var links=document.getElementById('navLinks');
-  var btn=document.getElementById('menuBtn');
-  links.classList.toggle('open');
-  btn.textContent=links.classList.contains('open')?'\u2715':'\u2630';
+
+function toggleMenu() {
+
+    const links =
+        document.getElementById('navLinks');
+
+    const btn =
+        document.getElementById('menuBtn');
+
+
+    links.classList.toggle('open');
+
+
+    btn.textContent =
+        links.classList.contains('open')
+        ? '✕'
+        : '☰';
 }
-function closeMenu(){
-  var links=document.getElementById('navLinks');
-  var btn=document.getElementById('menuBtn');
-  links.classList.remove('open');
-  btn.textContent='\u2630';
+
+
+function closeMenu() {
+
+    const links =
+        document.getElementById('navLinks');
+
+    const btn =
+        document.getElementById('menuBtn');
+
+
+    links.classList.remove('open');
+
+    btn.textContent = '☰';
 }
-var revealEls=document.querySelectorAll('.reveal');
-var observer=new IntersectionObserver(function(entries){
-  entries.forEach(function(entry){
-    if(entry.isIntersecting){entry.target.classList.add('visible')}
-  });
-},{threshold:0.1});
-revealEls.forEach(function(el){observer.observe(el)});
+
+
+/* =======================================================
+   SCROLL REVEAL
+======================================================= */
+
+const revealEls =
+    document.querySelectorAll('.reveal');
+
+
+const observer =
+    new IntersectionObserver(
+
+        function(entries) {
+
+            entries.forEach(
+                function(entry) {
+
+                    if(entry.isIntersecting) {
+
+                        entry.target
+                            .classList
+                            .add('visible');
+
+                    }
+
+                }
+            );
+
+        },
+
+        {
+            threshold: 0.1
+        }
+
+    );
+
+
+revealEls.forEach(
+    function(el) {
+
+        observer.observe(el);
+
+    }
+);
+
 </script>
+
+
 </body>
 </html>
+```

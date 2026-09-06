@@ -92,7 +92,7 @@ export function bootScene1(root) {
   }
 
   function frame(now) {
-    if (!running) return;
+    if (!running) { raf = null; return; }
     const t = reduced ? 999999 : now - START;
     fitCanvas(canvas);
     gl.viewport(0, 0, canvas.width, canvas.height);

@@ -12,1153 +12,22 @@
   <meta name="description" content="AIHope builds custom websites, mobile apps, e-commerce platforms and digital products for modern businesses.">
   <meta name="robots" content="index,follow">
 
-  <!-- FAVICON / GOOGLE SEARCH ICON -->
-  <!-- Editorial-style typography -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
-
-  <style>
-    :root{
-      --ink:#07111f;
-      --paper:#f7f9fc;
-      --paper-2:#eaf0f8;
-      --olive:#0c2748;
-      --rust:#2f6bff;
-      --mustard:#79e0ff;
-      --white:#ffffff;
-      --line:#0d1b2d;
-      --violet:#7a5cff;
-      --cyan:#42d5ff;
-      --soft-blue:#dfeaff;
-      --serif:"DM Serif Display", Georgia, serif;
-      --sans:"DM Sans", Arial, sans-serif;
-    }
-
-    *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{
-      background:var(--paper);
-      color:var(--ink);
-      font-family:var(--sans);
-      overflow-x:hidden;
-    }
-    a{color:inherit;text-decoration:none}
-    img{display:block;max-width:100%}
-    button{font:inherit}
-
-    .container{
-      width:min(1440px, calc(100% - 48px));
-      margin:auto;
-    }
-
-    /* ---------- HEADER ---------- */
-    .site-header{
-      position:sticky;
-      top:0;
-      z-index:100;
-      background:rgba(246,248,252,.96);
-      backdrop-filter:blur(12px);
-      border-bottom:2px solid var(--line);
-    }
-
-    .nav{
-      height:84px;
-      display:grid;
-      grid-template-columns:1fr auto 1fr;
-      align-items:center;
-      gap:24px;
-    }
-
-    .brand{
-      display:inline-flex;
-      align-items:center;
-      gap:12px;
-      font-weight:700;
-      letter-spacing:-.03em;
-      justify-self:start;
-    }
-    .brand img{
-      width:44px;
-      height:44px;
-      object-fit:contain;
-      border-radius:50%;
-      border:1.5px solid var(--ink);
-      background:var(--white);
-    }
-    .brand span{
-      font-family:var(--serif);
-      font-size:1.7rem;
-      line-height:1;
-    }
-
-    .nav-links{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:30px;
-      font-size:.82rem;
-      font-weight:700;
-      text-transform:uppercase;
-      letter-spacing:.11em;
-    }
-    .nav-links a{
-      position:relative;
-    }
-    .nav-links a:after{
-      content:"";
-      position:absolute;
-      left:0;
-      right:100%;
-      bottom:-5px;
-      height:2px;
-      background:var(--ink);
-      transition:.25s;
-    }
-    .nav-links a:hover:after{right:0}
-
-    .nav-cta{
-      justify-self:end;
-      border:2px solid var(--ink);
-      padding:12px 18px;
-      font-size:.78rem;
-      text-transform:uppercase;
-      font-weight:700;
-      letter-spacing:.08em;
-      transition:.2s;
-    }
-    .nav-cta:hover{
-      background:var(--ink);
-      color:var(--paper);
-    }
-
-    .menu-btn{
-      display:none;
-      border:2px solid var(--ink);
-      background:transparent;
-      width:46px;
-      height:46px;
-      cursor:pointer;
-      font-size:1.35rem;
-    }
-
-    /* ---------- HERO ---------- */
-    .hero{
-      border-bottom:2px solid var(--line);
-    }
-
-    .hero-grid{
-      min-height:690px;
-      display:grid;
-      grid-template-columns:1.18fr .82fr;
-    }
-
-    .hero-copy{
-      padding:92px 64px 74px 0;
-      border-right:2px solid var(--line);
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      gap:48px;
-    }
-
-    .eyebrow{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      text-transform:uppercase;
-      letter-spacing:.13em;
-      font-size:.78rem;
-      font-weight:700;
-    }
-    .eyebrow:before{
-      content:"";
-      width:44px;
-      height:2px;
-      background:var(--ink);
-    }
-
-    .hero h1{
-      font-family:var(--serif);
-      font-size:clamp(4.5rem,9vw,9.8rem);
-      line-height:.84;
-      letter-spacing:-.055em;
-      font-weight:400;
-      margin-top:28px;
-    }
-    .hero h1 em{
-      color:var(--rust);
-      font-weight:400;
-    }
-
-    .hero-bottom{
-      display:grid;
-      grid-template-columns:1.15fr .85fr;
-      gap:44px;
-      align-items:end;
-    }
-
-    .hero-lead{
-      font-size:1.15rem;
-      line-height:1.65;
-      max-width:620px;
-    }
-
-    .hero-actions{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-
-    .btn{
-      display:inline-flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:18px;
-      min-height:56px;
-      padding:14px 18px;
-      border:2px solid var(--ink);
-      text-transform:uppercase;
-      font-size:.78rem;
-      font-weight:700;
-      letter-spacing:.09em;
-      transition:.2s;
-    }
-    .btn:after{content:"↗";font-size:1.2rem}
-    .btn-dark{
-      background:var(--ink);
-      color:var(--paper);
-    }
-    .btn:hover{
-      background:var(--rust);
-      color:var(--white);
-      border-color:var(--rust);
-    }
-
-    .hero-panel{
-      background:var(--olive);
-      color:var(--white);
-      padding:58px 44px 34px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .hero-panel:before{
-      content:"AI";
-      position:absolute;
-      right:-32px;
-      top:70px;
-      font-family:var(--serif);
-      font-size:18rem;
-      line-height:.7;
-      color:rgba(255,255,255,.07);
-      transform:rotate(-7deg);
-      pointer-events:none;
-    }
-
-    .panel-badge{
-      width:88px;
-      height:88px;
-      border-radius:50%;
-      border:2px solid currentColor;
-      display:grid;
-      place-items:center;
-      font-size:.72rem;
-      font-weight:700;
-      letter-spacing:.1em;
-      text-transform:uppercase;
-      text-align:center;
-      transform:rotate(-8deg);
-    }
-
-    .panel-copy{
-      position:relative;
-      z-index:1;
-    }
-    .panel-copy small{
-      display:block;
-      text-transform:uppercase;
-      letter-spacing:.14em;
-      font-size:.72rem;
-      margin-bottom:18px;
-      opacity:.85;
-    }
-    .panel-copy h2{
-      font-family:var(--serif);
-      font-size:clamp(2.8rem,5vw,5.3rem);
-      font-weight:400;
-      line-height:.94;
-      letter-spacing:-.04em;
-    }
-    .panel-copy p{
-      margin-top:24px;
-      max-width:420px;
-      line-height:1.65;
-      font-size:.98rem;
-      opacity:.9;
-    }
-
-    /* ---------- MARQUEE ---------- */
-    .marquee{
-      overflow:hidden;
-      border-bottom:2px solid var(--line);
-      background:var(--mustard);
-    }
-    .marquee-track{
-      display:flex;
-      width:max-content;
-      animation:marquee 28s linear infinite;
-    }
-    .marquee-track span{
-      display:block;
-      padding:19px 26px;
-      font-family:var(--serif);
-      font-size:1.6rem;
-      white-space:nowrap;
-    }
-    .marquee-track span:after{
-      content:" ✦";
-      margin-left:24px;
-    }
-    @keyframes marquee{
-      from{transform:translateX(0)}
-      to{transform:translateX(-50%)}
-    }
-
-    /* ---------- COMMON ---------- */
-    .section{
-      padding:100px 0;
-      border-bottom:2px solid var(--line);
-    }
-
-    .section-head{
-      display:grid;
-      grid-template-columns:.8fr 2.2fr;
-      gap:52px;
-      align-items:start;
-      margin-bottom:64px;
-    }
-
-    .section-kicker{
-      font-size:.78rem;
-      font-weight:700;
-      text-transform:uppercase;
-      letter-spacing:.13em;
-      padding-top:12px;
-    }
-
-    .section-title{
-      font-family:var(--serif);
-      font-size:clamp(3.1rem,6.2vw,6.8rem);
-      line-height:.9;
-      letter-spacing:-.045em;
-      font-weight:400;
-    }
-
-    /* ---------- ABOUT ---------- */
-    .about-grid{
-      display:grid;
-      grid-template-columns:1.05fr .95fr;
-      border:2px solid var(--line);
-    }
-
-    .about-story{
-      padding:54px;
-      border-right:2px solid var(--line);
-      background:var(--white);
-    }
-    .about-story p{
-      font-family:var(--serif);
-      font-size:clamp(1.8rem,3vw,3.2rem);
-      line-height:1.17;
-      letter-spacing:-.02em;
-    }
-
-    .about-stack{
-      display:grid;
-      grid-template-rows:repeat(3,1fr);
-    }
-    .about-item{
-      padding:32px 34px;
-      border-bottom:2px solid var(--line);
-      display:grid;
-      grid-template-columns:70px 1fr;
-      gap:20px;
-      align-items:start;
-    }
-    .about-item:last-child{border-bottom:0}
-    .about-num{
-      font-family:var(--serif);
-      font-size:2.2rem;
-      color:var(--rust);
-    }
-    .about-item h3{
-      font-size:1rem;
-      margin-bottom:9px;
-      text-transform:uppercase;
-      letter-spacing:.08em;
-    }
-    .about-item p{
-      color:#465168;
-      line-height:1.55;
-    }
-
-    /* ---------- SERVICES ---------- */
-    .services{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      border-top:2px solid var(--line);
-      border-left:2px solid var(--line);
-    }
-    .service{
-      min-height:330px;
-      padding:34px;
-      border-right:2px solid var(--line);
-      border-bottom:2px solid var(--line);
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      transition:.25s;
-    }
-    .service:hover{
-      background:var(--ink);
-      color:var(--paper);
-    }
-    .service .index{
-      font-size:.75rem;
-      font-weight:700;
-      letter-spacing:.12em;
-    }
-    .service h3{
-      font-family:var(--serif);
-      font-size:2.25rem;
-      line-height:1;
-      font-weight:400;
-      max-width:260px;
-    }
-    .service p{
-      line-height:1.55;
-      font-size:.92rem;
-      opacity:.85;
-      max-width:300px;
-    }
-
-    /* ---------- PROCESS ---------- */
-    .process-list{
-      border-top:2px solid var(--line);
-    }
-    .process-row{
-      display:grid;
-      grid-template-columns:80px 1fr 1fr;
-      gap:28px;
-      align-items:center;
-      padding:30px 0;
-      border-bottom:2px solid var(--line);
-    }
-    .process-no{
-      font-family:var(--serif);
-      font-size:2.1rem;
-      color:var(--rust);
-    }
-    .process-row h3{
-      font-family:var(--serif);
-      font-size:2.5rem;
-      font-weight:400;
-    }
-    .process-row p{
-      line-height:1.6;
-      color:#465168;
-      max-width:650px;
-    }
-
-    /* ---------- WHY ---------- */
-    .why-wrap{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:0;
-      border:2px solid var(--line);
-    }
-    .why-card{
-      min-height:250px;
-      padding:38px;
-      border-bottom:2px solid var(--line);
-      border-right:2px solid var(--line);
-    }
-    .why-card:nth-child(even){border-right:0}
-    .why-card:nth-last-child(-n+2){border-bottom:0}
-    .why-card h3{
-      font-family:var(--serif);
-      font-size:2.4rem;
-      font-weight:400;
-      margin-bottom:20px;
-    }
-    .why-card p{
-      line-height:1.6;
-      max-width:500px;
-    }
-
-    /* ---------- CONTACT ---------- */
-    .contact{
-      background:var(--rust);
-      color:var(--white);
-      padding:96px 0 82px;
-      border-bottom:2px solid var(--line);
-    }
-    .contact-grid{
-      display:grid;
-      grid-template-columns:1.4fr .6fr;
-      gap:60px;
-      align-items:end;
-    }
-    .contact h2{
-      font-family:var(--serif);
-      font-size:clamp(4rem,8vw,9rem);
-      line-height:.86;
-      letter-spacing:-.055em;
-      font-weight:400;
-    }
-    .contact-side p{
-      line-height:1.6;
-      margin-bottom:24px;
-    }
-    .contact .btn{
-      border-color:var(--white);
-      color:var(--white);
-    }
-    .contact .btn:hover{
-      background:var(--white);
-      color:var(--rust);
-    }
-
-    /* ---------- FOOTER ---------- */
-    footer{
-      background:var(--ink);
-      color:var(--paper);
-      padding:30px 0;
-    }
-    .footer-row{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:20px;
-      font-size:.8rem;
-      text-transform:uppercase;
-      letter-spacing:.08em;
-    }
-
-    /* ---------- RESPONSIVE ---------- */
-    @media(max-width:1050px){
-      .nav{
-        grid-template-columns:1fr auto;
-      }
-      .nav-links,.nav-cta{display:none}
-      .menu-btn{display:block;justify-self:end}
-
-      .mobile-menu{
-        display:none;
-        border-top:2px solid var(--line);
-        padding:18px 24px 24px;
-        background:var(--paper);
-      }
-      .mobile-menu.open{display:grid;gap:18px}
-      .mobile-menu a{
-        font-family:var(--serif);
-        font-size:2rem;
-      }
-
-      .hero-grid{grid-template-columns:1fr}
-      .hero-copy{
-        border-right:0;
-        border-bottom:2px solid var(--line);
-        padding-right:0;
-      }
-      .hero-panel{min-height:520px}
-
-      .section-head{grid-template-columns:1fr}
-      .about-grid{grid-template-columns:1fr}
-      .about-story{border-right:0;border-bottom:2px solid var(--line)}
-      .services{grid-template-columns:repeat(2,1fr)}
-      .process-row{grid-template-columns:70px 1fr}
-      .process-row p{grid-column:2}
-      .contact-grid{grid-template-columns:1fr}
-    }
-
-    @media(max-width:700px){
-      .container{
-        width:min(100% - 28px, 1440px);
-      }
-      .nav{height:72px}
-      .brand span{font-size:1.45rem}
-      .brand img{width:38px;height:38px}
-
-      .hero-copy{padding:58px 0 48px}
-      .hero h1{font-size:clamp(4rem,22vw,7rem)}
-      .hero-bottom{grid-template-columns:1fr}
-      .hero-panel{padding:42px 26px 30px;min-height:470px}
-      .hero-panel:before{font-size:12rem}
-      .panel-badge{width:76px;height:76px}
-
-      .section{padding:72px 0}
-      .section-head{margin-bottom:44px}
-      .about-story{padding:30px}
-      .about-item{grid-template-columns:50px 1fr;padding:26px 22px}
-
-      .services{grid-template-columns:1fr}
-      .service{min-height:280px}
-
-      .process-row{
-        grid-template-columns:50px 1fr;
-        gap:18px;
-        padding:24px 0;
-      }
-      .process-row h3{font-size:2rem}
-
-      .why-wrap{grid-template-columns:1fr}
-      .why-card,
-      .why-card:nth-child(even){
-        border-right:0;
-        border-bottom:2px solid var(--line);
-      }
-      .why-card:last-child{border-bottom:0}
-
-      .contact{padding:72px 0}
-      .footer-row{
-        flex-direction:column;
-        align-items:flex-start;
-      }
-    }
-  
-    /* ===========================
-       PREMIUM STYLE ENHANCEMENTS
-    =========================== */
-
-    body{
-      background:
-        radial-gradient(circle at 10% 5%, rgba(66,213,255,.12), transparent 28%),
-        radial-gradient(circle at 90% 12%, rgba(122,92,255,.10), transparent 26%),
-        var(--paper);
-    }
-
-    .site-header{
-      background:rgba(247,249,252,.80);
-      backdrop-filter:blur(18px) saturate(1.3);
-      -webkit-backdrop-filter:blur(18px) saturate(1.3);
-      border-bottom:1px solid rgba(13,27,45,.16);
-      box-shadow:0 10px 40px rgba(11,22,39,.05);
-    }
-
-    .nav{
-      height:92px;
-    }
-
-    .brand img{
-      width:48px;
-      height:48px;
-      border:0;
-      background:linear-gradient(145deg,#fff,#edf4ff);
-      box-shadow:0 10px 30px rgba(47,107,255,.14);
-    }
-
-    .brand span{
-      font-size:1.9rem;
-      letter-spacing:-.045em;
-    }
-
-    .nav-cta{
-      border:0;
-      border-radius:999px;
-      padding:14px 22px;
-      color:#fff;
-      background:linear-gradient(135deg,var(--rust),var(--violet));
-      box-shadow:0 10px 26px rgba(47,107,255,.28);
-    }
-
-    .nav-cta:hover{
-      transform:translateY(-2px);
-      background:linear-gradient(135deg,var(--violet),var(--rust));
-      color:#fff;
-    }
-
-    .hero{
-      position:relative;
-      overflow:hidden;
-      border-bottom:1px solid rgba(13,27,45,.16);
-    }
-
-    .hero:before{
-      content:"";
-      position:absolute;
-      width:420px;
-      height:420px;
-      border-radius:50%;
-      left:-180px;
-      top:80px;
-      background:radial-gradient(circle,rgba(66,213,255,.2),transparent 68%);
-      filter:blur(10px);
-      pointer-events:none;
-    }
-
-    .hero-grid{
-      min-height:760px;
-    }
-
-    .hero-copy{
-      padding:110px 74px 88px 0;
-      border-right:1px solid rgba(13,27,45,.14);
-    }
-
-    .eyebrow{
-      color:#31506f;
-      letter-spacing:.18em;
-    }
-
-    .eyebrow:before{
-      background:linear-gradient(90deg,var(--rust),var(--cyan));
-    }
-
-    .hero h1{
-      font-size:clamp(5rem,9.4vw,10.6rem);
-      line-height:.82;
-      letter-spacing:-.065em;
-      text-wrap:balance;
-    }
-
-    .hero h1 em{
-      background:linear-gradient(120deg,var(--rust),var(--violet),var(--cyan));
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-      background-clip:text;
-      position:relative;
-    }
-
-    .hero h1 em:after{
-      content:"";
-      position:absolute;
-      left:2%;
-      right:2%;
-      bottom:.03em;
-      height:.08em;
-      border-radius:999px;
-      background:linear-gradient(90deg,var(--rust),var(--violet),var(--cyan));
-      opacity:.65;
-      transform:rotate(-1.5deg);
-    }
-
-    .hero-lead{
-      font-size:1.19rem;
-      color:#32465d;
-      max-width:640px;
-    }
-
-    .btn{
-      border-radius:999px;
-      border:1px solid rgba(13,27,45,.28);
-      transition:.25s ease;
-      box-shadow:0 8px 26px rgba(11,22,39,.04);
-    }
-
-    .btn-dark{
-      border:0;
-      background:linear-gradient(135deg,var(--ink),#1d3554);
-      color:#fff;
-      box-shadow:0 14px 30px rgba(7,17,31,.18);
-    }
-
-    .btn:hover{
-      transform:translateY(-3px);
-      box-shadow:0 16px 32px rgba(47,107,255,.15);
-      background:linear-gradient(135deg,var(--rust),var(--violet));
-      color:#fff;
-      border-color:transparent;
-    }
-
-    .hero-panel{
-      background:
-        radial-gradient(circle at 85% 12%, rgba(66,213,255,.22), transparent 28%),
-        radial-gradient(circle at 15% 80%, rgba(122,92,255,.20), transparent 34%),
-        linear-gradient(145deg,#0b1a2c,#112f57 50%,#10274a);
-      border-left:0;
-      position:relative;
-    }
-
-    .hero-panel:after{
-      content:"";
-      position:absolute;
-      width:260px;
-      height:260px;
-      right:-80px;
-      bottom:-70px;
-      border:1px solid rgba(255,255,255,.16);
-      border-radius:50%;
-      box-shadow:
-        0 0 0 38px rgba(255,255,255,.03),
-        0 0 0 78px rgba(255,255,255,.02);
-    }
-
-    .panel-badge{
-      width:96px;
-      height:96px;
-      border-color:rgba(255,255,255,.55);
-      box-shadow:inset 0 0 0 8px rgba(255,255,255,.03);
-    }
-
-    .panel-copy h2{
-      font-size:clamp(3rem,5.2vw,5.8rem);
-      letter-spacing:-.05em;
-    }
-
-    .marquee{
-      background:
-        linear-gradient(90deg,var(--cyan),#a9ebff 35%,#c5d9ff 70%,#cfc4ff);
-      border-bottom:1px solid rgba(13,27,45,.16);
-    }
-
-    .marquee-track span{
-      font-size:1.7rem;
-      color:#102037;
-    }
-
-    .section{
-      border-bottom:1px solid rgba(13,27,45,.14);
-    }
-
-    .section-title{
-      background:linear-gradient(135deg,#0b1625 20%,#193d67 70%,#2f6bff);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-      background-clip:text;
-    }
-
-    .about-grid{
-      border:1px solid rgba(13,27,45,.18);
-      border-radius:28px;
-      overflow:hidden;
-      box-shadow:0 28px 70px rgba(25,55,95,.08);
-    }
-
-    .about-story{
-      background:
-        linear-gradient(145deg,#ffffff,#f5f9ff);
-      border-right:1px solid rgba(13,27,45,.14);
-    }
-
-    .about-item{
-      border-bottom:1px solid rgba(13,27,45,.12);
-      transition:.25s ease;
-      background:rgba(255,255,255,.64);
-    }
-
-    .about-item:hover{
-      background:linear-gradient(90deg,rgba(47,107,255,.07),rgba(66,213,255,.04));
-      transform:translateX(5px);
-    }
-
-    .about-num{
-      color:var(--rust);
-    }
-
-    .services{
-      border:0;
-      gap:18px;
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-    }
-
-    .service{
-      min-height:340px;
-      border:1px solid rgba(13,27,45,.14);
-      border-radius:24px;
-      background:rgba(255,255,255,.72);
-      backdrop-filter:blur(12px);
-      box-shadow:0 18px 50px rgba(17,45,85,.06);
-      position:relative;
-      overflow:hidden;
-    }
-
-    .service:before{
-      content:"";
-      position:absolute;
-      width:120px;
-      height:120px;
-      border-radius:50%;
-      right:-30px;
-      top:-30px;
-      background:radial-gradient(circle,rgba(66,213,255,.18),transparent 70%);
-      transition:.3s ease;
-    }
-
-    .service:hover{
-      background:
-        radial-gradient(circle at 90% 10%,rgba(66,213,255,.22),transparent 26%),
-        linear-gradient(145deg,#0c1830,#153d68);
-      color:#fff;
-      transform:translateY(-8px);
-      box-shadow:0 28px 70px rgba(47,107,255,.18);
-      border-color:transparent;
-    }
-
-    .service:hover:before{
-      transform:scale(1.4);
-    }
-
-    .service h3{
-      font-size:2.5rem;
-      letter-spacing:-.03em;
-    }
-
-    .process-list{
-      border-top:1px solid rgba(13,27,45,.14);
-    }
-
-    .process-row{
-      border-bottom:1px solid rgba(13,27,45,.14);
-      transition:.25s ease;
-      padding:34px 18px;
-      border-radius:18px;
-    }
-
-    .process-row:hover{
-      background:linear-gradient(90deg,rgba(47,107,255,.06),rgba(66,213,255,.04));
-      transform:translateX(6px);
-    }
-
-    .process-no{
-      color:var(--violet);
-    }
-
-    .why-wrap{
-      border:0;
-      gap:18px;
-    }
-
-    .why-card,
-    .why-card:nth-child(even),
-    .why-card:nth-last-child(-n+2){
-      border:1px solid rgba(13,27,45,.14);
-      border-radius:24px;
-      background:rgba(255,255,255,.74);
-      box-shadow:0 16px 50px rgba(17,45,85,.05);
-      transition:.25s ease;
-    }
-
-    .why-card:hover{
-      transform:translateY(-7px);
-      box-shadow:0 26px 70px rgba(47,107,255,.14);
-      background:
-        linear-gradient(145deg,#ffffff,#eef5ff);
-    }
-
-    .contact{
-      background:
-        radial-gradient(circle at 12% 15%,rgba(66,213,255,.18),transparent 26%),
-        radial-gradient(circle at 90% 80%,rgba(122,92,255,.22),transparent 28%),
-        linear-gradient(135deg,#0a1424,#17375f 55%,#204f84);
-      border-bottom:0;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .contact:before{
-      content:"";
-      position:absolute;
-      inset:0;
-      opacity:.08;
-      background-image:
-        linear-gradient(rgba(255,255,255,.18) 1px, transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.18) 1px, transparent 1px);
-      background-size:42px 42px;
-    }
-
-    .contact-grid{
-      position:relative;
-      z-index:1;
-    }
-
-    .contact h2{
-      background:linear-gradient(120deg,#fff,#bdeeff,#cfc8ff);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-      background-clip:text;
-    }
-
-    footer{
-      background:#07111f;
-      color:#dce6f5;
-    }
-
-    @media(max-width:1050px){
-      .hero-copy{
-        border-right:0;
-        border-bottom:1px solid rgba(13,27,45,.14);
-      }
-      .services{
-        grid-template-columns:repeat(2,1fr);
-      }
-    }
-
-    @media(max-width:700px){
-      .nav{height:76px}
-      .hero-grid{min-height:auto}
-      .hero-copy{padding:64px 0 50px}
-      .hero h1{font-size:clamp(4.2rem,22vw,7.2rem)}
-      .services{grid-template-columns:1fr}
-      .service{min-height:300px}
-      .about-grid{border-radius:22px}
-      .why-wrap{gap:14px}
-    }
-
-
-    /* ===== HEADER / MOBILE MENU FIX ===== */
-    .mobile-menu{
-      display:none;
-    }
-
-    @media (min-width:1051px){
-      .mobile-menu,
-      .mobile-menu.open{
-        display:none !important;
-      }
-    }
-
-    @media (max-width:1050px){
-      .site-header{
-        overflow:visible;
-      }
-
-      .nav{
-        height:78px;
-        grid-template-columns:1fr auto;
-        gap:14px;
-      }
-
-      .brand{
-        min-width:0;
-      }
-
-      .brand img{
-        width:40px;
-        height:40px;
-        flex:0 0 40px;
-      }
-
-      .brand span{
-        font-size:1.55rem;
-        white-space:nowrap;
-      }
-
-      .nav-links,
-      .nav-cta{
-        display:none !important;
-      }
-
-      .menu-btn{
-        display:grid !important;
-        place-items:center;
-        justify-self:end;
-        width:44px;
-        height:44px;
-        border-radius:12px;
-        border:1px solid rgba(13,27,45,.18);
-        background:#fff;
-        color:var(--ink);
-        box-shadow:0 8px 24px rgba(7,17,31,.08);
-      }
-
-      .mobile-menu{
-        display:none;
-        position:absolute;
-        top:100%;
-        left:14px;
-        right:14px;
-        padding:14px;
-        border:1px solid rgba(13,27,45,.12);
-        border-radius:18px;
-        background:rgba(255,255,255,.98);
-        box-shadow:0 22px 60px rgba(7,17,31,.16);
-        z-index:999;
-      }
-
-      .mobile-menu.open{
-        display:grid !important;
-        gap:4px;
-      }
-
-      .mobile-menu a{
-        display:flex;
-        align-items:center;
-        min-height:48px;
-        padding:10px 14px;
-        border-radius:12px;
-        font-family:var(--sans);
-        font-size:1rem;
-        font-weight:700;
-        letter-spacing:-.01em;
-      }
-
-      .mobile-menu a:hover{
-        background:var(--soft-blue);
-        color:var(--rust);
-      }
-    }
-
-    @media (max-width:700px){
-      .container{
-        width:min(100% - 28px, 1440px);
-      }
-
-      .nav{
-        height:72px;
-      }
-
-      .brand img{
-        width:36px;
-        height:36px;
-        flex-basis:36px;
-      }
-
-      .brand span{
-        font-size:1.4rem;
-      }
-
-      .menu-btn{
-        width:40px;
-        height:40px;
-      }
-
-      .hero{
-        padding-top:0;
-      }
-
-      .hero-copy{
-        padding-top:54px;
-      }
-
-      .section:first-of-type{
-        scroll-margin-top:84px;
-      }
-    }
-
-</style>
+  <link rel="stylesheet" href="src/styles/app.css">
 </head>
-
 <body>
 
-<header class="site-header">
+<header class="site-header" data-header>
   <div class="container nav">
     <a class="brand" href="#top">
       <img src="favico.png" alt="AIHope logo">
-      <span>AIHope</span>
+      <span>AIHOPE</span>
     </a>
 
     <nav class="nav-links" aria-label="Main navigation">
       <a href="#about">About</a>
       <a href="founder.html">Founder</a>
-      <a href="#services">Services</a>
-      <a href="#process">Process</a>
-      <a href="#why">Why Us</a>
+      <a href="#story">Journey</a>
+      <a href="#work">Work</a>
       <a href="#contact">Contact</a>
     </nav>
 
@@ -1166,15 +35,14 @@
       Start a project
     </a>
 
-    <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">☰</button>
   </div>
 
   <div class="mobile-menu" id="mobileMenu">
     <a href="#about">About</a>
     <a href="founder.html">Founder</a>
-    <a href="#services">Services</a>
-    <a href="#process">Process</a>
-    <a href="#why">Why Us</a>
+    <a href="#story">Journey</a>
+    <a href="#work">Work</a>
     <a href="#contact">Contact</a>
     <a href="https://wa.me/821094859943" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a>
   </div>
@@ -1182,72 +50,38 @@
 
 <main id="top">
 
+  <!-- SCENE 1 — opening -->
   <section class="hero">
-    <div class="container hero-grid">
-
-      <div class="hero-copy">
-        <div>
-          <div class="eyebrow">Independent digital studio</div>
-
-          <h1>
-            We build<br>
-            digital products<br>
-            that <em>matter.</em>
-          </h1>
-        </div>
-
-        <div class="hero-bottom">
-          <p class="hero-lead">
-            Custom websites, mobile applications and digital platforms built
-            for ambitious businesses. Clear strategy, thoughtful design and
-            modern engineering — without recycled templates.
-          </p>
-
-          <div class="hero-actions">
-            <a class="btn btn-dark" href="#services">Explore services</a>
-            <a class="btn" href="https://wa.me/821094859943" target="_blank" rel="noopener noreferrer">
-              Talk on WhatsApp
-            </a>
-          </div>
+    <h1 class="sr-only">AIHope — Custom Web &amp; Mobile Solutions</h1>
+    <canvas data-s1-canvas></canvas>
+    <div class="container hero-overlay">
+      <div class="hero-eyebrow" data-s1-eyebrow>Independent digital studio</div>
+      <div class="hero-bottom">
+        <p class="hero-lead" data-s1-lead>
+          Custom websites, mobile applications and digital platforms built for
+          ambitious businesses. Clear strategy, thoughtful design and modern
+          engineering — without recycled templates.
+        </p>
+        <div class="hero-actions" data-s1-actions>
+          <a class="btn btn-solid" href="#story">See our journey</a>
+          <a class="btn" href="https://wa.me/821094859943" target="_blank" rel="noopener noreferrer">Talk on WhatsApp</a>
         </div>
       </div>
-
-      <aside class="hero-panel">
-        <div class="panel-badge">Built<br>from<br>scratch</div>
-
-        <div class="panel-copy">
-          <small>AIHope / Web + Mobile + Design</small>
-          <h2>Good ideas deserve better digital experiences.</h2>
-          <p>
-            We combine strategy, interface design and development into one
-            focused process so your product looks distinctive and works hard.
-          </p>
-        </div>
-      </aside>
-
     </div>
+    <div class="scroll-cue" aria-hidden="true"><span></span>Scroll</div>
   </section>
 
   <div class="marquee" aria-hidden="true">
     <div class="marquee-track">
-      <span>Web Development</span>
-      <span>Mobile Apps</span>
-      <span>UI / UX</span>
-      <span>E-Commerce</span>
-      <span>Cloud & Backend</span>
-      <span>Product Strategy</span>
-      <span>Web Development</span>
-      <span>Mobile Apps</span>
-      <span>UI / UX</span>
-      <span>E-Commerce</span>
-      <span>Cloud & Backend</span>
-      <span>Product Strategy</span>
+      <span>Web Development</span><span>Mobile Apps</span><span>UI / UX</span>
+      <span>E-Commerce</span><span>Cloud & Backend</span><span>Product Strategy</span>
+      <span>Web Development</span><span>Mobile Apps</span><span>UI / UX</span>
+      <span>E-Commerce</span><span>Cloud & Backend</span><span>Product Strategy</span>
     </div>
   </div>
 
   <section class="section" id="about">
     <div class="container">
-
       <div class="section-head">
         <div class="section-kicker">01 / About</div>
         <h2 class="section-title">Small studio.<br>Serious capability.</h2>
@@ -1258,10 +92,8 @@
           <p>
             AIHope is a full-service digital studio creating custom web and mobile
             products for founders, growing teams and established businesses.
-            We design for clarity, build for performance and keep communication direct.
           </p>
         </div>
-
         <div class="about-stack">
           <div class="about-item">
             <div class="about-num">01</div>
@@ -1270,7 +102,6 @@
               <p>No generic templates. Every interface and feature is shaped around your goals, users and workflow.</p>
             </div>
           </div>
-
           <div class="about-item">
             <div class="about-num">02</div>
             <div>
@@ -1278,7 +109,6 @@
               <p>Strategy, UI/UX and engineering stay connected from the first wireframe through launch.</p>
             </div>
           </div>
-
           <div class="about-item">
             <div class="about-num">03</div>
             <div>
@@ -1288,196 +118,111 @@
           </div>
         </div>
       </div>
-
     </div>
   </section>
 
-  <section class="section" id="services">
-    <div class="container">
-
-      <div class="section-head">
-        <div class="section-kicker">02 / Services</div>
+  <!-- SCENE 2 — capabilities constellation -->
+  <section class="capabilities" data-s2>
+    <div class="capabilities-pin">
+      <canvas data-s2-canvas></canvas>
+      <div class="container capabilities-head">
+        <div class="section-kicker">02 / Capabilities</div>
         <h2 class="section-title">What we<br>make happen.</h2>
       </div>
+      <div class="cap-nodes" data-s2-nodes></div>
+    </div>
+  </section>
 
-      <div class="services">
-
-        <article class="service">
-          <span class="index">01 / SERVICE</span>
-          <h3>Custom Web Development</h3>
-          <p>High-performance websites and web applications using modern frameworks and clean, maintainable code.</p>
-        </article>
-
-        <article class="service">
-          <span class="index">02 / SERVICE</span>
-          <h3>Mobile App Development</h3>
-          <p>Native and cross-platform mobile products for iOS and Android with polished, intuitive experiences.</p>
-        </article>
-
-        <article class="service">
-          <span class="index">03 / SERVICE</span>
-          <h3>E-Commerce Solutions</h3>
-          <p>Online stores, payments, inventory and custom commerce flows designed around conversion and growth.</p>
-        </article>
-
-        <article class="service">
-          <span class="index">04 / SERVICE</span>
-          <h3>UI / UX Design</h3>
-          <p>Wireframes, prototypes and design systems that make complex products feel clear, useful and distinctive.</p>
-        </article>
-
-        <article class="service">
-          <span class="index">05 / SERVICE</span>
-          <h3>Backend & Cloud</h3>
-          <p>APIs, cloud infrastructure and scalable backend systems engineered to grow with your business.</p>
-        </article>
-
-        <article class="service">
-          <span class="index">06 / SERVICE</span>
-          <h3>Maintenance & Support</h3>
-          <p>Updates, monitoring, performance improvements and ongoing technical support after launch.</p>
-        </article>
-
+  <!-- SCENE 3 — timeline -->
+  <section class="timeline-scene" id="story" data-s3>
+    <div class="timeline-pin">
+      <canvas data-s3-canvas></canvas>
+      <div class="container timeline-head">
+        <div class="section-kicker">03 / Journey</div>
+        <h2 class="section-title">Every year,<br>further.</h2>
       </div>
+      <div class="chrono-clock" data-s3-clock>
+        <div class="chrono-hand" data-s3-hand></div>
+        <div class="chrono-pivot"></div>
+      </div>
+      <div class="timeline-rail" data-s3-rail></div>
+    </div>
+  </section>
+
+  <!-- SCENE 4 — project gallery -->
+  <section class="gallery" id="work" data-s4>
+    <canvas class="gallery-plate" data-s4-canvas></canvas>
+    <div class="container" style="position:relative;z-index:1">
+      <div class="section-head">
+        <div class="section-kicker">04 / Selected Work</div>
+        <h2 class="section-title">A universe of<br>shipped products.</h2>
+      </div>
+      <div class="project-grid" data-s4-grid></div>
     </div>
   </section>
 
   <section class="section" id="process">
     <div class="container">
-
       <div class="section-head">
-        <div class="section-kicker">03 / Process</div>
+        <div class="section-kicker">05 / Process</div>
         <h2 class="section-title">Simple process.<br>Better outcomes.</h2>
       </div>
-
       <div class="process-list">
-
-        <div class="process-row">
-          <div class="process-no">01</div>
-          <h3>Discovery</h3>
-          <p>We define your audience, business goals, technical needs and what success should look like.</p>
-        </div>
-
-        <div class="process-row">
-          <div class="process-no">02</div>
-          <h3>Design</h3>
-          <p>We shape the structure, visual direction and interaction model before development begins.</p>
-        </div>
-
-        <div class="process-row">
-          <div class="process-no">03</div>
-          <h3>Development</h3>
-          <p>We build with modern, maintainable technology and give you clear progress updates throughout.</p>
-        </div>
-
-        <div class="process-row">
-          <div class="process-no">04</div>
-          <h3>Testing</h3>
-          <p>We validate responsive behavior, usability, performance and browser compatibility before launch.</p>
-        </div>
-
-        <div class="process-row">
-          <div class="process-no">05</div>
-          <h3>Launch</h3>
-          <p>Deployment, DNS configuration and go-live support are handled so the transition is smooth.</p>
-        </div>
-
-        <div class="process-row">
-          <div class="process-no">06</div>
-          <h3>Growth</h3>
-          <p>We support improvements, updates and future product development as your business evolves.</p>
-        </div>
-
+        <div class="process-row"><div class="process-no">01</div><h3>Discovery</h3><p>We define your audience, business goals, technical needs and what success should look like.</p></div>
+        <div class="process-row"><div class="process-no">02</div><h3>Design</h3><p>We shape the structure, visual direction and interaction model before development begins.</p></div>
+        <div class="process-row"><div class="process-no">03</div><h3>Development</h3><p>We build with modern, maintainable technology and give you clear progress updates throughout.</p></div>
+        <div class="process-row"><div class="process-no">04</div><h3>Testing</h3><p>We validate responsive behavior, usability, performance and browser compatibility before launch.</p></div>
+        <div class="process-row"><div class="process-no">05</div><h3>Launch</h3><p>Deployment, DNS configuration and go-live support are handled so the transition is smooth.</p></div>
+        <div class="process-row"><div class="process-no">06</div><h3>Growth</h3><p>We support improvements, updates and future product development as your business evolves.</p></div>
       </div>
     </div>
   </section>
 
   <section class="section" id="why">
     <div class="container">
-
       <div class="section-head">
-        <div class="section-kicker">04 / Why AIHope</div>
+        <div class="section-kicker">06 / Why AIHope</div>
         <h2 class="section-title">Built differently.<br>Delivered right.</h2>
       </div>
-
       <div class="why-wrap">
-
-        <article class="why-card">
-          <h3>Fast Turnaround</h3>
-          <p>Focused workflows keep projects moving quickly without sacrificing the details that make the product feel finished.</p>
-        </article>
-
-        <article class="why-card">
-          <h3>100% Custom</h3>
-          <p>Every project starts with your actual problem rather than forcing your business into a pre-built template.</p>
-        </article>
-
-        <article class="why-card">
-          <h3>Direct Communication</h3>
-          <p>You can speak directly with the people designing and building your product, so decisions happen faster.</p>
-        </article>
-
-        <article class="why-card">
-          <h3>Transparent Pricing</h3>
-          <p>Clear project scope and straightforward estimates help you understand exactly what you are paying for.</p>
-        </article>
-
-        <article class="why-card">
-          <h3>Results Focused</h3>
-          <p>We care about what the product achieves — leads, sales, usability, retention and operational efficiency.</p>
-        </article>
-
-        <article class="why-card">
-          <h3>Post-launch Support</h3>
-          <p>Launching is not the finish line. We can continue supporting, refining and extending your digital product.</p>
-        </article>
-
+        <article class="why-card"><h3>Fast Turnaround</h3><p>Focused workflows keep projects moving quickly without sacrificing the details that make the product feel finished.</p></article>
+        <article class="why-card"><h3>100% Custom</h3><p>Every project starts with your actual problem rather than forcing your business into a pre-built template.</p></article>
+        <article class="why-card"><h3>Direct Communication</h3><p>You can speak directly with the people designing and building your product, so decisions happen faster.</p></article>
+        <article class="why-card"><h3>Transparent Pricing</h3><p>Clear project scope and straightforward estimates help you understand exactly what you are paying for.</p></article>
+        <article class="why-card"><h3>Results Focused</h3><p>We care about what the product achieves — leads, sales, usability, retention and operational efficiency.</p></article>
+        <article class="why-card"><h3>Post-launch Support</h3><p>Launching is not the finish line. We can continue supporting, refining and extending your digital product.</p></article>
       </div>
     </div>
   </section>
 
   <section class="contact" id="contact">
     <div class="container contact-grid">
-      <h2>Have an idea?<br>Let’s build it.</h2>
-
+      <h2>Have an idea?<br>Let's build it.</h2>
       <div class="contact-side">
-        <p>
-          Tell us what you are trying to create. We can help turn the idea into
-          a clear, polished and production-ready digital product.
-        </p>
+        <p>Tell us what you are trying to create. We can help turn the idea into a clear, polished and production-ready digital product.</p>
+        <a class="btn btn-solid" href="https://wa.me/821094859943" target="_blank" rel="noopener noreferrer">Start a conversation</a>
+      </div>
+    </div>
+  </section>
 
-        <a class="btn" href="https://wa.me/821094859943" target="_blank" rel="noopener noreferrer">
-          Start a conversation
-        </a>
+  <!-- SCENE 6 — finale -->
+  <section class="finale" data-s6>
+    <canvas data-s6-canvas></canvas>
+    <p class="finale-quote" data-s6-quote>
+      "Good ideas deserve better digital experiences — that's the whole reason AIHope exists."
+    </p>
+    <div class="container finale-row" data-s6-row>
+      <span>© 2026 AIHope — Custom Web &amp; Mobile Solutions</span>
+      <div class="finale-socials">
+        <a href="https://wa.me/821094859943" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        <a href="founder.html">Founder</a>
+        <a href="#top">Back to top</a>
       </div>
     </div>
   </section>
 
 </main>
 
-<footer>
-  <div class="container footer-row">
-    <span>© 2026 AIHope — Custom Web & Mobile Solutions</span>
-    <span>Web / Mobile / Design / Cloud</span>
-  </div>
-</footer>
-
-<script>
-  const menuBtn = document.getElementById('menuBtn');
-  const mobileMenu = document.getElementById('mobileMenu');
-
-  menuBtn.addEventListener('click', () => {
-    mobileMenu.classList.toggle('open');
-    menuBtn.textContent = mobileMenu.classList.contains('open') ? '✕' : '☰';
-  });
-
-  mobileMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      mobileMenu.classList.remove('open');
-      menuBtn.textContent = '☰';
-    });
-  });
-</script>
-
+<script type="module" src="src/main.js"></script>
 </body>
 </html>

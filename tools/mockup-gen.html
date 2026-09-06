@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AIHope mockup generator</title>
+<style>
+  @font-face{ font-family:'Oswald'; src:url('../public/fonts/oswald-400.woff2') format('woff2'); font-weight:400; }
+  @font-face{ font-family:'Oswald'; src:url('../public/fonts/oswald-500.woff2') format('woff2'); font-weight:500; }
+  @font-face{ font-family:'Oswald'; src:url('../public/fonts/oswald-600.woff2') format('woff2'); font-weight:600; }
+  @font-face{ font-family:'Oswald'; src:url('../public/fonts/oswald-700.woff2') format('woff2'); font-weight:700; }
+
+  *{ box-sizing:border-box; margin:0; padding:0; font-family:'Oswald',Arial,sans-serif; }
+  body{ background:#333; padding:40px; display:flex; flex-wrap:wrap; gap:40px; }
+
+  .frame{ width:960px; height:640px; position:relative; overflow:hidden; border-radius:4px; }
+  .light{ background:#f3f5f9; color:#131a29; }
+  .dark{ background:#0b0f18; color:#f2f5fb; }
+
+  /* ---- shared brand mark ---- */
+  .brand{ display:flex; align-items:center; gap:10px; }
+  .brand .badge{
+    width:30px; height:30px; border-radius:9px; display:grid; place-items:center;
+    background:linear-gradient(135deg,#2f6bff,#42d5ff); color:#fff; font-weight:700; font-size:12px; letter-spacing:-.02em;
+  }
+  .brand .word{ font-weight:600; font-size:17px; letter-spacing:-.01em; }
+  .light .brand .word{ color:#131a29; }
+  .dark .brand .word{ color:#f2f5fb; }
+
+  /* ---- shared topbar ---- */
+  .topbar{ height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; border-bottom:1px solid rgba(0,0,0,.06); }
+  .dark .topbar{ border-bottom:1px solid rgba(255,255,255,.08); }
+  .search{ width:280px; height:36px; border-radius:10px; background:rgba(0,0,0,.05); display:flex; align-items:center; gap:8px; padding:0 12px; color:#7c8aa0; font-size:12px; }
+  .dark .search{ background:rgba(255,255,255,.06); color:#8a97ad; }
+  .topright{ display:flex; align-items:center; gap:14px; }
+  .icon-dot{ width:34px; height:34px; border-radius:50%; background:rgba(0,0,0,.05); display:grid; place-items:center; position:relative; }
+  .dark .icon-dot{ background:rgba(255,255,255,.07); }
+  .icon-dot:after{ content:""; position:absolute; top:6px; right:7px; width:7px; height:7px; border-radius:50%; background:#2f6bff; }
+  .avatar{ width:36px; height:36px; border-radius:50%; display:grid; place-items:center; color:#fff; font-size:12px; font-weight:700; background:linear-gradient(135deg,#7a5cff,#42d5ff); }
+
+  /* ---- sidebar ---- */
+  .sidebar{ position:absolute; left:0; top:0; bottom:0; width:76px; background:#0d1424; display:flex; flex-direction:column; align-items:center; padding:22px 0; gap:20px; }
+  .sidebar .badge{ margin-bottom:14px; }
+  .navdot{ width:38px; height:38px; border-radius:11px; display:grid; place-items:center; color:#5c6b85; }
+  .navdot svg{ width:18px; height:18px; }
+  .navdot.active{ background:linear-gradient(135deg,#2f6bff,#42d5ff); color:#fff; }
+
+  /* ---- kpi card ---- */
+  .kpi{ border-radius:16px; padding:18px 20px; background:#fff; box-shadow:0 8px 24px rgba(20,30,60,.06); }
+  .dark .kpi{ background:rgba(255,255,255,.04); box-shadow:none; border:1px solid rgba(255,255,255,.08); }
+  .kpi .lbl{ font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:#8a93a6; }
+  .kpi .val{ font-size:26px; font-weight:700; margin-top:8px; letter-spacing:-.02em; }
+  .kpi .trend{ font-size:11px; margin-top:6px; font-weight:600; }
+  .trend.up{ color:#1fb47a; } .trend.down{ color:#ff5470; }
+
+  /* ---- card ---- */
+  .card{ border-radius:16px; padding:20px 22px; background:#fff; box-shadow:0 8px 24px rgba(20,30,60,.06); }
+  .dark .card{ background:rgba(255,255,255,.04); box-shadow:none; border:1px solid rgba(255,255,255,.08); }
+  .card h4{ font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:#5c6b85; }
+  .dark .card h4{ color:#95a1b8; }
+
+  /* ---- table ---- */
+  .trow{ display:flex; align-items:center; padding:12px 0; border-bottom:1px solid rgba(0,0,0,.05); font-size:13px; }
+  .dark .trow{ border-bottom:1px solid rgba(255,255,255,.07); }
+  .pill{ font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; padding:5px 11px; border-radius:999px; }
+  .pill.green{ background:#dff7ec; color:#1a9a63; } .dark .pill.green{ background:rgba(31,180,122,.18); color:#3fe0a5; }
+  .pill.gray{ background:#eceff4; color:#6b7590; } .dark .pill.gray{ background:rgba(255,255,255,.08); color:#9aa5ba; }
+  .pill.amber{ background:#fdf0da; color:#b5750a; } .dark .pill.amber{ background:rgba(255,180,60,.16); color:#ffbf5c; }
+  .pill.blue{ background:#e3edff; color:#2f6bff; } .dark .pill.blue{ background:rgba(66,213,255,.16); color:#7fe3ff; }
+
+  .btn{ display:inline-flex; align-items:center; justify-content:center; padding:11px 20px; border-radius:10px; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; }
+  .btn.primary{ background:linear-gradient(135deg,#2f6bff,#42d5ff); color:#fff; }
+  .btn.ghost{ border:1px solid rgba(0,0,0,.15); color:#131a29; }
+  .dark .btn.ghost{ border:1px solid rgba(255,255,255,.25); color:#fff; }
+
+  svg.spark{ display:block; }
+  .frame-label{ position:absolute; left:14px; bottom:12px; font-size:11px; letter-spacing:.05em; color:rgba(255,255,255,.4); text-transform:uppercase; }
+</style>
+</head>
+<body>
+
+<!-- 01 WEB APP -->
+<div class="frame light" data-frame="p01_webapp">
+  <div class="sidebar">
+    <div class="badge">AH</div>
+    <div class="navdot active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
+    <div class="navdot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5m8 14V9m8 10V13"/></svg></div>
+    <div class="navdot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div>
+    <div class="navdot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div>
+  </div>
+  <div style="margin-left:76px">
+    <div class="topbar">
+      <div class="brand"><span class="word">aihope CRM</span></div>
+      <div class="search"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>Search dashboard…</div>
+      <div class="topright"><div class="icon-dot"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c8aa0" stroke-width="2"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/></svg></div><div class="avatar">JD</div></div>
+    </div>
+    <div style="padding:24px 26px; display:grid; grid-template-columns:repeat(3,1fr); gap:18px">
+      <div class="kpi"><div class="lbl">Live Sales</div><div class="val">$18.29K</div><div class="trend up">▲ 12.4% this week</div></div>
+      <div class="kpi"><div class="lbl">Expenses</div><div class="val">$5,908</div><div class="trend down">▼ 3.1% this week</div></div>
+      <div class="kpi"><div class="lbl">Net Profit</div><div class="val">$12.35K</div><div class="trend up">▲ 18.9% this week</div></div>
+    </div>
+    <div style="padding:0 26px 24px; display:grid; grid-template-columns:1.6fr 1fr; gap:18px">
+      <div class="card">
+        <h4>Revenue Analytics</h4>
+        <svg class="spark" width="100%" height="180" viewBox="0 0 560 180" preserveAspectRatio="none">
+          <polyline points="0,140 60,120 120,130 180,90 240,100 300,60 360,75 420,40 480,55 540,20" fill="none" stroke="#2f6bff" stroke-width="3"/>
+          <polygon points="0,140 60,120 120,130 180,90 240,100 300,60 360,75 420,40 480,55 540,20 540,180 0,180" fill="url(#g1)" opacity=".18"/>
+          <defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2f6bff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
+        </svg>
+      </div>
+      <div class="card">
+        <h4>Profile</h4>
+        <div style="display:flex;align-items:center;gap:12px;margin-top:14px"><div class="avatar" style="width:52px;height:52px;font-size:16px">JD</div><div><div style="font-weight:700;font-size:15px">Juser Profile</div><div style="font-size:12px;color:#8a93a6">@aihopeuser</div></div></div>
+        <div style="margin-top:18px;display:flex;justify-content:space-between;font-size:12px;color:#5c6b85"><span>Live Deals</span><b style="color:#131a29">22</b></div>
+        <div style="margin-top:8px;display:flex;justify-content:space-between;font-size:12px;color:#5c6b85"><span>Closed</span><b style="color:#131a29">1006</b></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 02 MOBILE APP -->
+<div class="frame dark" data-frame="p02_mobile" style="background:linear-gradient(150deg,#0a1220,#182a4d 60%,#0a1220)">
+  <div style="position:absolute; left:250px; top:70px; width:230px; height:480px; border-radius:34px; border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.02); filter:blur(1px); opacity:.5"></div>
+  <div style="position:absolute; left:365px; top:60px; width:230px; height:500px; border-radius:36px; border:6px solid #131b2e; background:#0d1220; box-shadow:0 40px 90px rgba(0,0,0,.5)">
+    <div style="padding:22px 20px">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:11px;color:#8a97ad">9:41</span><span style="font-size:11px;color:#8a97ad">●●●</span></div>
+      <div style="margin-top:18px;font-size:13px;color:#8a97ad">Total Balance</div>
+      <div style="font-size:30px;font-weight:700;margin-top:6px">$5,908.12</div>
+      <div style="display:flex;gap:10px;margin-top:18px">
+        <div class="btn primary" style="flex:1">Send</div>
+        <div class="btn ghost" style="flex:1">Add</div>
+      </div>
+      <svg class="spark" width="100%" height="70" viewBox="0 0 190 70" style="margin-top:22px" preserveAspectRatio="none">
+        <polyline points="0,50 20,40 40,45 60,25 80,35 100,15 120,28 140,10 160,22 190,5" fill="none" stroke="#42d5ff" stroke-width="3"/>
+      </svg>
+      <div style="margin-top:22px;font-size:11px;color:#8a97ad;text-transform:uppercase;letter-spacing:.08em">Recent</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;font-size:12px"><span>Spotify</span><b>-$9.99</b></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:12px"><span>Client Payout</span><b style="color:#3fe0a5">+$820.00</b></div>
+    </div>
+  </div>
+  <div class="frame-label">aihope wallet</div>
+</div>
+
+<!-- 03 E-COMMERCE -->
+<div class="frame light" data-frame="p03_ecommerce">
+  <div class="topbar"><div class="brand"><div class="badge">AH</div><span class="word">aihope shop</span></div><div class="topright"><div class="icon-dot"></div><div class="avatar">MK</div></div></div>
+  <div style="display:grid; grid-template-columns:.9fr 1.1fr; gap:40px; padding:34px 40px">
+    <div style="display:flex;gap:14px">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,#e3edff,#c9e8ff)"></div>
+        <div style="width:64px;height:64px;border-radius:12px;background:#eceff4"></div>
+        <div style="width:64px;height:64px;border-radius:12px;background:#eceff4"></div>
+        <div style="width:64px;height:64px;border-radius:12px;background:#eceff4"></div>
+      </div>
+      <div style="flex:1;border-radius:20px;background:linear-gradient(160deg,#dbe9ff,#f3f5f9 70%); display:grid; place-items:center">
+        <div style="width:140px;height:140px;border-radius:50%;background:linear-gradient(135deg,#2f6bff,#42d5ff);opacity:.85"></div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:11px;color:#8a93a6;text-transform:uppercase;letter-spacing:.08em">Footwear / Premium</div>
+      <div style="font-size:30px;font-weight:700;margin-top:10px;letter-spacing:-.02em">Premium Item Detail</div>
+      <div style="color:#ffb43c;margin-top:10px;font-size:14px">★★★★★ <span style="color:#8a93a6;font-size:12px">(214 reviews)</span></div>
+      <div style="font-size:26px;font-weight:700;margin-top:16px;color:#2f6bff">$199.00</div>
+      <div style="display:flex;gap:10px;margin-top:20px">
+        <div style="width:28px;height:28px;border-radius:50%;background:#131a29"></div>
+        <div style="width:28px;height:28px;border-radius:50%;background:#2f6bff"></div>
+        <div style="width:28px;height:28px;border-radius:50%;background:#c9924a"></div>
+        <div style="width:28px;height:28px;border-radius:50%;background:#8a93a6"></div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:20px">
+        <div class="pill gray" style="padding:10px 16px">S</div><div class="pill gray" style="padding:10px 16px">M</div><div class="pill blue" style="padding:10px 16px">L</div><div class="pill gray" style="padding:10px 16px">XL</div>
+      </div>
+      <div class="btn primary" style="margin-top:28px;width:220px">Add to Cart</div>
+    </div>
+  </div>
+</div>
+
+<!-- 04 DASHBOARD -->
+<div class="frame light" data-frame="p04_dashboard">
+  <div class="topbar"><div class="brand"><div class="badge">AH</div><span class="word">Overview</span></div><div class="pill blue">Last 30 days</div></div>
+  <div style="padding:24px 30px; display:grid; grid-template-columns:repeat(4,1fr); gap:16px">
+    <div class="kpi"><div class="lbl">Visitors</div><div class="val">48.2K</div><div class="trend up">▲ 8.2%</div></div>
+    <div class="kpi"><div class="lbl">Conversions</div><div class="val">3,204</div><div class="trend up">▲ 4.6%</div></div>
+    <div class="kpi"><div class="lbl">Revenue</div><div class="val">$92.4K</div><div class="trend up">▲ 21.3%</div></div>
+    <div class="kpi"><div class="lbl">Churn</div><div class="val">1.8%</div><div class="trend down">▼ 0.4%</div></div>
+  </div>
+  <div style="padding:0 30px; display:grid; grid-template-columns:1.7fr 1fr; gap:16px">
+    <div class="card">
+      <h4>Growth</h4>
+      <svg width="100%" height="220" viewBox="0 0 560 160">
+        <g>
+          <rect x="10" y="80" width="30" height="80" rx="4" fill="#dbe6ff"/><rect x="60" y="60" width="30" height="100" rx="4" fill="#c1d6ff"/>
+          <rect x="110" y="40" width="30" height="120" rx="4" fill="#8fb4ff"/><rect x="160" y="55" width="30" height="105" rx="4" fill="#c1d6ff"/>
+          <rect x="210" y="20" width="30" height="140" rx="4" fill="#2f6bff"/><rect x="260" y="45" width="30" height="115" rx="4" fill="#8fb4ff"/>
+          <rect x="310" y="30" width="30" height="130" rx="4" fill="#42d5ff"/><rect x="360" y="60" width="30" height="100" rx="4" fill="#c1d6ff"/>
+          <rect x="410" y="15" width="30" height="145" rx="4" fill="#2f6bff"/><rect x="460" y="50" width="30" height="110" rx="4" fill="#8fb4ff"/>
+          <rect x="510" y="35" width="30" height="125" rx="4" fill="#42d5ff"/>
+        </g>
+      </svg>
+    </div>
+    <div class="card" style="display:flex;flex-direction:column;align-items:center;justify-content:center">
+      <h4 style="align-self:flex-start">Channels</h4>
+      <div style="width:130px;height:130px;border-radius:50%;margin-top:16px;background:conic-gradient(#2f6bff 0 40%, #42d5ff 40% 65%, #7a5cff 65% 85%, #eceff4 85% 100%)"></div>
+      <div style="display:flex;gap:12px;margin-top:16px;font-size:11px;color:#5c6b85"><span>● Organic</span><span>● Social</span><span>● Ads</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 05 LANDING PAGE -->
+<div class="frame dark" data-frame="p05_landing" style="background:radial-gradient(circle at 80% 20%, rgba(66,213,255,.18), transparent 45%), radial-gradient(circle at 10% 90%, rgba(122,92,255,.2), transparent 40%), #090d16">
+  <div class="topbar" style="border-bottom:1px solid rgba(255,255,255,.06)">
+    <div class="brand"><div class="badge">AH</div><span class="word">aihope</span></div>
+    <div style="display:flex;gap:28px;font-size:12px;color:#aab4c6;text-transform:uppercase;letter-spacing:.06em"><span>Product</span><span>Pricing</span><span>Docs</span></div>
+    <div class="btn primary">Get Started</div>
+  </div>
+  <div style="padding:70px 60px">
+    <div style="font-size:44px;font-weight:700;line-height:1.05;max-width:560px;letter-spacing:-.02em">Launch your product<br>before <span style="background:linear-gradient(120deg,#42d5ff,#7a5cff);-webkit-background-clip:text;-webkit-text-fill-color:transparent">everyone else.</span></div>
+    <div style="margin-top:20px;color:#aab4c6;max-width:460px;font-size:14px;line-height:1.6">A launch page built to convert — fast, clear, and ready for real traffic on day one.</div>
+    <div style="display:flex;gap:12px;margin-top:30px"><div class="btn primary">Start free trial</div><div class="btn ghost">Watch demo</div></div>
+  </div>
+  <div class="card" style="position:absolute; right:60px; bottom:60px; width:300px">
+    <h4>Product Performance</h4>
+    <div style="font-size:24px;font-weight:700;margin-top:10px">+184%</div>
+    <svg class="spark" width="100%" height="50" viewBox="0 0 260 50" preserveAspectRatio="none" style="margin-top:8px">
+      <polyline points="0,40 40,30 80,35 120,15 160,22 200,8 260,4" fill="none" stroke="#42d5ff" stroke-width="3"/>
+    </svg>
+  </div>
+</div>
+
+<!-- 06 BOOKING PLATFORM -->
+<div class="frame light" data-frame="p06_booking">
+  <div class="topbar"><div class="brand"><div class="badge">AH</div><span class="word">Bookings — March 2026</span></div><div class="btn primary">New Booking</div></div>
+  <div style="display:grid; grid-template-columns:1.1fr 1fr; gap:20px; padding:26px 30px">
+    <div class="card">
+      <h4>Calendar</h4>
+      <div id="gen-calendar" style="display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:16px"></div>
+    </div>
+    <div class="card">
+      <h4>Upcoming</h4>
+      <div class="trow"><div class="avatar" style="width:30px;height:30px;font-size:10px;margin-right:10px">RA</div><div style="flex:1"><div style="font-weight:600">Deep Clean — 2:00 PM</div><div style="font-size:11px;color:#8a93a6">Rina A.</div></div><div class="pill green">Confirmed</div></div>
+      <div class="trow"><div class="avatar" style="width:30px;height:30px;font-size:10px;margin-right:10px">TJ</div><div style="flex:1"><div style="font-weight:600">Consultation — 4:30 PM</div><div style="font-size:11px;color:#8a93a6">Tom J.</div></div><div class="pill amber">Pending</div></div>
+      <div class="trow"><div class="avatar" style="width:30px;height:30px;font-size:10px;margin-right:10px">SL</div><div style="flex:1"><div style="font-weight:600">Studio Session — 6:00 PM</div><div style="font-size:11px;color:#8a93a6">Sam L.</div></div><div class="pill green">Confirmed</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 07 SAAS PRODUCT -->
+<div class="frame dark" data-frame="p07_saas">
+  <div class="topbar" style="justify-content:center;border-bottom:0"><div style="font-size:22px;font-weight:700">Choose your plan</div></div>
+  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; padding:20px 50px">
+    <div class="card"><h4>Starter</h4><div style="font-size:30px;font-weight:700;margin-top:12px">$19<span style="font-size:13px;color:#95a1b8">/mo</span></div>
+      <div style="margin-top:16px;font-size:12px;color:#c3ccdc;line-height:2.1">✓ 1 project<br>✓ Basic analytics<br>✓ Email support</div>
+      <div class="btn ghost" style="margin-top:18px;width:100%">Choose plan</div></div>
+    <div class="card" style="border:1px solid #42d5ff;position:relative">
+      <div class="pill blue" style="position:absolute;top:-12px;left:20px">Popular</div>
+      <h4>Pro</h4><div style="font-size:30px;font-weight:700;margin-top:12px">$49<span style="font-size:13px;color:#95a1b8">/mo</span></div>
+      <div style="margin-top:16px;font-size:12px;color:#c3ccdc;line-height:2.1">✓ Unlimited projects<br>✓ Advanced analytics<br>✓ Priority support<br>✓ Team seats</div>
+      <div class="btn primary" style="margin-top:18px;width:100%">Choose plan</div></div>
+    <div class="card"><h4>Enterprise</h4><div style="font-size:30px;font-weight:700;margin-top:12px">Custom</div>
+      <div style="margin-top:16px;font-size:12px;color:#c3ccdc;line-height:2.1">✓ SSO & compliance<br>✓ Dedicated manager<br>✓ Custom SLAs</div>
+      <div class="btn ghost" style="margin-top:18px;width:100%">Contact sales</div></div>
+  </div>
+</div>
+
+<!-- 08 MARKETPLACE -->
+<div class="frame light" data-frame="p08_marketplace">
+  <div class="topbar"><div class="brand"><div class="badge">AH</div><span class="word">aihope market</span></div><div class="search" style="width:340px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>Search listings…</div></div>
+  <div id="gen-marketplace" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:24px 30px"></div>
+</div>
+
+<!-- 09 FINTECH APP -->
+<div class="frame dark" data-frame="p09_fintech">
+  <div class="topbar"><div class="brand"><div class="badge">AH</div><span class="word">aihope invest</span></div>
+    <div style="display:flex;gap:8px"><div class="pill blue">BTC</div><div class="pill gray">ETH</div><div class="pill gray">AAPL</div></div>
+  </div>
+  <div style="padding:20px 30px">
+    <div style="font-size:28px;font-weight:700">$67,204.18 <span style="font-size:13px;color:#3fe0a5;font-weight:600">▲ 2.84%</span></div>
+    <svg width="100%" height="220" viewBox="0 0 880 190" style="margin-top:16px">
+      <g id="gen-candles"></g>
+      <polyline points="0,150 80,120 160,140 240,90 320,110 400,60 480,80 560,40 640,65 720,30 800,50 880,20" fill="none" stroke="#42d5ff" stroke-width="2" opacity=".8"/>
+    </svg>
+    <div style="display:flex;gap:16px;margin-top:20px">
+      <div class="btn primary" style="flex:1">Buy</div>
+      <div class="btn ghost" style="flex:1">Sell</div>
+    </div>
+  </div>
+</div>
+
+<!-- 10 ANALYTICS SUITE -->
+<div class="frame light" data-frame="p10_analytics">
+  <div class="topbar"><div class="brand"><div class="badge">AH</div><span class="word">Traffic Analytics</span></div><div class="pill blue">This Week</div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:24px 30px">
+    <div class="card">
+      <h4>Engagement Heatmap</h4>
+      <div id="gen-heatmap" style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:16px"></div>
+    </div>
+    <div class="card">
+      <h4>Sessions</h4>
+      <svg width="100%" height="140" viewBox="0 0 340 110" style="margin-top:10px">
+        <rect x="0" y="50" width="24" height="60" rx="4" fill="#c1d6ff"/><rect x="34" y="30" width="24" height="80" rx="4" fill="#8fb4ff"/>
+        <rect x="68" y="10" width="24" height="100" rx="4" fill="#2f6bff"/><rect x="102" y="40" width="24" height="70" rx="4" fill="#8fb4ff"/>
+        <rect x="136" y="60" width="24" height="50" rx="4" fill="#c1d6ff"/><rect x="170" y="20" width="24" height="90" rx="4" fill="#42d5ff"/>
+        <rect x="204" y="35" width="24" height="75" rx="4" fill="#8fb4ff"/><rect x="238" y="15" width="24" height="95" rx="4" fill="#2f6bff"/>
+        <rect x="272" y="45" width="24" height="65" rx="4" fill="#c1d6ff"/><rect x="306" y="25" width="24" height="85" rx="4" fill="#42d5ff"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- 11 CONTENT PLATFORM -->
+<div class="frame light" data-frame="p11_content">
+  <div class="topbar"><div class="brand"><div class="badge">AH</div><span class="word">Articles</span></div><div class="btn primary">New Article</div></div>
+  <div style="padding:20px 30px">
+    <div class="trow" style="font-size:11px;color:#8a93a6;text-transform:uppercase;letter-spacing:.06em"><div style="flex:2">Title</div><div style="flex:1">Author</div><div style="flex:1">Status</div><div style="flex:1">Date</div></div>
+    <div id="gen-articles"></div>
+  </div>
+</div>
+
+<!-- 12 INTERNAL TOOL -->
+<div class="frame light" data-frame="p12_internal">
+  <div class="topbar"><div class="brand"><div class="badge">AH</div><span class="word">Admin — Users</span></div><div class="search" style="width:220px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>Filter…</div></div>
+  <div style="padding:20px 30px">
+    <div class="trow" style="font-size:11px;color:#8a93a6;text-transform:uppercase;letter-spacing:.06em"><div style="flex:2">Name</div><div style="flex:1">Role</div><div style="flex:1">Status</div><div style="flex:1">Actions</div></div>
+    <div id="gen-users"></div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('gen-calendar').innerHTML = Array.from({length:35}).map((_,i)=>{
+    const special = [8,15,22].includes(i);
+    return `<div style="height:34px;border-radius:8px;display:grid;place-items:center;font-size:11px;background:${special?'linear-gradient(135deg,#2f6bff,#42d5ff)':'#eef1f6'};color:${special?'#fff':'#8a93a6'}">${i+1<=31?i+1:''}</div>`;
+  }).join('');
+
+  document.getElementById('gen-marketplace').innerHTML = ['Studio Chair','Desk Lamp','Wall Print','Ceramic Set','Wool Throw','Oak Shelf'].map((n,i)=>`
+    <div class="card" style="padding:0;overflow:hidden">
+      <div style="height:110px;background:linear-gradient(${135+i*20}deg,#dbe9ff,#f3f5f9)"></div>
+      <div style="padding:14px 16px"><div style="font-weight:600;font-size:13px">${n}</div><div style="display:flex;justify-content:space-between;margin-top:8px"><b style="color:#2f6bff">$${40+i*15}</b><span style="font-size:11px;color:#ffb43c">★ 4.${8-i%3}</span></div></div>
+    </div>`).join('');
+
+  document.getElementById('gen-candles').innerHTML = Array.from({length:34}).map((_,i)=>{
+    const h=20+((i*37)%90); const up=i%3!==0;
+    return `<rect x="${i*26}" y="${190-h}" width="10" height="${h}" fill="${up?'#3fe0a5':'#ff5470'}" opacity="0.9"/>`;
+  }).join('');
+
+  document.getElementById('gen-heatmap').innerHTML = Array.from({length:35}).map((_,i)=>{
+    const o=0.12+((i*53)%80)/100;
+    return `<div style="height:26px;border-radius:6px;background:rgba(47,107,255,${o.toFixed(2)})"></div>`;
+  }).join('');
+
+  document.getElementById('gen-articles').innerHTML = [
+    ['Designing for trust','A. Rasool','green','Published','Mar 2'],
+    ['The AI product loop','J. Lee','amber','In review','Mar 4'],
+    ['Shipping fast, safely','R. Chen','gray','Draft','Mar 5'],
+    ['Edge inference notes','A. Rasool','green','Published','Mar 6'],
+    ['2026 roadmap','M. Park','amber','In review','Mar 7'],
+  ].map(([t,a,c,s,d])=>`
+    <div class="trow"><div style="flex:2;font-weight:600">${t}</div><div style="flex:1;color:#5c6b85">${a}</div><div style="flex:1"><span class="pill ${c}">${s}</span></div><div style="flex:1;color:#8a93a6">${d}</div></div>`).join('');
+
+  document.getElementById('gen-users').innerHTML = [
+    ['JD','Jordan Diaz','Admin','green'],
+    ['RA','Rina Ali','Editor','green'],
+    ['TK','Theo Kim','Viewer','gray'],
+    ['SL','Sara Lin','Editor','green'],
+    ['MP','Milo Park','Viewer','amber'],
+  ].map(([ini,n,role,c])=>`
+    <div class="trow"><div style="flex:2;display:flex;align-items:center;gap:10px"><div class="avatar" style="width:28px;height:28px;font-size:10px">${ini}</div><b>${n}</b></div><div style="flex:1;color:#5c6b85">${role}</div><div style="flex:1"><span class="pill ${c}">${c==='green'?'Active':c==='amber'?'Invited':'Suspended'}</span></div><div style="flex:1;display:flex;gap:8px"><div class="icon-dot" style="width:26px;height:26px"></div><div class="icon-dot" style="width:26px;height:26px"></div></div></div>`).join('');
+</script>
+
+</body>
+</html>

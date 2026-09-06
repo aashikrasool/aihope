@@ -150,6 +150,11 @@ body::after{
 .capabilities{ height:220svh; position:relative; }
 .capabilities-pin{ position:sticky; top:0; height:100svh; overflow:clip; }
 .capabilities-pin canvas{ position:absolute; inset:0; width:100%; height:100%; }
+.capabilities.is-lite .capabilities-pin{
+  background:
+    radial-gradient(circle at 50% 85%, rgba(47,107,255,.16), transparent 55%),
+    radial-gradient(circle at 50% 55%, rgba(66,213,255,.08), transparent 60%), var(--ink);
+}
 .capabilities-head{ position:relative; z-index:2; padding-top:130px; text-align:center; }
 .capabilities-head .section-kicker{ text-align:center; }
 .capabilities-head .section-title{ margin-top:10px; }
@@ -168,6 +173,9 @@ body::after{
 .timeline-scene{ height:240svh; position:relative; }
 .timeline-pin{ position:sticky; top:0; height:100svh; overflow:clip; }
 .timeline-pin canvas{ position:absolute; inset:0; width:100%; height:100%; }
+.timeline-scene.is-lite .timeline-pin{
+  background:radial-gradient(circle at 50% 55%, rgba(122,92,255,.14), transparent 55%), var(--ink);
+}
 .timeline-head{ position:relative; z-index:2; padding-top:110px; text-align:center; }
 .timeline-head .section-kicker{ text-align:center; }
 .chrono-clock{
@@ -192,6 +200,7 @@ body::after{
 /* ============ SCENE 4 -- PROJECT GALLERY ============ */
 .gallery{ padding:120px 0 140px; border-bottom:1px solid var(--line-soft); position:relative; overflow:clip; }
 .gallery-plate{ position:absolute; inset:0; z-index:0; }
+.gallery.is-lite{ background:radial-gradient(circle at 50% 20%, rgba(47,107,255,.12), transparent 55%), var(--ink); }
 .project-grid{ position:relative; z-index:1; display:grid; grid-template-columns:repeat(4, 1fr); gap:22px; margin-top:20px; }
 .project-grid.has-hover .project-card:not(.is-hovered){ opacity:.5 !important; filter:saturate(.6) blur(1px); }
 .project-card{
@@ -242,6 +251,19 @@ body::after{
 /* ============ SCENE 6 -- FINALE ============ */
 .finale{ position:relative; min-height:100svh; overflow:clip; background:var(--ink); display:flex; flex-direction:column; justify-content:flex-end; }
 .finale canvas{ position:absolute; inset:0; width:100%; height:100%; }
+.finale.is-lite{
+  background:
+    radial-gradient(circle at 28% 30%, rgba(122,92,255,.18), transparent 55%),
+    radial-gradient(circle at 72% 68%, rgba(66,213,255,.14), transparent 55%), var(--ink);
+}
+.finale-word-fallback{
+  display:none; position:relative; z-index:1; text-align:center; margin:0 auto 36px;
+  font-family:var(--display); font-weight:400; font-size:clamp(2.6rem,11vw,5.4rem); letter-spacing:.01em;
+  background:linear-gradient(120deg,#fff,var(--cyan),var(--violet));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  opacity:0; transition:opacity .1s linear, transform .1s linear;
+}
+.finale.is-lite .finale-word-fallback{ display:block; }
 .finale-quote{
   position:relative; z-index:2; text-align:center; max-width:760px; margin:0 auto 48px; padding:0 24px;
   font-family:var(--serif); font-size:clamp(1.2rem,2.2vw,1.7rem); line-height:1.5; color:#e7ecf7;

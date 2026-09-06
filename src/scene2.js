@@ -5,6 +5,7 @@
 import { createGL, program, quad, bindQuad, FULLSCREEN_VS, fitCanvas } from './lib/glutil.js';
 import { createEmbers } from './lib/particles.js';
 import { clamp, smoothstep, easeOutBack, prefersReducedMotion } from './lib/ease.js';
+import { isLitePower } from './lib/device.js';
 
 const PLATE_FS = `#version 300 es
 precision highp float;
@@ -85,18 +86,22 @@ export function bootScene2(root) {
   const nodeWrap = root.querySelector('[data-s2-nodes]');
   if (!section || !canvas) return;
 
-  const gl = createGL(canvas);
-  const plateProg = program(gl, FULLSCREEN_VS, PLATE_FS);
-  const ribbonProg = program(gl, RIBBON_VS, RIBBON_FS);
-  const buf = quad(gl);
-  const embers = createEmbers(gl, 70);
-
+  const lite = isLitePower();
+  if (lite) section.classList.add('is-lite');
+  let gl, plateProg, ribbonProg, buf, embers, ribbonBuf;
   const RIB_N = 260;
-  const ribbonSeeds = new Float32Array(RIB_N);
-  for (let i = 0; i < RIB_N; i++) ribbonSeeds[i] = i / RIB_N;
-  const ribbonBuf = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, ribbonBuf);
-  gl.bufferData(gl.ARRAY_BUFFER, ribbonSeeds, gl.STATIC_DRAW);
+  if (!lite) {
+    gl = createGL(canvas);
+    plateProg = program(gl, FULLSCREEN_VS, PLATE_FS);
+    ribbonProg = program(gl, RIBBON_VS, RIBBON_FS);
+    buf = quad(gl);
+    embers = createEmbers(gl, 70);
+    const ribbonSeeds = new Float32Array(RIB_N);
+    for (let i = 0; i < RIB_N; i++) ribbonSeeds[i] = i / RIB_N;
+    ribbonBuf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, ribbonBuf);
+    gl.bufferData(gl.ARRAY_BUFFER, ribbonSeeds, gl.STATIC_DRAW);
+  }
 
   const nodes = SERVICES.map((s, i) => {
     const el = document.createElement('button');
@@ -127,9 +132,11 @@ export function bootScene2(root) {
 
   function frame(now) {
     if (!running) return;
-    fitCanvas(canvas);
-    gl.viewport(0, 0, canvas.width, canvas.height);
-    const aspect = canvas.width / canvas.height;
+    if (!lite) {
+      fitCanvas(canvas);
+      gl.viewport(0, 0, canvas.width, canvas.height);
+    }
+    const aspect = canvas.clientWidth / canvas.clientHeight;
     const sp = scrollProgress();
     const enterP = smoothstep(0.02, 0.35, sp);
     if (enterP > 0.02 && matStart === null) matStart = now;
@@ -138,13 +145,15 @@ export function bootScene2(root) {
     matGlobal = mat;
     const dolly = smoothstep(0.3, 1.0, sp);
 
-    gl.disable(gl.BLEND);
-    gl.useProgram(plateProg);
-    bindQuad(gl, buf, plateProg);
-    gl.uniform2f(gl.getUniformLocation(plateProg, 'uRes'), canvas.width, canvas.height);
-    gl.uniform1f(gl.getUniformLocation(plateProg, 'uTime'), now * 0.001);
-    gl.uniform1f(gl.getUniformLocation(plateProg, 'uDolly'), dolly);
-    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    if (!lite) {
+      gl.disable(gl.BLEND);
+      gl.useProgram(plateProg);
+      bindQuad(gl, buf, plateProg);
+      gl.uniform2f(gl.getUniformLocation(plateProg, 'uRes'), canvas.width, canvas.height);
+      gl.uniform1f(gl.getUniformLocation(plateProg, 'uTime'), now * 0.001);
+      gl.uniform1f(gl.getUniformLocation(plateProg, 'uDolly'), dolly);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    }
 
     const spin = now * 0.00012 + sp * 1.4 + mouse[0] * 0.25;
     const pts2D = [];
@@ -168,22 +177,24 @@ export function bootScene2(root) {
       el.style.zIndex = String(100 + Math.round(z * 10));
     }
 
-    gl.enable(gl.BLEND);
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
-    gl.useProgram(ribbonProg);
-    const aLoc = gl.getAttribLocation(ribbonProg, 'aT');
-    gl.bindBuffer(gl.ARRAY_BUFFER, ribbonBuf);
-    gl.enableVertexAttribArray(aLoc);
-    gl.vertexAttribPointer(aLoc, 1, gl.FLOAT, false, 0, 0);
-    gl.uniform2fv(gl.getUniformLocation(ribbonProg, 'uPts'), pts2D);
-    gl.uniform1f(gl.getUniformLocation(ribbonProg, 'uMat'), clamp(mat, 0, 1));
-    gl.drawArrays(gl.POINTS, 0, RIB_N);
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+    if (!lite) {
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+      gl.useProgram(ribbonProg);
+      const aLoc = gl.getAttribLocation(ribbonProg, 'aT');
+      gl.bindBuffer(gl.ARRAY_BUFFER, ribbonBuf);
+      gl.enableVertexAttribArray(aLoc);
+      gl.vertexAttribPointer(aLoc, 1, gl.FLOAT, false, 0, 0);
+      gl.uniform2fv(gl.getUniformLocation(ribbonProg, 'uPts'), pts2D);
+      gl.uniform1f(gl.getUniformLocation(ribbonProg, 'uMat'), clamp(mat, 0, 1));
+      gl.drawArrays(gl.POINTS, 0, RIB_N);
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
-    embers.draw(now * 0.001, {
-      area: [1.0, 1.0], center: [0, 0.1], speed: 0.4, opacity: 0.35 + dolly * 0.3,
-      hot: [0.55, 0.85, 1.0], cool: [0.5, 0.35, 1.0],
-    });
+      embers.draw(now * 0.001, {
+        area: [1.0, 1.0], center: [0, 0.1], speed: 0.4, opacity: 0.35 + dolly * 0.3,
+        hot: [0.55, 0.85, 1.0], cool: [0.5, 0.35, 1.0],
+      });
+    }
 
     requestAnimationFrame(frame);
   }

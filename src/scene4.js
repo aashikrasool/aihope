@@ -8,6 +8,7 @@
 import { createGL, program, quad, bindQuad, FULLSCREEN_VS, fitCanvas } from './lib/glutil.js';
 import { createEmbers } from './lib/particles.js';
 import { clamp, smoothstep, easeOutCubic, prefersReducedMotion } from './lib/ease.js';
+import { isLitePower } from './lib/device.js';
 
 const PLATE_FS = `#version 300 es
 precision highp float;
@@ -56,10 +57,15 @@ export function bootScene4(root) {
   const grid = root.querySelector('[data-s4-grid]');
   if (!section || !canvas) return;
 
-  const gl = createGL(canvas);
-  const plateProg = program(gl, FULLSCREEN_VS, PLATE_FS);
-  const buf = quad(gl);
-  const embers = createEmbers(gl, 50);
+  const lite = isLitePower();
+  if (lite) section.classList.add('is-lite');
+  let gl, plateProg, buf, embers;
+  if (!lite) {
+    gl = createGL(canvas);
+    plateProg = program(gl, FULLSCREEN_VS, PLATE_FS);
+    buf = quad(gl);
+    embers = createEmbers(gl, 50);
+  }
 
   const cards = PROJECTS.map((project, i) => {
     const el = document.createElement('article');
@@ -95,20 +101,24 @@ export function bootScene4(root) {
 
   function frame(now) {
     if (!running) return;
-    fitCanvas(canvas);
-    gl.viewport(0, 0, canvas.width, canvas.height);
+    if (!lite) {
+      fitCanvas(canvas);
+      gl.viewport(0, 0, canvas.width, canvas.height);
+    }
 
     const r = section.getBoundingClientRect();
     const inView = smoothstep(innerHeight * 0.85, innerHeight * 0.35, r.top);
     if (inView > 0.05 && matStart === null) matStart = now;
     const localT = matStart === null ? 0 : (now - matStart) / 1000;
 
-    gl.disable(gl.BLEND);
-    gl.useProgram(plateProg);
-    bindQuad(gl, buf, plateProg);
-    gl.uniform2f(gl.getUniformLocation(plateProg, 'uRes'), canvas.width, canvas.height);
-    gl.uniform1f(gl.getUniformLocation(plateProg, 'uTime'), now * 0.001);
-    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    if (!lite) {
+      gl.disable(gl.BLEND);
+      gl.useProgram(plateProg);
+      bindQuad(gl, buf, plateProg);
+      gl.uniform2f(gl.getUniformLocation(plateProg, 'uRes'), canvas.width, canvas.height);
+      gl.uniform1f(gl.getUniformLocation(plateProg, 'uTime'), now * 0.001);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    }
 
     cards.forEach((el, i) => {
       const depth = parseFloat(el.dataset.depth);
@@ -127,7 +137,9 @@ export function bootScene4(root) {
       if (p > 0.55 && !el.classList.contains('filled')) el.classList.add('filled');
     });
 
-    embers.draw(now * 0.001, { area: [1, 0.9], center: [0, -0.1], speed: 0.3, opacity: 0.28, hot: [0.5, 0.8, 1.0], cool: [0.45, 0.35, 1.0] });
+    if (!lite) {
+      embers.draw(now * 0.001, { area: [1, 0.9], center: [0, -0.1], speed: 0.3, opacity: 0.28, hot: [0.5, 0.8, 1.0], cool: [0.45, 0.35, 1.0] });
+    }
 
     requestAnimationFrame(frame);
   }

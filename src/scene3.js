@@ -5,6 +5,7 @@
 import { createGL, program, quad, bindQuad, FULLSCREEN_VS, fitCanvas } from './lib/glutil.js';
 import { createEmbers } from './lib/particles.js';
 import { clamp, smoothstep, prefersReducedMotion } from './lib/ease.js';
+import { isLitePower } from './lib/device.js';
 
 const PLATE_FS = `#version 300 es
 precision highp float;
@@ -90,18 +91,22 @@ export function bootScene3(root) {
   const hand = root.querySelector('[data-s3-hand]');
   if (!section || !canvas) return;
 
-  const gl = createGL(canvas);
-  const plateProg = program(gl, FULLSCREEN_VS, PLATE_FS);
-  const railProg = program(gl, RAIL_VS, RAIL_FS);
-  const buf = quad(gl);
-  const embers = createEmbers(gl, 60);
-
+  const lite = isLitePower();
+  if (lite) section.classList.add('is-lite');
+  let gl, plateProg, railProg, buf, embers, railBuf;
   const RN = 220;
-  const seeds = new Float32Array(RN);
-  for (let i = 0; i < RN; i++) seeds[i] = i / (RN - 1);
-  const railBuf = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, railBuf);
-  gl.bufferData(gl.ARRAY_BUFFER, seeds, gl.STATIC_DRAW);
+  if (!lite) {
+    gl = createGL(canvas);
+    plateProg = program(gl, FULLSCREEN_VS, PLATE_FS);
+    railProg = program(gl, RAIL_VS, RAIL_FS);
+    buf = quad(gl);
+    embers = createEmbers(gl, 60);
+    const seeds = new Float32Array(RN);
+    for (let i = 0; i < RN; i++) seeds[i] = i / (RN - 1);
+    railBuf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, railBuf);
+    gl.bufferData(gl.ARRAY_BUFFER, seeds, gl.STATIC_DRAW);
+  }
 
   const cards = MILESTONES.map((m, i) => {
     const el = document.createElement('button');
@@ -158,8 +163,10 @@ export function bootScene3(root) {
 
   function frame(now) {
     if (!running) return;
-    fitCanvas(canvas);
-    gl.viewport(0, 0, canvas.width, canvas.height);
+    if (!lite) {
+      fitCanvas(canvas);
+      gl.viewport(0, 0, canvas.width, canvas.height);
+    }
 
     const r = section.getBoundingClientRect();
     const total = section.offsetHeight - innerHeight;
@@ -171,26 +178,30 @@ export function bootScene3(root) {
     const active = clamp(Math.round(uSmoothed), 0, 5);
     cards.forEach((el, i) => el.classList.toggle('active', i === active));
 
-    gl.disable(gl.BLEND);
-    gl.useProgram(plateProg);
-    bindQuad(gl, buf, plateProg);
-    gl.uniform2f(gl.getUniformLocation(plateProg, 'uRes'), canvas.width, canvas.height);
-    gl.uniform1f(gl.getUniformLocation(plateProg, 'uTime'), now * 0.001);
-    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    if (!lite) {
+      gl.disable(gl.BLEND);
+      gl.useProgram(plateProg);
+      bindQuad(gl, buf, plateProg);
+      gl.uniform2f(gl.getUniformLocation(plateProg, 'uRes'), canvas.width, canvas.height);
+      gl.uniform1f(gl.getUniformLocation(plateProg, 'uTime'), now * 0.001);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    }
 
     if (!isPortrait) {
-      const clip = nodes.map((n) => [n.x * 2 - 1, -(n.y * 2 - 1)]).flat();
-      gl.enable(gl.BLEND);
-      gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
-      gl.useProgram(railProg);
-      const aLoc = gl.getAttribLocation(railProg, 'aT');
-      gl.bindBuffer(gl.ARRAY_BUFFER, railBuf);
-      gl.enableVertexAttribArray(aLoc);
-      gl.vertexAttribPointer(aLoc, 1, gl.FLOAT, false, 0, 0);
-      gl.uniform2fv(gl.getUniformLocation(railProg, 'uPts'), clip);
-      gl.uniform1f(gl.getUniformLocation(railProg, 'uReveal'), reveal);
-      gl.drawArrays(gl.POINTS, 0, RN);
-      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+      if (!lite) {
+        const clip = nodes.map((n) => [n.x * 2 - 1, -(n.y * 2 - 1)]).flat();
+        gl.enable(gl.BLEND);
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+        gl.useProgram(railProg);
+        const aLoc = gl.getAttribLocation(railProg, 'aT');
+        gl.bindBuffer(gl.ARRAY_BUFFER, railBuf);
+        gl.enableVertexAttribArray(aLoc);
+        gl.vertexAttribPointer(aLoc, 1, gl.FLOAT, false, 0, 0);
+        gl.uniform2fv(gl.getUniformLocation(railProg, 'uPts'), clip);
+        gl.uniform1f(gl.getUniformLocation(railProg, 'uReveal'), reveal);
+        gl.drawArrays(gl.POINTS, 0, RN);
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+      }
 
       const clockRect = clock.getBoundingClientRect();
       const ccx = clockRect.left + clockRect.width / 2 - r.left;
@@ -205,7 +216,9 @@ export function bootScene3(root) {
       clock.style.opacity = String(reveal);
     }
 
-    embers.draw(now * 0.001, { area: [1, 1], center: [0, 0.2], speed: 0.35, opacity: 0.3 + reveal * 0.25, hot: [1, 0.7, 0.55], cool: [0.6, 0.3, 0.5] });
+    if (!lite) {
+      embers.draw(now * 0.001, { area: [1, 1], center: [0, 0.2], speed: 0.35, opacity: 0.3 + reveal * 0.25, hot: [1, 0.7, 0.55], cool: [0.6, 0.3, 0.5] });
+    }
 
     requestAnimationFrame(frame);
   }

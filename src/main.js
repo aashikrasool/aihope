@@ -25,11 +25,18 @@ function bootChrome() {
   }
 }
 
+// Each scene owns its own WebGL context; a failure creating or compiling one
+// (blocked GPU, driver quirk, context limit) must not take the rest of the
+// page down with it.
+function safeBoot(fn) {
+  try { fn(document); } catch (err) { console.error(err); }
+}
+
 document.fonts.ready.finally(() => {
   bootChrome();
-  bootScene1(document);
-  bootScene2(document);
-  bootScene3(document);
-  bootScene4(document);
-  bootScene6(document);
+  safeBoot(bootScene1);
+  safeBoot(bootScene2);
+  safeBoot(bootScene3);
+  safeBoot(bootScene4);
+  safeBoot(bootScene6);
 });

@@ -5,6 +5,7 @@ import { createGL, program, quad, bindQuad, FULLSCREEN_VS, fitCanvas, texFromIma
 import { createEmbers } from './lib/particles.js';
 import { clamp, smoothstep, prefersReducedMotion } from './lib/ease.js';
 import { buildWordCanvas, buildGlowCanvas, WORD_VS, WORD_FS } from './lib/wordfx.js';
+import { isLitePower } from './lib/device.js';
 
 const PLATE_FS = `#version 300 es
 precision highp float;
@@ -28,68 +29,79 @@ export function bootScene6(root) {
   const canvas = root.querySelector('[data-s6-canvas]');
   const quote = root.querySelector('[data-s6-quote]');
   const row = root.querySelector('[data-s6-row]');
+  const fallback = root.querySelector('[data-s6-fallback]');
   if (!section || !canvas) return;
 
-  const gl = createGL(canvas);
-  const plateProg = program(gl, FULLSCREEN_VS, PLATE_FS);
-  const wordProg = program(gl, WORD_VS, WORD_FS);
-  const buf = quad(gl);
-  const embers = createEmbers(gl, 80);
+  const lite = isLitePower();
+  if (lite) section.classList.add('is-lite');
+  let gl, plateProg, wordProg, buf, embers, wordCanvas, glowCanvas, wordTex, glowTex, grungeTex;
+  if (!lite) {
+    gl = createGL(canvas);
+    plateProg = program(gl, FULLSCREEN_VS, PLATE_FS);
+    wordProg = program(gl, WORD_VS, WORD_FS);
+    buf = quad(gl);
+    embers = createEmbers(gl, 80);
 
-  const wordCanvas = buildWordCanvas('AIHOPE', 300);
-  const glowCanvas = buildGlowCanvas(wordCanvas);
-  const wordTex = texFromImage(gl, wordCanvas);
-  const glowTex = texFromImage(gl, glowCanvas);
-  let grungeTex = null;
-  const grungeImg = new Image();
-  grungeImg.onload = () => { grungeTex = texFromImage(gl, grungeImg); };
-  grungeImg.src = 'public/tex/grunge.png';
+    wordCanvas = buildWordCanvas('AIHOPE', 300);
+    glowCanvas = buildGlowCanvas(wordCanvas);
+    wordTex = texFromImage(gl, wordCanvas);
+    glowTex = texFromImage(gl, glowCanvas);
+    grungeTex = null;
+    const grungeImg = new Image();
+    grungeImg.onload = () => { grungeTex = texFromImage(gl, grungeImg); };
+    grungeImg.src = 'public/tex/grunge.png';
+  }
 
   const reduced = prefersReducedMotion();
   let running = false;
 
   function frame(now) {
     if (!running) return;
-    fitCanvas(canvas);
-    gl.viewport(0, 0, canvas.width, canvas.height);
-
     const r = section.getBoundingClientRect();
     const p = reduced ? 1 : smoothstep(innerHeight * 0.9, innerHeight * 0.25, r.top);
 
-    gl.disable(gl.BLEND);
-    gl.useProgram(plateProg);
-    bindQuad(gl, buf, plateProg);
-    gl.uniform2f(gl.getUniformLocation(plateProg, 'uRes'), canvas.width, canvas.height);
-    gl.uniform1f(gl.getUniformLocation(plateProg, 'uTime'), now * 0.001);
-    gl.uniform1f(gl.getUniformLocation(plateProg, 'uGlow'), 0.3 + p * 0.7);
-    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    if (!lite) {
+      fitCanvas(canvas);
+      gl.viewport(0, 0, canvas.width, canvas.height);
 
-    if (grungeTex) {
-      const aspect = wordCanvas.width / wordCanvas.height;
-      const canvasAspect = canvas.width / canvas.height;
-      let sx = 0.6, sy = sx / aspect * canvasAspect;
-      if (canvasAspect < 1) { sx = 0.88; sy = sx / aspect * canvasAspect; }
-      gl.enable(gl.BLEND);
-      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-      gl.useProgram(wordProg);
-      bindQuad(gl, buf, wordProg);
-      gl.uniform2f(gl.getUniformLocation(wordProg, 'uScale'), sx, sy);
-      gl.uniform2f(gl.getUniformLocation(wordProg, 'uOffset'), 0, 0.06);
-      gl.uniform1f(gl.getUniformLocation(wordProg, 'uProgress'), p);
-      gl.uniform2f(gl.getUniformLocation(wordProg, 'uGrungeRepeat'), 2.0, 1.4);
-      gl.uniform3f(gl.getUniformLocation(wordProg, 'uGlowA'), 0.42, 0.33, 1.0);
-      gl.uniform3f(gl.getUniformLocation(wordProg, 'uGlowB'), 0.16, 0.64, 1.0);
-      gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, wordTex);
-      gl.uniform1i(gl.getUniformLocation(wordProg, 'uWord'), 0);
-      gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, glowTex);
-      gl.uniform1i(gl.getUniformLocation(wordProg, 'uGlowTex'), 1);
-      gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, grungeTex);
-      gl.uniform1i(gl.getUniformLocation(wordProg, 'uGrunge'), 2);
+      gl.disable(gl.BLEND);
+      gl.useProgram(plateProg);
+      bindQuad(gl, buf, plateProg);
+      gl.uniform2f(gl.getUniformLocation(plateProg, 'uRes'), canvas.width, canvas.height);
+      gl.uniform1f(gl.getUniformLocation(plateProg, 'uTime'), now * 0.001);
+      gl.uniform1f(gl.getUniformLocation(plateProg, 'uGlow'), 0.3 + p * 0.7);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
-    }
 
-    gl.enable(gl.BLEND);
-    embers.draw(now * 0.001, { area: [1, 1], center: [0, -0.3], speed: 0.3, opacity: 0.35 + p * 0.35, hot: [0.55, 0.85, 1.0], cool: [0.5, 0.35, 1.0] });
+      if (grungeTex) {
+        const aspect = wordCanvas.width / wordCanvas.height;
+        const canvasAspect = canvas.width / canvas.height;
+        let sx = 0.6, sy = sx / aspect * canvasAspect;
+        if (canvasAspect < 1) { sx = 0.88; sy = sx / aspect * canvasAspect; }
+        gl.enable(gl.BLEND);
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+        gl.useProgram(wordProg);
+        bindQuad(gl, buf, wordProg);
+        gl.uniform2f(gl.getUniformLocation(wordProg, 'uScale'), sx, sy);
+        gl.uniform2f(gl.getUniformLocation(wordProg, 'uOffset'), 0, 0.06);
+        gl.uniform1f(gl.getUniformLocation(wordProg, 'uProgress'), p);
+        gl.uniform2f(gl.getUniformLocation(wordProg, 'uGrungeRepeat'), 2.0, 1.4);
+        gl.uniform3f(gl.getUniformLocation(wordProg, 'uGlowA'), 0.42, 0.33, 1.0);
+        gl.uniform3f(gl.getUniformLocation(wordProg, 'uGlowB'), 0.16, 0.64, 1.0);
+        gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, wordTex);
+        gl.uniform1i(gl.getUniformLocation(wordProg, 'uWord'), 0);
+        gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, glowTex);
+        gl.uniform1i(gl.getUniformLocation(wordProg, 'uGlowTex'), 1);
+        gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, grungeTex);
+        gl.uniform1i(gl.getUniformLocation(wordProg, 'uGrunge'), 2);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+      }
+
+      gl.enable(gl.BLEND);
+      embers.draw(now * 0.001, { area: [1, 1], center: [0, -0.3], speed: 0.3, opacity: 0.35 + p * 0.35, hot: [0.55, 0.85, 1.0], cool: [0.5, 0.35, 1.0] });
+    } else {
+      fallback.style.opacity = String(p);
+      fallback.style.transform = `translateY(${(1 - p) * 14}px)`;
+    }
 
     const capP = smoothstep(0.35, 1.0, p);
     quote.style.opacity = String(capP);

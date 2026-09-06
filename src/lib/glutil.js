@@ -1,7 +1,9 @@
 // Shared WebGL2 helpers used by every scene canvas.
 
 export function createGL(canvas) {
-  const gl = canvas.getContext('webgl2', { alpha: true, antialias: true, premultipliedAlpha: true });
+  // antialias:false -- MSAA resolve is expensive on tile-based mobile GPUs
+  // and these scenes already layer film grain, which hides aliasing anyway.
+  const gl = canvas.getContext('webgl2', { alpha: true, antialias: false, premultipliedAlpha: true, powerPreference: 'low-power' });
   if (!gl) throw new Error('WebGL2 unavailable');
   return gl;
 }

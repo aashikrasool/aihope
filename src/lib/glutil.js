@@ -80,8 +80,12 @@ export function updateCanvasTexture(gl, tex, canvasSrc) {
 }
 
 // Resizes a canvas's backing store to its CSS size * DPR, returns true if it changed.
-export function fitCanvas(canvas, maxDpr = 2) {
-  const dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
+export function fitCanvas(canvas, maxDpr) {
+  // Narrow (mobile) viewports get a lower DPR cap -- five simultaneous WebGL
+  // canvases at full retina resolution is enough backing-store memory on its
+  // own to help tip a phone browser tab into an out-of-memory crash.
+  const cap = maxDpr ?? (window.innerWidth <= 760 ? 1.5 : 2);
+  const dpr = Math.min(window.devicePixelRatio || 1, cap);
   const w = Math.round(canvas.clientWidth * dpr);
   const h = Math.round(canvas.clientHeight * dpr);
   if (canvas.width !== w || canvas.height !== h) {

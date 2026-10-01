@@ -289,7 +289,7 @@ body.menu-open .site-header{ background:transparent; backdrop-filter:none; -webk
 
 /* ============ SCENE 4 -- PROJECT GALLERY ============ */
 .gallery{ padding:clamp(5rem,10vw,10rem) 0; position:relative; overflow:clip; background:var(--navy); }
-.gallery-plate{ position:absolute; inset:0; z-index:0; }
+.gallery-plate{ position:absolute; inset:0; z-index:0; width:100%; height:100%; } /* a canvas ignores inset for sizing and would stay 300x150 */
 .gallery.is-page{ padding-top:0; }
 .gallery.is-lite{ background:radial-gradient(circle at 50% 20%, rgba(111,123,169,.22), transparent 55%), var(--navy); }
 .project-grid{ position:relative; z-index:1; display:grid; grid-template-columns:repeat(4, 1fr); gap:22px; }

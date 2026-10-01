@@ -1,6 +1,6 @@
 // Scene 4 — the project gallery. Up to twelve work-cards arranged with per-card
 // depth: two are real shipped products (live screenshots, clickable through
-// to the site), the rest are UI mockups rendered from tools/mockup-gen.html.
+// to the site), the rest are stock photos illustrating each kind of work.
 // One materialisation event brings the far row in first, each card resolving
 // into focus with a soft zoom-out, then a small infinite dephased float takes
 // over. Pointer moves the whole deck by depth and hovering a card lifts it
@@ -26,25 +26,25 @@ void main(){
 }`;
 
 const PROJECTS = [
-  { label: 'Web App', image: 'public/projects/p01_webapp.png' },
-  { label: 'Mobile App', image: 'public/projects/p02_mobile.png' },
-  { label: 'E-Commerce', image: 'public/projects/p03_ecommerce.png' },
-  { label: 'Dashboard', image: 'public/projects/p04_dashboard.png' },
-  { label: 'Landing Page', image: 'public/projects/p05_landing.png' },
+  { label: 'Web App', image: 'public/projects/p01_webapp.jpg' },
+  { label: 'Mobile App', image: 'public/projects/p02_mobile.jpg' },
+  { label: 'E-Commerce', image: 'public/projects/p03_ecommerce.jpg' },
+  { label: 'Dashboard', image: 'public/projects/p04_dashboard.jpg' },
+  { label: 'Landing Page', image: 'public/projects/p05_landing.jpg' },
   { label: 'Wingspro Holidays', sub: 'Travel & booking platform', image: 'public/projects/wingsproholidays.jpg', url: 'https://wingsproholidays.com' },
   { label: 'Questlix', sub: 'Education SaaS platform', image: 'public/projects/questlix.jpg', url: 'https://gaming-omega-two.vercel.app/' },
-  { label: 'Marketplace', image: 'public/projects/p08_marketplace.png' },
-  { label: 'Fintech App', image: 'public/projects/p09_fintech.png' },
-  { label: 'Analytics Suite', image: 'public/projects/p10_analytics.png' },
-  { label: 'Content Platform', image: 'public/projects/p11_content.png' },
-  { label: 'Internal Tool', image: 'public/projects/p12_internal.png' },
+  { label: 'Marketplace', image: 'public/projects/p08_marketplace.jpg' },
+  { label: 'Fintech App', image: 'public/projects/p09_fintech.jpg' },
+  { label: 'Analytics Suite', image: 'public/projects/p10_analytics.jpg' },
+  { label: 'Content Platform', image: 'public/projects/p11_content.jpg' },
+  { label: 'Internal Tool', image: 'public/projects/p12_internal.jpg' },
 ];
 
 function buildMockup(project, index) {
   const num = String(index + 1).padStart(2, '0');
   const shot = project.url
     ? `<a class="project-shot" href="${project.url}" target="_blank" rel="noopener noreferrer" style="background-image:url(${project.image})" aria-label="Open ${project.label} live site"></a>`
-    : `<div class="project-shot" style="background-image:url(${project.image})"></div>`;
+    : `<div class="project-shot" style="background-image:url(${project.image});background-position:center"></div>`;
   const tag = project.sub
     ? `<span class="project-card-tag live"><b>${num} / ${project.label}</b><em>${project.sub}${project.url ? ' — live ↗' : ''}</em></span>`
     : `<span class="project-card-tag">${num} / ${project.label}</span>`;

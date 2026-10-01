@@ -12,23 +12,23 @@
   <meta name="description" content="AIHope builds custom websites, mobile apps, e-commerce platforms and digital products for modern businesses.">
   <meta name="robots" content="index,follow">
 
-  <link rel="stylesheet" href="src/styles/app.css?v=3">
+  <link rel="stylesheet" href="src/styles/app.css?v=4">
 </head>
 <body>
 
 <header class="site-header" data-header>
   <div class="container nav">
-    <a class="brand" href="#top">
+    <a class="brand" href="index.html">
       <img src="favico.png" alt="AIHope logo">
       <span>AIHope</span>
     </a>
 
     <nav class="nav-links" aria-label="Main navigation">
-      <a href="#about">About</a>
+      <a href="about.html">About</a>
       <a href="founder.html">Founder</a>
-      <a href="#story">Journey</a>
-      <a href="#work">Work</a>
-      <a href="#contact">Contact</a>
+      <a href="journey.html">Journey</a>
+      <a href="work.html">Work</a>
+      <a href="contact.html">Contact</a>
     </nav>
 
     <div class="nav-right">
@@ -41,11 +41,12 @@
 </header>
 
 <nav class="mobile-menu" id="mobileMenu" aria-label="Menu">
-  <a href="#about">About</a>
+  <a href="index.html" aria-current="page">Home</a>
+  <a href="about.html">About</a>
   <a href="founder.html">Founder</a>
-  <a href="#story">Journey</a>
-  <a href="#work">Work</a>
-  <a href="#contact">Contact</a>
+  <a href="journey.html">Journey</a>
+  <a href="work.html">Work</a>
+  <a href="contact.html">Contact</a>
   <a class="menu-small" href="https://wa.me/821094859943" target="_blank" rel="noopener noreferrer">Talk on WhatsApp ↗</a>
 </nav>
 
@@ -65,7 +66,7 @@
           engineering without recycled templates.
         </p>
         <div class="hero-actions" data-s1-actions>
-          <a class="btn btn-solid" href="#story">See our journey</a>
+          <a class="btn btn-solid" href="journey.html">See our journey</a>
           <a class="btn" href="https://wa.me/821094859943" target="_blank" rel="noopener noreferrer">Talk on WhatsApp</a>
         </div>
       </div>
@@ -100,23 +101,7 @@
         <img src="public/images/studio-mobile.jpg" alt="Hand holding a phone with a dashboard app in front of a desktop design" width="1400" height="1050" loading="lazy">
       </div>
 
-      <div class="about-stack">
-        <div class="about-item">
-          <div class="about-num">01</div>
-          <h3>Built around your business</h3>
-          <p>No generic templates. Every interface and feature is shaped around your goals, users and workflow.</p>
-        </div>
-        <div class="about-item">
-          <div class="about-num">02</div>
-          <h3>Design + development together</h3>
-          <p>Strategy, UI/UX and engineering stay connected from the first wireframe through launch.</p>
-        </div>
-        <div class="about-item">
-          <div class="about-num">03</div>
-          <h3>Clear communication</h3>
-          <p>Direct contact, transparent progress and practical recommendations throughout the project.</p>
-        </div>
-      </div>
+      <div class="section-cta"><a class="btn btn-solid" href="about.html">More about AIHope</a></div>
     </div>
   </section>
 
@@ -168,70 +153,20 @@
     </div>
   </section>
 
-  <!-- SCENE 3 — timeline -->
-  <section class="timeline-scene" id="story" data-s3>
-    <div class="timeline-pin">
-      <canvas data-s3-canvas></canvas>
-      <div class="container timeline-head">
-        <div class="section-kicker">03 / Journey</div>
-        <h2 class="section-title">Every year,<br><span class="accent">further.</span></h2>
-      </div>
-      <div class="chrono-clock" data-s3-clock>
-        <div class="chrono-hand" data-s3-hand></div>
-        <div class="chrono-pivot"></div>
-      </div>
-      <div class="timeline-rail" data-s3-rail></div>
-    </div>
-  </section>
-
   <!-- SCENE 4 — project gallery -->
   <section class="gallery" id="work" data-s4>
     <canvas class="gallery-plate" data-s4-canvas></canvas>
     <div class="container" style="position:relative;z-index:1">
       <div class="section-head">
-        <div class="section-kicker">04 / Selected Work</div>
+        <div class="section-kicker">03 / Selected Work</div>
         <h2 class="section-title">A universe of<br><span class="accent">shipped</span> products.</h2>
       </div>
-      <div class="project-grid" data-s4-grid></div>
+      <div class="project-grid" data-s4-grid data-limit="4"></div>
+      <div class="section-cta"><a class="btn btn-solid" href="work.html">See all work</a></div>
     </div>
   </section>
 
-  <section class="section is-light" id="process">
-    <div class="container">
-      <div class="section-head">
-        <div class="section-kicker">05 / Process</div>
-        <h2 class="section-title">Simple process.<br><span class="accent">Better</span> outcomes.</h2>
-      </div>
-      <img class="process-media" src="public/images/process-sketches.jpg" alt="Pen marking up hand-drawn mobile app wireframes" width="1400" height="1050" loading="lazy">
-      <div class="process-list">
-        <div class="process-row"><div class="process-no">01</div><h3>Discovery</h3><p>We define your audience, business goals, technical needs and what success should look like.</p></div>
-        <div class="process-row"><div class="process-no">02</div><h3>Design</h3><p>We shape the structure, visual direction and interaction model before development begins.</p></div>
-        <div class="process-row"><div class="process-no">03</div><h3>Development</h3><p>We build with modern, maintainable technology and give you clear progress updates throughout.</p></div>
-        <div class="process-row"><div class="process-no">04</div><h3>Testing</h3><p>We validate responsive behavior, usability, performance and browser compatibility before launch.</p></div>
-        <div class="process-row"><div class="process-no">05</div><h3>Launch</h3><p>Deployment, DNS configuration and go-live support are handled so the transition is smooth.</p></div>
-        <div class="process-row"><div class="process-no">06</div><h3>Growth</h3><p>We support improvements, updates and future product development as your business evolves.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section is-deep" id="why">
-    <div class="container">
-      <div class="section-head">
-        <div class="section-kicker">06 / Why AIHope</div>
-        <h2 class="section-title">Built differently.<br>Delivered <span class="accent">right.</span></h2>
-      </div>
-      <div class="why-wrap">
-        <article class="why-card"><h3>Fast Turnaround</h3><p>Focused workflows keep projects moving quickly without sacrificing the details that make the product feel finished.</p></article>
-        <article class="why-card"><h3>100% Custom</h3><p>Every project starts with your actual problem rather than forcing your business into a pre-built template.</p></article>
-        <article class="why-card"><h3>Direct Communication</h3><p>You can speak directly with the people designing and building your product, so decisions happen faster.</p></article>
-        <article class="why-card"><h3>Transparent Pricing</h3><p>Clear project scope and straightforward estimates help you understand exactly what you are paying for.</p></article>
-        <article class="why-card"><h3>Results Focused</h3><p>We care about what the product achieves — leads, sales, usability, retention and operational efficiency.</p></article>
-        <article class="why-card"><h3>Post-launch Support</h3><p>Launching is not the finish line. We can continue supporting, refining and extending your digital product.</p></article>
-      </div>
-    </div>
-  </section>
-
-  <section class="contact" id="contact">
+  <section class="contact">
     <div class="container contact-grid">
       <h2>Have an idea?<br>Let’s <span class="accent">build</span> it.</h2>
       <div class="contact-side">
@@ -261,6 +196,6 @@
 
 </main>
 
-<script type="module" src="src/main.js?v=3"></script>
+<script type="module" src="src/main.js?v=4"></script>
 </body>
 </html>

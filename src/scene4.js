@@ -1,4 +1,4 @@
-// Scene 4 — the project gallery. Twelve work-cards arranged with per-card
+// Scene 4 — the project gallery. Up to twelve work-cards arranged with per-card
 // depth: two are real shipped products (live screenshots, clickable through
 // to the site), the rest are UI mockups rendered from tools/mockup-gen.html.
 // One materialisation event brings the far row in first, each card resolving
@@ -67,7 +67,13 @@ export function bootScene4(root) {
     embers = createEmbers(gl, 50);
   }
 
-  const cards = PROJECTS.map((project, i) => {
+  // data-limit="N" shows a preview of N cards, live products first.
+  const limit = parseInt(grid.dataset.limit || '0', 10);
+  const list = limit
+    ? [...PROJECTS].sort((a, b) => (b.url ? 1 : 0) - (a.url ? 1 : 0)).slice(0, limit)
+    : PROJECTS;
+
+  const cards = list.map((project, i) => {
     const el = document.createElement('article');
     el.className = 'project-card' + (project.url ? ' is-live' : '');
     const row = Math.floor(i / 4);

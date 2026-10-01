@@ -1,5 +1,4 @@
 import { bootScene1 } from './scene1.js';
-import { bootScene2 } from './scene2.js';
 import { bootScene3 } from './scene3.js';
 import { bootScene4 } from './scene4.js';
 import { bootScene6 } from './scene6.js';
@@ -34,7 +33,7 @@ function bootChrome() {
 
 // Static blocks rise in as they enter the viewport. The hidden state only
 // exists once this adds .reveal, so the page stays readable without JS.
-const REVEAL = '.section-head, .about-statement, .about-collage, .about-item, .process-media, .process-row, .why-card, .contact-grid > *, '
+const REVEAL = '.section-head, .about-statement, .about-collage, .about-item, .cap-card, .process-media, .process-row, .why-card, .contact-grid > *, '
   + '.founder-grid > *, .profile-grid, .expertise-card, .founder-quote';
 
 function bootReveal() {
@@ -64,7 +63,6 @@ Promise.all([document.fonts.load('800 1em "Bricolage Grotesque"'), document.font
   bootChrome();
   bootReveal();
   safeBoot(bootScene1);
-  safeBoot(bootScene2);
   safeBoot(bootScene3);
   safeBoot(bootScene4);
   safeBoot(bootScene6);

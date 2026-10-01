@@ -16,12 +16,12 @@ in vec2 vUv; uniform vec2 uRes; uniform float uTime; out vec4 frag;
 float hash(vec2 p){ return fract(sin(dot(p, vec2(41.3,289.1)))*43758.5453); }
 void main(){
   vec2 p = vUv*2.0-1.0; p.x *= uRes.x/uRes.y;
-  vec3 ink = vec3(0.018,0.02,0.03);
+  vec3 ink = vec3(0.114,0.141,0.251);
   float glow = exp(-length(p-vec2(0.0,-0.2))*1.1)*0.22;
-  vec3 col = ink + glow*vec3(0.25,0.5,1.0);
+  vec3 col = ink + glow*vec3(0.435,0.482,0.663)*0.6;
   float vig = 1.0 - smoothstep(0.5,1.4,length(p));
-  col *= mix(0.6,1.0,vig);
-  col += (hash(vUv*uRes.xy*0.3+uTime*40.0)-0.5)*0.028;
+  col *= mix(0.9,1.0,vig);
+  col += (hash(vUv*uRes.xy*0.3+uTime*40.0)-0.5)*0.02;
   frag = vec4(col,1.0);
 }`;
 
@@ -138,7 +138,7 @@ export function bootScene4(root) {
     });
 
     if (!lite) {
-      embers.draw(now * 0.001, { area: [1, 0.9], center: [0, -0.1], speed: 0.3, opacity: 0.28, hot: [0.5, 0.8, 1.0], cool: [0.45, 0.35, 1.0] });
+      embers.draw(now * 0.001, { area: [1, 0.9], center: [0, -0.1], speed: 0.3, opacity: 0.28, hot: [1.0, 0.75, 0.82], cool: [0.87, 0.89, 0.98] });
     }
 
     requestAnimationFrame(frame);

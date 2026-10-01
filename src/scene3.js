@@ -17,12 +17,12 @@ float hash(vec2 p){ return fract(sin(dot(p, vec2(41.3, 289.1))) * 43758.5453); }
 void main(){
   vec2 p = vUv * 2.0 - 1.0;
   p.x *= uRes.x/uRes.y;
-  vec3 ink = vec3(0.025, 0.02, 0.03);
+  vec3 ink = vec3(0.114, 0.141, 0.251);
   float warm = exp(-length(p - vec2(0.0,0.5))*1.3) * 0.12;
-  vec3 col = ink + warm*vec3(0.5,0.3,0.9);
+  vec3 col = ink + warm*vec3(0.435,0.482,0.663);
   float vig = 1.0 - smoothstep(0.5,1.4,length(p));
-  col *= mix(0.55,1.0,vig);
-  col += (hash(vUv*uRes.xy*0.3+uTime*45.0)-0.5)*0.03;
+  col *= mix(0.88,1.0,vig);
+  col += (hash(vUv*uRes.xy*0.3+uTime*45.0)-0.5)*0.02;
   frag = vec4(col,1.0);
 }`;
 
@@ -56,7 +56,7 @@ out vec4 frag;
 void main(){
   vec2 uv = gl_PointCoord*2.0-1.0;
   float a = smoothstep(1.0,0.0,length(uv));
-  vec3 col = vec3(0.95,0.6,0.5);
+  vec3 col = vec3(1.0,0.608,0.706);
   frag = vec4(col*a*vGlow, a*vGlow*0.8);
 }`;
 
@@ -77,7 +77,7 @@ function layoutNodes(isPortrait) {
     if (isPortrait) {
       pts.push({ x: 0.16, y: 0.12 + t * 0.8 });
     } else {
-      pts.push({ x: 0.08 + t * 0.84, y: 0.22 + Math.pow(t, 1.25) * 0.56 });
+      pts.push({ x: 0.1 + t * 0.8, y: 0.24 + Math.pow(t, 1.25) * 0.56 });
     }
   }
   return pts;
@@ -217,7 +217,7 @@ export function bootScene3(root) {
     }
 
     if (!lite) {
-      embers.draw(now * 0.001, { area: [1, 1], center: [0, 0.2], speed: 0.35, opacity: 0.3 + reveal * 0.25, hot: [1, 0.7, 0.55], cool: [0.6, 0.3, 0.5] });
+      embers.draw(now * 0.001, { area: [1, 1], center: [0, 0.2], speed: 0.35, opacity: 0.3 + reveal * 0.25, hot: [1.0, 0.75, 0.82], cool: [0.87, 0.89, 0.98] });
     }
 
     requestAnimationFrame(frame);

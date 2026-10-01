@@ -8,9 +8,9 @@ export function buildWordCanvas(text, fontSize = 340) {
   ctx.textBaseline = 'alphabetic';
   ctx.textAlign = 'left';
   ctx.fillStyle = '#fff';
-  ctx.font = `400 ${fontSize}px Anton, sans-serif`;
+  ctx.font = `800 ${fontSize}px "Bricolage Grotesque", sans-serif`;
   const letters = text.split('');
-  const spacing = fontSize * 0.02;
+  const spacing = fontSize * -0.045;
   let total = 0;
   const widths = letters.map((ch) => {
     const w = ctx.measureText(ch).width;
@@ -69,8 +69,8 @@ void main(){
   float mask = smoothstep(threshold - 0.12, threshold + 0.12, grunge * 0.6 + leftBias * 0.4);
   mask = 1.0 - mask;
   mask *= step(0.0, uProgress);
-  vec3 glowCol = mix(uGlowA, uGlowB, uv.x) * glow * mask * 1.4;
-  vec3 wordCol = vec3(0.96, 0.98, 1.0) * word * mask;
+  vec3 glowCol = mix(uGlowA, uGlowB, uv.x) * glow * mask * 0.7;
+  vec3 wordCol = vec3(0.976, 0.988, 0.957) * word * mask;
   vec3 col = glowCol + wordCol;
   float alpha = clamp(glow * 0.9 + word, 0.0, 1.0) * mask;
   frag = vec4(col, alpha);

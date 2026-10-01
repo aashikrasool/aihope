@@ -3,17 +3,24 @@ import { bootScene2 } from './scene2.js';
 import { bootScene3 } from './scene3.js';
 import { bootScene4 } from './scene4.js';
 import { bootScene6 } from './scene6.js';
+import { prefersReducedMotion } from './lib/ease.js';
 
 function bootChrome() {
   const menuBtn = document.getElementById('menuBtn');
   const mobileMenu = document.getElementById('mobileMenu');
   if (menuBtn && mobileMenu) {
-    menuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('open');
-      menuBtn.setAttribute('aria-expanded', mobileMenu.classList.contains('open') ? 'true' : 'false');
-    });
+    const setOpen = (open) => {
+      mobileMenu.classList.toggle('open', open);
+      document.body.classList.toggle('menu-open', open);
+      menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    };
+    menuBtn.addEventListener('click', () => setOpen(!mobileMenu.classList.contains('open')));
     mobileMenu.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => mobileMenu.classList.remove('open'));
+      link.addEventListener('click', () => setOpen(false));
+    });
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileMenu.classList.contains('open')) { setOpen(false); menuBtn.focus(); }
     });
   }
 
@@ -25,6 +32,26 @@ function bootChrome() {
   }
 }
 
+// Static blocks rise in as they enter the viewport. The hidden state only
+// exists once this adds .reveal, so the page stays readable without JS.
+const REVEAL = '.section-head, .about-statement, .about-collage, .about-item, .process-media, .process-row, .why-card, .contact-grid > *, '
+  + '.founder-grid > *, .profile-grid, .expertise-card, .founder-quote';
+
+function bootReveal() {
+  if (prefersReducedMotion() || !('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    });
+  }, { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll(REVEAL).forEach((el) => {
+    el.classList.add('reveal');
+    io.observe(el);
+  });
+}
+
 // Each scene owns its own WebGL context; a failure creating or compiling one
 // (blocked GPU, driver quirk, context limit) must not take the rest of the
 // page down with it.
@@ -32,8 +59,10 @@ function safeBoot(fn) {
   try { fn(document); } catch (err) { console.error(err); }
 }
 
-document.fonts.ready.finally(() => {
+// The wordmark is rasterised to a canvas, so its face has to be loaded first.
+Promise.all([document.fonts.load('800 1em "Bricolage Grotesque"'), document.fonts.ready]).finally(() => {
   bootChrome();
+  bootReveal();
   safeBoot(bootScene1);
   safeBoot(bootScene2);
   safeBoot(bootScene3);

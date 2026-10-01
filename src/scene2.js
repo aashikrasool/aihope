@@ -18,13 +18,13 @@ float hash(vec2 p){ return fract(sin(dot(p, vec2(41.3, 289.1))) * 43758.5453); }
 void main(){
   vec2 p = vUv * 2.0 - 1.0;
   p.x *= uRes.x / uRes.y;
-  vec3 ink = vec3(0.02, 0.025, 0.04);
+  vec3 ink = vec3(0.114, 0.141, 0.251);
   float floorGlow = exp(-max(0.0, p.y + 0.9) * 2.2) * 0.35;
   float ring = smoothstep(0.02, 0.0, abs(length(p) - (0.55 + uDolly*0.15)));
-  vec3 col = ink + floorGlow * vec3(0.2,0.5,0.9) + ring * vec3(0.3,0.55,1.0) * 0.15;
+  vec3 col = ink + floorGlow * vec3(0.435,0.482,0.663) * 0.5 + ring * vec3(1.0,0.608,0.706) * 0.18;
   float vig = 1.0 - smoothstep(0.5, 1.4, length(p));
-  col *= mix(0.6, 1.0, vig);
-  float grain = (hash(vUv * uRes.xy * 0.3 + uTime*50.0) - 0.5) * 0.03;
+  col *= mix(0.88, 1.0, vig);
+  float grain = (hash(vUv * uRes.xy * 0.3 + uTime*50.0) - 0.5) * 0.02;
   col += grain;
   frag = vec4(col, 1.0);
 }`;
@@ -61,7 +61,7 @@ out vec4 frag;
 void main(){
   vec2 uv = gl_PointCoord*2.0-1.0;
   float a = smoothstep(1.0,0.0,length(uv));
-  vec3 col = mix(vec3(0.9,0.98,1.0), vec3(0.45,0.35,1.0), fract(vT*3.0));
+  vec3 col = mix(vec3(0.976,0.988,0.957), vec3(1.0,0.608,0.706), fract(vT*3.0));
   frag = vec4(col*a*uMat, a*uMat*0.85);
 }`;
 
@@ -192,7 +192,7 @@ export function bootScene2(root) {
 
       embers.draw(now * 0.001, {
         area: [1.0, 1.0], center: [0, 0.1], speed: 0.4, opacity: 0.35 + dolly * 0.3,
-        hot: [0.55, 0.85, 1.0], cool: [0.5, 0.35, 1.0],
+        hot: [1.0, 0.75, 0.82], cool: [0.87, 0.89, 0.98],
       });
     }
 

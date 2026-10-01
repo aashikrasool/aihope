@@ -1,5 +1,5 @@
 // Scene 1 — the opening. Black screen -> the AIHOPE wordmark resolves out of a
-// distressed dissolve -> the eyebrow/tagline/CTAs and header draw themselves in.
+// distressed dissolve -> the eyebrow/tagline/CTAs fade in (CSS, see heroIn in app.css).
 import { createGL, program, quad, bindQuad, FULLSCREEN_VS, fitCanvas, texFromImage } from './lib/glutil.js';
 import { createEmbers } from './lib/particles.js';
 import { clamp, smoothstep, easeOutBack, prefersReducedMotion } from './lib/ease.js';
@@ -20,20 +20,20 @@ void main(){
   vec2 p = uv * 2.0 - 1.0;
   p.x *= uRes.x / uRes.y;
 
-  vec3 ink = vec3(0.015, 0.02, 0.035);
+  vec3 ink = vec3(0.114, 0.141, 0.251);
   float vig = 1.0 - smoothstep(0.4, 1.35, length(p));
 
-  vec3 a = vec3(0.16, 0.64, 1.0);   // cyan
-  vec3 b = vec3(0.42, 0.33, 1.0);   // violet
+  vec3 a = vec3(1.0, 0.608, 0.706);   // pink
+  vec3 b = vec3(0.435, 0.482, 0.663); // periwinkle
   vec2 c1 = vec2(-0.35, 0.55);
   vec2 c2 = vec2(0.5, -0.5);
   float g1 = exp(-length(p - c1) * 1.6) * (0.5 + 0.5 * sin(uTime * 0.25));
   float g2 = exp(-length(p - c2) * 1.7) * (0.5 + 0.5 * sin(uTime * 0.31 + 2.0));
 
-  vec3 col = ink + (a * g1 + b * g2) * 0.55 * uGlow;
-  col *= mix(0.55, 1.0, vig);
+  vec3 col = ink + (a * g1 + b * g2) * 0.3 * uGlow;
+  col *= mix(0.88, 1.0, vig);
 
-  float grain = (hash(uv * uRes.xy * 0.4 + uTime * 60.0) - 0.5) * 0.035;
+  float grain = (hash(uv * uRes.xy * 0.4 + uTime * 60.0) - 0.5) * 0.02;
   col += grain;
 
   frag = vec4(col, 1.0);
@@ -41,9 +41,6 @@ void main(){
 
 export function bootScene1(root) {
   const canvas = root.querySelector('[data-s1-canvas]');
-  const eyebrow = root.querySelector('[data-s1-eyebrow]');
-  const lead = root.querySelector('[data-s1-lead]');
-  const actions = root.querySelector('[data-s1-actions]');
   const header = document.querySelector('[data-header]');
   if (!canvas) return;
 
@@ -51,6 +48,8 @@ export function bootScene1(root) {
   const plateProg = program(gl, FULLSCREEN_VS, PLATE_FS);
   const wordProg = program(gl, WORD_VS, WORD_FS);
   const buf = quad(gl);
+  // WebGL is up: retire the CSS fallback wordmark, the canvas draws it from here.
+  canvas.closest('.hero').classList.add('has-gl');
 
   const wordCanvas = buildWordCanvas('AIHOPE');
   const glowCanvas = buildGlowCanvas(wordCanvas);
@@ -71,7 +70,7 @@ export function bootScene1(root) {
   const START = performance.now();
   const DUR_GLOW = 900;
   const DUR_WORD = [700, 2500];
-  const DUR_FURNITURE = [2500, 3300];
+  const DUR_FURNITURE = [2500, 3300]; // matches the heroIn delay in app.css
 
   let raf = null;
   let running = true;
@@ -79,17 +78,6 @@ export function bootScene1(root) {
   window.addEventListener('pointermove', (e) => {
     mouse = [(e.clientX / innerWidth) * 2 - 1, (e.clientY / innerHeight) * 2 - 1];
   }, { passive: true });
-
-  function fireFurniture(p) {
-    if (!eyebrow) return;
-    eyebrow.style.opacity = p;
-    eyebrow.style.transform = `translateY(${(1 - p) * 14}px)`;
-    lead.style.opacity = p;
-    lead.style.transform = `translateY(${(1 - p) * 18}px)`;
-    actions.style.opacity = p;
-    actions.style.transform = `translateY(${(1 - p) * 22}px)`;
-    if (p > 0.05) header.classList.add('is-drawn');
-  }
 
   function frame(now) {
     if (!running) { raf = null; return; }
@@ -99,8 +87,7 @@ export function bootScene1(root) {
 
     const glowP = reduced ? 1 : smoothstep(0, DUR_GLOW, t);
     const wordP = reduced ? 1 : smoothstep(DUR_WORD[0], DUR_WORD[1], t);
-    const furP = reduced ? 1 : smoothstep(DUR_FURNITURE[0], DUR_FURNITURE[1], t);
-    fireFurniture(furP);
+    if (t > DUR_FURNITURE[0]) header.classList.add('is-drawn');
 
     gl.disable(gl.BLEND);
     gl.useProgram(plateProg);
@@ -113,8 +100,8 @@ export function bootScene1(root) {
     if (ready.grunge) {
       const aspect = wordCanvas.width / wordCanvas.height;
       const canvasAspect = canvas.width / canvas.height;
-      let sx = 0.66, sy = sx / aspect * canvasAspect;
-      if (canvasAspect < 1) { sx = 0.92; sy = sx / aspect * canvasAspect; }
+      let sx = 1.2, sy = sx / aspect * canvasAspect;
+      if (canvasAspect < 1) { sx = 1.5; sy = sx / aspect * canvasAspect; }
       const settle = easeOutBack(Math.min(1, wordP * 1.15));
       const scaleMul = 0.94 + settle * 0.06;
       const parX = mouse[0] * 0.012;
@@ -128,8 +115,8 @@ export function bootScene1(root) {
       gl.uniform2f(gl.getUniformLocation(wordProg, 'uOffset'), parX, -0.03 + parY);
       gl.uniform1f(gl.getUniformLocation(wordProg, 'uProgress'), wordP);
       gl.uniform2f(gl.getUniformLocation(wordProg, 'uGrungeRepeat'), 2.0, 1.4);
-      gl.uniform3f(gl.getUniformLocation(wordProg, 'uGlowA'), 0.18, 0.62, 1.0);
-      gl.uniform3f(gl.getUniformLocation(wordProg, 'uGlowB'), 0.55, 0.4, 1.0);
+      gl.uniform3f(gl.getUniformLocation(wordProg, 'uGlowA'), 1.0, 0.608, 0.706);
+      gl.uniform3f(gl.getUniformLocation(wordProg, 'uGlowB'), 0.435, 0.482, 0.663);
       gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, wordTex);
       gl.uniform1i(gl.getUniformLocation(wordProg, 'uWord'), 0);
       gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, glowTex);
@@ -142,7 +129,7 @@ export function bootScene1(root) {
     gl.enable(gl.BLEND);
     embers.draw(t * 0.001, {
       area: [0.9, 1.0], center: [0, -0.2], speed: 0.5, size: 26 * (window.devicePixelRatio || 1),
-      hot: [0.6, 0.85, 1.0], cool: [0.5, 0.4, 1.0], opacity: 0.5 + glowP * 0.4,
+      hot: [1.0, 0.75, 0.82], cool: [0.87, 0.89, 0.98], opacity: 0.5 + glowP * 0.4,
     });
 
     raf = requestAnimationFrame(frame);
@@ -155,5 +142,4 @@ export function bootScene1(root) {
   }, { threshold: 0 });
   io.observe(canvas);
 
-  if (reduced) fireFurniture(1);
 }

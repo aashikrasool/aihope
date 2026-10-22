@@ -1,4 +1,4 @@
-import { bootScene1 } from './scene1.js';
+import { bootScene1 } from './scene1.js?v=7';
 import { bootScene4 } from './scene4.js';
 import { bootScene6 } from './scene6.js';
 import { bootJourney } from './journey.js';

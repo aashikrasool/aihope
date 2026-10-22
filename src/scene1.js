@@ -72,6 +72,19 @@ export function bootScene1(root) {
   const DUR_WORD = [700, 2500];
   const DUR_FURNITURE = [2500, 3300]; // matches the heroIn delay in app.css
 
+  const eyebrow = root.querySelector('[data-s1-eyebrow]');
+  const bottom = root.querySelector('.hero-bottom');
+  // Vertical span (CSS px from the canvas top) left free between the eyebrow and
+  // the tagline/CTA block. offsetTop ignores the heroIn transform, so it's stable.
+  function freeBand() {
+    if (!eyebrow || !bottom) return null;
+    const h = canvas.clientHeight;
+    const top = eyebrow.offsetTop + eyebrow.offsetHeight;
+    const bot = bottom.offsetTop;
+    if (!h || bot - top < 40) return null;
+    return { top, bottom: bot, h };
+  }
+
   let raf = null;
   let running = true;
   let mouse = [0, 0];
@@ -101,7 +114,20 @@ export function bootScene1(root) {
       const aspect = wordCanvas.width / wordCanvas.height;
       const canvasAspect = canvas.width / canvas.height;
       let sx = 1.2, sy = sx / aspect * canvasAspect;
-      if (canvasAspect < 1) { sx = 1.5; sy = sx / aspect * canvasAspect; }
+      let baseY = -0.03;
+      if (canvasAspect < 1) {
+        sx = 1.5; sy = sx / aspect * canvasAspect;
+        // Portrait: the tagline block reaches the middle of the screen, so sit the
+        // wordmark in the free band between the eyebrow and the tagline instead.
+        const band = freeBand();
+        if (band) {
+          // Glyphs fill ~40% of the word texture's height (see buildWordCanvas).
+          const glyphPx = 0.4 * sy * band.h;
+          const fit = (band.bottom - band.top) * 0.8 / glyphPx;
+          if (fit < 1) { sx *= fit; sy *= fit; }
+          baseY = 1 - ((band.top + band.bottom) / band.h);
+        }
+      }
       const settle = easeOutBack(Math.min(1, wordP * 1.15));
       const scaleMul = 0.94 + settle * 0.06;
       const parX = mouse[0] * 0.012;
@@ -112,7 +138,7 @@ export function bootScene1(root) {
       gl.useProgram(wordProg);
       bindQuad(gl, buf, wordProg);
       gl.uniform2f(gl.getUniformLocation(wordProg, 'uScale'), sx * scaleMul, sy * scaleMul);
-      gl.uniform2f(gl.getUniformLocation(wordProg, 'uOffset'), parX, -0.03 + parY);
+      gl.uniform2f(gl.getUniformLocation(wordProg, 'uOffset'), parX, baseY + parY);
       gl.uniform1f(gl.getUniformLocation(wordProg, 'uProgress'), wordP);
       gl.uniform2f(gl.getUniformLocation(wordProg, 'uGrungeRepeat'), 2.0, 1.4);
       gl.uniform3f(gl.getUniformLocation(wordProg, 'uGlowA'), 1.0, 0.608, 0.706);
